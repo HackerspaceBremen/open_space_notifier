@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="4" passed="4">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="104" started-at="2012-12-24T01:06:16Z" finished-at="2012-12-24T01:06:16Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="104" started-at="2012-12-24T01:06:16Z" finished-at="2012-12-24T01:06:16Z">
+      <class name="de.hackerspacebremen.transformer.SpeakingDateTransformerTest">
+        <test-method status="PASS" signature="testEnglish()[pri:0, instance:de.hackerspacebremen.transformer.SpeakingDateTransformerTest@5ff06dc3]" name="testEnglish" duration-ms="83" started-at="2012-12-24T02:06:16Z" finished-at="2012-12-24T02:06:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testEnglish -->
+        <test-method status="PASS" signature="testGerman()[pri:0, instance:de.hackerspacebremen.transformer.SpeakingDateTransformerTest@5ff06dc3]" name="testGerman" duration-ms="2" started-at="2012-12-24T02:06:16Z" finished-at="2012-12-24T02:06:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGerman -->
+        <test-method status="PASS" signature="testWithoutFormat()[pri:0, instance:de.hackerspacebremen.transformer.SpeakingDateTransformerTest@5ff06dc3]" name="testWithoutFormat" duration-ms="1" started-at="2012-12-24T02:06:16Z" finished-at="2012-12-24T02:06:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testWithoutFormat -->
+        <test-method status="PASS" signature="wrongUsageTest()[pri:0, instance:de.hackerspacebremen.transformer.SpeakingDateTransformerTest@5ff06dc3]" name="wrongUsageTest" duration-ms="2" started-at="2012-12-24T02:06:16Z" finished-at="2012-12-24T02:06:16Z">
+          <exception class="flexjson.JSONException">
+            <message>
+              <![CDATA[Error trying to deepSerialize]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[flexjson.JSONException: Error trying to deepSerialize
+	at flexjson.transformer.ObjectTransformer.transform(ObjectTransformer.java:61)
+	at flexjson.transformer.TransformerWrapper.transform(TransformerWrapper.java:22)
+	at flexjson.JSONContext.transform(JSONContext.java:73)
+	at flexjson.JSONSerializer.serialize(JSONSerializer.java:377)
+	at flexjson.JSONSerializer.serialize(JSONSerializer.java:235)
+	at de.hackerspacebremen.transformer.SpeakingDateTransformerTest.wrongUsageTest(SpeakingDateTransformerTest.java:99)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:128)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1203)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1128)
+	at org.testng.TestNG.run(TestNG.java:1036)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
+Caused by: java.lang.ClassCastException: com.google.appengine.api.datastore.Text cannot be cast to java.lang.Long
+	at de.hackerspacebremen.transformer.SpeakingDateTransformer.transform(SpeakingDateTransformer.java:76)
+	at flexjson.transformer.TransformerWrapper.transform(TransformerWrapper.java:22)
+	at flexjson.transformer.ObjectTransformer.transform(ObjectTransformer.java:49)
+	... 29 more
+]]>
+            </full-stacktrace>
+          </exception> <!-- flexjson.JSONException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- wrongUsageTest -->
+      </class> <!-- de.hackerspacebremen.transformer.SpeakingDateTransformerTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

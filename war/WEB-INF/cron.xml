@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries> 
+	  <cron>
+	    <url>/cron/statuscheck</url>
+	    <description>Check if space is closed</description>
+	    <schedule>every day 04:00</schedule>
+	    <timezone>Europe/Berlin</timezone>
+	  </cron>
+</cronentries>

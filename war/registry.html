@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- The HTML 4.01 Transitional DOCTYPE declaration-->
+<!-- above set at the top of the file will set     -->
+<!-- the browser's rendering engine into           -->
+<!-- "Quirks Mode". Replacing this declaration     -->
+<!-- with a "Standards Mode" doctype is supported, -->
+<!-- but may lead to some differences in layout.   -->
+
+<!-- /* -->
+<!--  * Hackerspace Bremen Backend - An Open-Space-Notifier -->
+<!--  *  -->
+<!--  * Copyright (C) 2012 Steve Liedtke <sliedtke57@gmail.com> -->
+<!--  *  -->
+<!--  * This program is free software; you can redistribute it and/or modify it under the terms of the  -->
+<!--  * GNU General Public License as published by the Free Software Foundation; either version 3 of  -->
+<!--  * the License, or (at your option) any later version. -->
+<!--  *  -->
+<!--  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;  -->
+<!--  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See  -->
+<!--  * the GNU General Public License for more details. -->
+<!--  *  -->
+<!--  * You can find a copy of the GNU General Public License on http://www.gnu.org/licenses/gpl.html. -->
+<!--  *  -->
+<!--  * Contributors: -->
+<!--  *     Steve Liedtke <sliedtke57@gmail.com> -->
+<!--  */ -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Hackerspace Bremen - Registrierung</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="js/registry.js"></script>
+    <script>
+		document.write('<script src=js/' +
+		('__proto__' in {} ? 'zepto' : 'jquery') +
+		'.min.js><\/script>');
+	</script>
+  </head>
+
+  <body>
+    <h2>Registrierungs-Seite der Hackerspace-Bremen App!</h2>
+	
+	<article>
+		Dies ist die Registrierungsseite der 'Hackerspace-Bremen App'. Du kannst dich
+		hier registrieren, um den Space &ouml;ffnen oder schlie&szlig;en zu k&ouml;nnen. Dies ist 
+		KEINE Registrierung, um ein Mitglied des Hackerspaces zu werden.
+	</article>
+	
+	<fieldset id="registry_field" class="register_field_normal">
+		<legend>Registrierung</legend>
+		<p id="error_message"></p>
+		<p>
+			<label for="login">Login:</label>
+			<input id="login" type="text" onkeydown="removeInputError('#login');">*
+		</p>
+		<p>
+			<label for="pass">Passwort:</label>
+			<input id="pass" type="password" onkeydown="removeInputError('#pass');">*
+		</p>
+		<p>
+			<label for="retypepass">Passwort nochmal:</label>
+			<input id="retypepass" type="password" onkeydown="removeInputError('#retypepass');">*
+		</p>
+		<p>
+			<label for="fullName">Dein kompletter Name:</label>
+			<input id="fullName" type="text" onkeydown="removeInputError('#fullName');">*
+		</p>
+		<p>
+			<label for="email">Email:</label>
+			<input id="email" type="text" onkeydown="removeInputError('#email');">*
+		</p>
+		<p>
+			<input id="registry_btn" type="button" value="Registrieren" onclick="registryRequest();">
+		</p>
+	</fieldset>
+	
+  </body>
+</html>
