@@ -3,10 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/json-1.5.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/joda-time-2.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gcm-server.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/ljal.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/org.apache.commons.lang.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/aopalliance-1.0.jar"/>
@@ -20,11 +16,12 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-expression-3.1.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-web-3.1.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-webmvc-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-collections-1.0-rc2.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/jackson-mapper-asl-1.9.9.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/flexjson-2.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/testng-6.8.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-testing.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/flexjson-2.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/json-1.5.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gcm-server.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.apache.commons.lang.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-labs.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-stubs.jar"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
