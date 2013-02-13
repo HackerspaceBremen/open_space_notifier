@@ -8,7 +8,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gcm-server.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/ljal.jar"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/org.apache.commons.lang.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-logging-1.1.1.jar"/>
@@ -28,6 +27,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-testing.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-labs.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-stubs.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api.jar"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
