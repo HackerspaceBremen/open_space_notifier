@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
+    <version>1.1-SNAPSHOT</version>
+
+    <groupId>de.hackerspacebremen</groupId>
+    <artifactId>hshb_notifier_be</artifactId>
+
+    <properties>
+        <appengine.app.version>1</appengine.app.version>
+        <appengine.target.version>1.8.0</appengine.target.version>
+        <objectify.version>4.0b3</objectify.version>
+        <guice.version>3.0</guice.version>
+        <testng.version>6.8.5</testng.version>
+        <java.version>1.7</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+	
+	<repositories>
+		<repository>
+			<id>gcm-server-repository</id>
+			<url>https://raw.github.com/slorber/gcm-server-repository/master/releases/</url>
+		</repository>
+	</repositories>
+
+    <dependencies>
+        <!-- Compile/runtime dependencies -->
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-1.0-sdk</artifactId>
+            <version>${appengine.target.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <!-- Test Dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-testing</artifactId>
+            <version>${appengine.target.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-stubs</artifactId>
+            <version>${appengine.target.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+        	<groupId>com.googlecode.objectify</groupId>
+        	<artifactId>objectify</artifactId>
+        	<version>${objectify.version}</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.google.inject</groupId>
+        	<artifactId>guice</artifactId>
+        	<version>${guice.version}</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.google.inject.extensions</groupId>
+        	<artifactId>guice-servlet</artifactId>
+        	<version>${guice.version}</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.testng</groupId>
+        	<artifactId>testng</artifactId>
+        	<version>${testng.version}</version>
+        </dependency>
+		<dependency>
+			<groupId>net.sf.flexjson</groupId>
+			<artifactId>flexjson</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>3.2.3.RELEASE</version>
+		</dependency>
+		<!-- GCM Server JAR -->
+		<dependency>
+			<groupId>com.google.android.gcm</groupId>
+				<artifactId>gcm-server</artifactId>
+				<version>1.0.2</version>
+		</dependency>
+		<!-- own library: should be removed soon -->
+		<dependency>
+			<groupId>de.steveliedtke</groupId>
+			<artifactId>ljal</artifactId>
+			<version>1.0.5</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/ljal_1_0_5.jar</systemPath>
+		</dependency>
+		<!-- jdo: should be replace by objectify soon -->
+		<dependency>
+			<groupId>javax.jdo</groupId>
+			<artifactId>jdo-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-core</artifactId>
+			<version>3.1.1</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-api-jdo</artifactId>
+			<version>3.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.appengine.orm</groupId>
+			<artifactId>datanucleus-appengine</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+	</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>2.5.1</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <archiveClasses>true</archiveClasses>
+                    <webResources>
+                        <!-- in order to interpolate version from pom into appengine-web.xml -->
+                        <resource>
+                            <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+                            <filtering>true</filtering>
+                            <targetPath>WEB-INF</targetPath>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.google.appengine</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>${appengine.target.version}</version>
+                <configuration><jvmFlags>
+				  <jvmFlag>-Xdebug</jvmFlag>
+					<jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
+				  </jvmFlags>
+				</configuration>
+            </plugin>
+
+			<!-- Plugin for jdo: should be replaced after jdo is removed -->
+			<plugin>
+				<groupId>org.datanucleus</groupId>
+				<artifactId>maven-datanucleus-plugin</artifactId>
+				<version>3.1.2</version>
+				<configuration>
+				  <log4jConfiguration>${basedir}/log4j.properties</log4jConfiguration>
+				  <verbose>false</verbose>
+				  <fork>false</fork>
+				</configuration>
+				<executions>
+				  <execution>
+					<phase>process-classes</phase>
+					<goals>
+					  <goal>enhance</goal>
+					</goals>
+				  </execution>
+				</executions>
+			  </plugin>
+        </plugins>
+        
+        
+    </build>
+
+</project>
