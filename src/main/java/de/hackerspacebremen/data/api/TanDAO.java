@@ -19,7 +19,7 @@
 package de.hackerspacebremen.data.api;
 
 import de.hackerspacebremen.data.entities.Tan;
-import de.liedtke.data.api.BasicDAO;
+import de.hackerspacebremen.deprecated.data.api.BasicDAO;
 
 /**
  * @author Steve Liedtke

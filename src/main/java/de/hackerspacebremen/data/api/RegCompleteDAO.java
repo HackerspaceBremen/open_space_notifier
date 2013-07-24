@@ -21,7 +21,7 @@ package de.hackerspacebremen.data.api;
 import com.google.appengine.api.datastore.Key;
 
 import de.hackerspacebremen.data.entities.RegComplete;
-import de.liedtke.data.api.BasicDAO;
+import de.hackerspacebremen.deprecated.data.api.BasicDAO;
 
 public interface RegCompleteDAO extends BasicDAO{
 

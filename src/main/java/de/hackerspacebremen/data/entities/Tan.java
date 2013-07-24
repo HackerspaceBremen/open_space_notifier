@@ -24,9 +24,9 @@ import javax.jdo.annotations.Persistent;
 import com.google.appengine.api.datastore.Key;
 
 import de.hackerspacebremen.common.AppConstants;
-import de.liedtke.data.annotations.Entity;
-import de.liedtke.data.annotations.FormatPart;
-import de.liedtke.data.entity.BasicEntity;
+import de.hackerspacebremen.deprecated.data.annotations.Entity;
+import de.hackerspacebremen.deprecated.data.annotations.FormatPart;
+import de.hackerspacebremen.deprecated.data.entity.BasicEntity;
 
 /**
  * This entity is currently not saved in the database.

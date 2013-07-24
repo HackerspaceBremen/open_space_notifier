@@ -18,7 +18,7 @@
  */
 package de.hackerspacebremen.data.api;
 
-import de.liedtke.data.api.BasicDAO;
+import de.hackerspacebremen.deprecated.data.api.BasicDAO;
 
 public interface GCMAuthDAO extends BasicDAO{
 

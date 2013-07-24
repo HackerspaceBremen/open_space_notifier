@@ -23,10 +23,9 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import de.liedtke.presentation.ErrorMessages;
 
 @Service
-public class MyErrorMessages implements ErrorMessages{
+public class MyErrorMessages implements de.hackerspacebremen.deprecated.presentation.ErrorMessages{
 
 private final Map<Integer,String> errorMessages = new HashMap<Integer, String>();
 	

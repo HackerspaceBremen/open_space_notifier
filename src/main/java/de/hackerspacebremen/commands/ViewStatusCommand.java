@@ -24,17 +24,19 @@ import java.util.logging.Logger;
 import javax.servlet.ServletException;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import de.hackerspacebremen.Factory;
+import com.google.inject.Inject;
+
 import de.hackerspacebremen.commands.helper.StatusTimeFormat;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.deprecated.format.FormatException;
+import de.hackerspacebremen.deprecated.presentation.WebCommand;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.format.MessageFormat;
-import de.liedtke.common.Constants;
-import de.liedtke.format.FormatException;
-import de.liedtke.presentation.WebCommand;
-import de.liedtke.validation.ValidationException;
+import de.hackerspacebremen.util.Constants;
 
 public class ViewStatusCommand extends WebCommand{
 
@@ -43,9 +45,40 @@ public class ViewStatusCommand extends WebCommand{
      */
     private static final Logger logger = Logger.getLogger(ViewStatusCommand.class.getName());
 	
+    @Inject
+	private SpaceStatusService statusService;
+    
+    @Override
+    protected void handleSuccess(String message, String result) {
+    	super.handleSuccess(message, result);
+    	try{
+	    	this.result.addValue("api", "0.12");
+			this.result.addValue("space", "RevSpace");
+			this.result.addValue("url", "https:\\/\\/www.hackerspace-bremen.de");
+			final JSONObject iconJSON = new JSONObject();
+			iconJSON.put("open", "TODO");
+			iconJSON.put("closed", "TODO");
+			this.result.addValue("icon", iconJSON);
+			this.result.addValue("address", "Bornstrasse 14/15, 28195 Bremen, Germany");
+			final JSONObject contactJSON = new JSONObject();
+			contactJSON.put("phone", "+49 421 14 62 92 15");
+			contactJSON.put("twitter", "@hspacehb");
+			contactJSON.put("email", "info@hackerspace-bremen.de");
+			this.result.addValue("contact", contactJSON);
+			this.result.addValue("logo", "TODO");
+			this.result.addValue("lat", 53.08178f);
+			this.result.addValue("lon", 8.805831f);
+			final JSONObject status = new JSONObject(result);
+			this.result.addValue("open", status.getString("ST3").equals("OPEN"));
+			this.result.addValue("status", status.getString("ST5"));
+			this.result.addValue("lastchange", Long.valueOf(status.getString("ST2")));
+    	}catch(JSONException e){
+    		logger.warning("JSONException occured: " + e.getMessage());
+    	}
+    }
+    
 	@Override
 	public void process() throws ServletException, IOException {
-		final SpaceStatusService statusService = Factory.createSpaceStatusService();
 		this.registerService(statusService);
 		
 		final boolean htmlEncoded = (req.getParameter("htmlEncoded")!=null && req.getParameter("htmlEncoded").equals("true"));
@@ -74,7 +107,5 @@ public class ViewStatusCommand extends WebCommand{
 		
 		//closing all services
 		super.process();
-	}
-
-	
+	}	
 }

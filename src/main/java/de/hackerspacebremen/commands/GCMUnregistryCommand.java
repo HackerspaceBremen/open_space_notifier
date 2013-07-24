@@ -22,16 +22,19 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-import de.hackerspacebremen.Factory;
+import com.google.inject.Inject;
+
+import de.hackerspacebremen.deprecated.presentation.WebCommand;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.GCMDataService;
-import de.liedtke.presentation.WebCommand;
-import de.liedtke.validation.ValidationException;
 
 public class GCMUnregistryCommand extends WebCommand{
 
+	@Inject
+	private GCMDataService gcmService;
+	
 	@Override
 	public void process() throws ServletException, IOException {
-		final GCMDataService gcmService = Factory.createGCMDataService();
 		this.registerService(gcmService);
 		try{
 			gcmService.unregister(req.getParameter("deviceId"));

@@ -28,60 +28,75 @@ import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
+import com.google.inject.Inject;
 
-import de.hackerspacebremen.Factory;
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.data.entities.GCMAuth;
 import de.hackerspacebremen.data.entities.DoorKeyKeeper;
+import de.hackerspacebremen.data.entities.GCMAuth;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.domain.api.GCMAuthService;
+import de.hackerspacebremen.deprecated.presentation.WebCommand;
+import de.hackerspacebremen.deprecated.util.Encryption;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.DoorKeyKeeperService;
+import de.hackerspacebremen.domain.api.GCMAuthService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
-import de.liedtke.presentation.WebCommand;
-import de.liedtke.util.Encryption;
-import de.liedtke.validation.ValidationException;
 
-public class OpenSpaceCommand extends WebCommand{
+
+public class OpenSpaceCommand extends WebCommand {
+
+	@Inject
+	private SpaceStatusService statusService;
+
+	@Inject
+	private DoorKeyKeeperService keeperService;
+
+	@Inject
+	private GCMAuthService gcmAuthService;
 
 	@Override
 	public void process() throws ServletException, IOException {
-		final SpaceStatusService statusService = Factory.createSpaceStatusService();
-		final DoorKeyKeeperService keeperService = Factory.createDoorKeyKeeperService();
-		final GCMAuthService gcmAuthService = Factory.createGCMAuthService();
 		this.registerService(statusService, keeperService, gcmAuthService);
-		
-		try{
+
+		try {
 			final String name = this.req.getParameter("name");
 			final String pass = this.req.getParameter("pass");
 			final String message = this.req.getParameter("message");
-			
-			final DoorKeyKeeper keeper = keeperService.findKeyKeeper(name, pass);
-			if(keeper==null){
+
+			final DoorKeyKeeper keeper = keeperService
+					.findKeyKeeper(name, pass);
+			if (keeper == null) {
 				this.handleError(1);
-			}else{
+			} else {
 				SpaceStatus status = statusService.currentStatus();
-				if(status == null || status.getStatus().equals(AppConstants.CLOSED)){
+				if (status == null
+						|| status.getStatus().equals(AppConstants.CLOSED)) {
 					status = statusService.openSpace(keeper, message);
 					final GCMAuth authToken = gcmAuthService.getAuthToken();
-					if(authToken!=null){
+					if (authToken != null) {
 						final Queue queue = QueueFactory.getDefaultQueue();
-						TaskOptions taskOpt = TaskOptions.Builder.withUrl("/cmd/gcm");
+						TaskOptions taskOpt = TaskOptions.Builder
+								.withUrl("/cmd/gcm");
 						taskOpt.method(Method.POST);
-						taskOpt.taskName("task_cd2m_open_" + new Date().getTime());
-						taskOpt.param("token", Encryption.encryptSHA256(authToken.getToken()+KeyFactory.keyToString(status.getKey())));
+						taskOpt.taskName("task_cd2m_open_"
+								+ new Date().getTime());
+						taskOpt.param(
+								"token",
+								Encryption.encryptSHA256(authToken.getToken()
+										+ KeyFactory.keyToString(status
+												.getKey())));
 						queue.add(taskOpt);
 					}
 					this.handleSuccess("Space was opened", null);
-				}else{
+				} else {
 					this.handleError(3);
 				}
-				
+
 			}
-		}catch(ValidationException ve){
+		} catch (ValidationException ve) {
 			this.handleError(ve);
 		}
-		
-		//closing all
+
+		// closing all
 		super.process();
 	}
 }

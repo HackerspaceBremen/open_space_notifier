@@ -27,14 +27,14 @@ import de.hackerspacebremen.data.api.DoorKeyKeeperDAO;
 import de.hackerspacebremen.data.api.RegCompleteDAO;
 import de.hackerspacebremen.data.entities.DoorKeyKeeper;
 import de.hackerspacebremen.data.entities.RegComplete;
+import de.hackerspacebremen.deprecated.business.BasicServiceImpl;
+import de.hackerspacebremen.deprecated.util.Encryption;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.DoorKeyKeeperService;
 import de.hackerspacebremen.email.ActivationEmail;
 import de.hackerspacebremen.email.RegistryEmail;
 import de.hackerspacebremen.exceptions.AlreadyExistError;
 import de.hackerspacebremen.exceptions.DoesntExistError;
-import de.liedtke.business.BasicServiceImpl;
-import de.liedtke.util.Encryption;
-import de.liedtke.validation.ValidationException;
 
 public class DoorKeyKeeperServiceImpl extends BasicServiceImpl implements
 		DoorKeyKeeperService {

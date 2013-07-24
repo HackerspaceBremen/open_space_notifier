@@ -26,10 +26,10 @@ import com.google.android.gcm.server.Result;
 
 import de.hackerspacebremen.data.api.GCMDataDAO;
 import de.hackerspacebremen.data.entities.GCMData;
+import de.hackerspacebremen.deprecated.business.BasicServiceImpl;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.GCMDataService;
 import de.hackerspacebremen.gcm.GCMMessageSender;
-import de.liedtke.business.BasicServiceImpl;
-import de.liedtke.validation.ValidationException;
 
 public class GCMDataServiceImpl extends BasicServiceImpl implements GCMDataService{
 

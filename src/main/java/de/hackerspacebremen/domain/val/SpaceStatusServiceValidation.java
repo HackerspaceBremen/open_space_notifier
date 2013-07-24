@@ -24,9 +24,9 @@ import org.springframework.stereotype.Service;
 
 import de.hackerspacebremen.data.entities.DoorKeyKeeper;
 import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.deprecated.business.validation.BasicServiceValidation;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
-import de.liedtke.business.validation.BasicServiceValidation;
-import de.liedtke.validation.ValidationException;
 
 @Service
 public class SpaceStatusServiceValidation extends BasicServiceValidation 

@@ -25,8 +25,8 @@ import javax.jdo.Query;
 
 import de.hackerspacebremen.data.api.GCMDataDAO;
 import de.hackerspacebremen.data.entities.GCMData;
-import de.liedtke.data.BasicDAODB;
-import de.liedtke.data.entity.BasicEntity;
+import de.hackerspacebremen.deprecated.data.BasicDAODB;
+import de.hackerspacebremen.deprecated.data.entity.BasicEntity;
 
 public class GCMDataDB extends BasicDAODB implements GCMDataDAO{
 

@@ -23,9 +23,9 @@ import java.util.logging.Logger;
 
 import de.hackerspacebremen.data.api.GCMAuthDAO;
 import de.hackerspacebremen.data.entities.GCMAuth;
+import de.hackerspacebremen.deprecated.business.BasicServiceImpl;
+import de.hackerspacebremen.deprecated.util.Generator;
 import de.hackerspacebremen.domain.api.GCMAuthService;
-import de.liedtke.business.BasicServiceImpl;
-import de.liedtke.util.Generator;
 
 public class GCMAuthServiceImpl extends BasicServiceImpl implements GCMAuthService{
 

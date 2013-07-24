@@ -19,7 +19,7 @@
 package de.hackerspacebremen.data.api;
 
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.liedtke.data.api.BasicDAO;
+import de.hackerspacebremen.deprecated.data.api.BasicDAO;
 
 public interface SpaceStatusDAO extends BasicDAO{
 	

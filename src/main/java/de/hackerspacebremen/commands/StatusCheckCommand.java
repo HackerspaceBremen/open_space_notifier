@@ -23,15 +23,17 @@ import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
-import de.hackerspacebremen.Factory;
+import com.google.inject.Inject;
+
 import de.hackerspacebremen.data.entities.DoorKeyKeeper;
 import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.deprecated.presentation.WebCommand;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.DoorKeyKeeperService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.email.ForgotToCloseEmail;
 import de.hackerspacebremen.util.PropertyHelper;
-import de.liedtke.presentation.WebCommand;
-import de.liedtke.validation.ValidationException;
+
 
 /**
  * @author Steve
@@ -44,13 +46,17 @@ public class StatusCheckCommand extends WebCommand{
      */
     private static final Logger logger = Logger.getLogger(StatusCheckCommand.class.getName());
 	
+    @Inject
+	private SpaceStatusService statusService;
+    
+    @Inject
+	private DoorKeyKeeperService keeperService;
+    
 	/* (non-Javadoc)
-	 * @see de.liedtke.presentation.WebCommand#process()
+	 * @see de.hackerspacebremen.deprecated.WebCommand#process()
 	 */
 	@Override
 	public void process() throws ServletException, IOException {
-		final SpaceStatusService statusService = Factory.createSpaceStatusService();
-		final DoorKeyKeeperService keeperService = Factory.createDoorKeyKeeperService();
 		this.registerService(statusService, keeperService);
 		
 		try{

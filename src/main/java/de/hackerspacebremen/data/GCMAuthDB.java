@@ -20,8 +20,8 @@ package de.hackerspacebremen.data;
 
 import de.hackerspacebremen.data.api.GCMAuthDAO;
 import de.hackerspacebremen.data.entities.GCMAuth;
-import de.liedtke.data.BasicDAODB;
-import de.liedtke.data.entity.BasicEntity;
+import de.hackerspacebremen.deprecated.data.BasicDAODB;
+import de.hackerspacebremen.deprecated.data.entity.BasicEntity;
 
 public final class GCMAuthDB extends BasicDAODB implements GCMAuthDAO{
 

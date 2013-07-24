@@ -24,20 +24,20 @@ import java.util.logging.Logger;
 import javax.servlet.ServletException;
 
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.inject.Inject;
 
-import de.hackerspacebremen.Factory;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.GCMAuth;
 import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.deprecated.format.FormatException;
+import de.hackerspacebremen.deprecated.presentation.WebCommand;
+import de.hackerspacebremen.deprecated.util.Encryption;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.GCMAuthService;
 import de.hackerspacebremen.domain.api.GCMDataService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.format.MessageFormat;
-import de.liedtke.common.Constants;
-import de.liedtke.format.FormatException;
-import de.liedtke.presentation.WebCommand;
-import de.liedtke.util.Encryption;
-import de.liedtke.validation.ValidationException;
+import de.hackerspacebremen.util.Constants;
 
 public class GCMCommand extends WebCommand{
 
@@ -46,11 +46,17 @@ public class GCMCommand extends WebCommand{
      */
     private static final Logger logger = Logger.getLogger(GCMCommand.class.getName());
 	
+    @Inject
+	private SpaceStatusService statusService;
+    
+    @Inject
+	private GCMDataService gcmDataService;
+    
+    @Inject
+	private GCMAuthService gcmAuthService;
+    
 	@Override
 	public void process() throws ServletException, IOException {
-		final SpaceStatusService statusService = Factory.createSpaceStatusService();
-		final GCMDataService gcmDataService = Factory.createGCMDataService();
-		final GCMAuthService gcmAuthService = Factory.createGCMAuthService();
 		this.registerService(gcmDataService, gcmAuthService, statusService);
 		
 		try{

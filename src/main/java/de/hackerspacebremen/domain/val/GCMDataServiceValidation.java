@@ -20,9 +20,9 @@ package de.hackerspacebremen.domain.val;
 
 import java.io.IOException;
 
+import de.hackerspacebremen.deprecated.business.validation.BasicServiceValidation;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.GCMDataService;
-import de.liedtke.business.validation.BasicServiceValidation;
-import de.liedtke.validation.ValidationException;
 
 public class GCMDataServiceValidation extends BasicServiceValidation implements GCMDataService{
 

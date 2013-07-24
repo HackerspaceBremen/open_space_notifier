@@ -19,11 +19,11 @@
 package de.hackerspacebremen.domain.val;
 
 import de.hackerspacebremen.data.entities.DoorKeyKeeper;
+import de.hackerspacebremen.deprecated.business.validation.BasicServiceValidation;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.DoorKeyKeeperService;
 import de.hackerspacebremen.exceptions.AlreadyExistError;
 import de.hackerspacebremen.exceptions.DoesntExistError;
-import de.liedtke.business.validation.BasicServiceValidation;
-import de.liedtke.validation.ValidationException;
 
 public class DoorKeyKeeperServiceValidation extends BasicServiceValidation 
 											implements DoorKeyKeeperService{

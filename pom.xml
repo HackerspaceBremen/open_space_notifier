@@ -10,7 +10,7 @@
 
     <properties>
         <appengine.app.version>1</appengine.app.version>
-        <appengine.target.version>1.8.0</appengine.target.version>
+        <appengine.target.version>1.8.2</appengine.target.version>
         <objectify.version>4.0b3</objectify.version>
         <guice.version>3.0</guice.version>
         <testng.version>6.8.5</testng.version>
@@ -119,14 +119,6 @@
 			<groupId>com.google.android.gcm</groupId>
 				<artifactId>gcm-server</artifactId>
 				<version>1.0.2</version>
-		</dependency>
-		<!-- own library: should be removed soon -->
-		<dependency>
-			<groupId>de.steveliedtke</groupId>
-			<artifactId>ljal</artifactId>
-			<version>1.0.5</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/ljal_1_0_5.jar</systemPath>
 		</dependency>
 		<!-- jdo: should be replace by objectify soon -->
 		<dependency>

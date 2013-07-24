@@ -19,9 +19,9 @@
 package de.hackerspacebremen.domain.val;
 
 import de.hackerspacebremen.data.entities.GCMAuth;
+import de.hackerspacebremen.deprecated.business.validation.BasicServiceValidation;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.GCMAuthService;
-import de.liedtke.business.validation.BasicServiceValidation;
-import de.liedtke.validation.ValidationException;
 
 public class GCMAuthServiceValidation extends BasicServiceValidation implements GCMAuthService{
 

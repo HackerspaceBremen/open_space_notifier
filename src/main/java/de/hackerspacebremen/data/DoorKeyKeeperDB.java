@@ -26,8 +26,8 @@ import javax.jdo.Query;
 
 import de.hackerspacebremen.data.api.DoorKeyKeeperDAO;
 import de.hackerspacebremen.data.entities.DoorKeyKeeper;
-import de.liedtke.data.BasicDAODB;
-import de.liedtke.data.entity.BasicEntity;
+import de.hackerspacebremen.deprecated.data.BasicDAODB;
+import de.hackerspacebremen.deprecated.data.entity.BasicEntity;
 
 public class DoorKeyKeeperDB extends BasicDAODB implements DoorKeyKeeperDAO{
 

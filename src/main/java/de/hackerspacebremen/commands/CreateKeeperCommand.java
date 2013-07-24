@@ -22,11 +22,12 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-import de.hackerspacebremen.Factory;
+import com.google.inject.Inject;
+
+import de.hackerspacebremen.deprecated.presentation.WebCommand;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.DoorKeyKeeperService;
 import de.hackerspacebremen.exceptions.AlreadyExistError;
-import de.liedtke.presentation.WebCommand;
-import de.liedtke.validation.ValidationException;
 
 public class CreateKeeperCommand extends WebCommand{
 
@@ -35,9 +36,12 @@ public class CreateKeeperCommand extends WebCommand{
 //     */
 //    private static final Logger logger = Logger.getLogger(CreateKeeperCommand.class.getName());
 	
+	@Inject
+	private DoorKeyKeeperService keeperService;
+	
 	@Override
 	public void process() throws ServletException, IOException {
-		final DoorKeyKeeperService keeperService = Factory.createDoorKeyKeeperService();
+//		final DoorKeyKeeperService keeperService = Factory.createDoorKeyKeeperService();
 		this.registerService(keeperService);
 		try {
 			final boolean admin = keeperService.amount()==0;

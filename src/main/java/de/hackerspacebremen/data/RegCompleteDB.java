@@ -26,8 +26,8 @@ import com.google.appengine.api.datastore.Key;
 
 import de.hackerspacebremen.data.api.RegCompleteDAO;
 import de.hackerspacebremen.data.entities.RegComplete;
-import de.liedtke.data.BasicDAODB;
-import de.liedtke.data.entity.BasicEntity;
+import de.hackerspacebremen.deprecated.data.BasicDAODB;
+import de.hackerspacebremen.deprecated.data.entity.BasicEntity;
 
 public class RegCompleteDB extends BasicDAODB implements RegCompleteDAO{
 

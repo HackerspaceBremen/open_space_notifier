@@ -28,29 +28,36 @@ import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
+import com.google.inject.Inject;
 
-import de.hackerspacebremen.Factory;
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.data.entities.GCMAuth;
 import de.hackerspacebremen.data.entities.DoorKeyKeeper;
+import de.hackerspacebremen.data.entities.GCMAuth;
 import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.deprecated.presentation.WebCommand;
+import de.hackerspacebremen.deprecated.util.Encryption;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
+import de.hackerspacebremen.domain.api.DoorKeyKeeperService;
 import de.hackerspacebremen.domain.api.GCMAuthService;
 import de.hackerspacebremen.domain.api.GCMDataService;
-import de.hackerspacebremen.domain.api.DoorKeyKeeperService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
-import de.liedtke.presentation.WebCommand;
-import de.liedtke.util.Encryption;
-import de.liedtke.validation.ValidationException;
 
 public class CloseSpaceCommand extends WebCommand{
 
+	@Inject
+	private DoorKeyKeeperService keeperService;
+	
+	@Inject
+	private SpaceStatusService statusService;
+	
+	@Inject
+	private GCMAuthService gcmAuthService;
+	
+	@Inject
+	private GCMDataService gcmDataService;
 	
 	@Override
 	public void process() throws ServletException, IOException {
-		final SpaceStatusService statusService = Factory.createSpaceStatusService();
-		final DoorKeyKeeperService keeperService = Factory.createDoorKeyKeeperService();
-		final GCMAuthService gcmAuthService = Factory.createGCMAuthService();
-		final GCMDataService gcmDataService = Factory.createGCMDataService();
 		this.registerService(statusService, keeperService, gcmAuthService, gcmDataService);
 		try{
 			final DoorKeyKeeper keeper = keeperService.findKeyKeeper(this.req.getParameter("name"), this.req.getParameter("pass"));

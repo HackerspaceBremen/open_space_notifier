@@ -30,10 +30,10 @@ import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.api.SpaceStatusDAO;
 import de.hackerspacebremen.data.entities.DoorKeyKeeper;
 import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.deprecated.business.BasicServiceImpl;
+import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.email.StatusEmail;
-import de.liedtke.business.BasicServiceImpl;
-import de.liedtke.validation.ValidationException;
 
 @Service
 public class SpaceStatusServiceImpl extends BasicServiceImpl 

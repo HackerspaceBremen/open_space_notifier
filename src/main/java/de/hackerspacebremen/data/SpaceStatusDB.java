@@ -26,8 +26,8 @@ import org.springframework.stereotype.Service;
 
 import de.hackerspacebremen.data.api.SpaceStatusDAO;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.liedtke.data.BasicDAODB;
-import de.liedtke.data.entity.BasicEntity;
+import de.hackerspacebremen.deprecated.data.BasicDAODB;
+import de.hackerspacebremen.deprecated.data.entity.BasicEntity;
 
 @Service
 public final class SpaceStatusDB extends BasicDAODB implements SpaceStatusDAO{
