@@ -23,21 +23,21 @@ import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.GCMAuth;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.deprecated.format.FormatException;
-import de.hackerspacebremen.deprecated.presentation.WebCommand;
-import de.hackerspacebremen.deprecated.util.Encryption;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.GCMAuthService;
 import de.hackerspacebremen.domain.api.GCMDataService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
+import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.format.FormatException;
+import de.hackerspacebremen.format.FormatFactory;
 import de.hackerspacebremen.format.MessageFormat;
+import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
+import de.hackerspacebremen.util.Encryption;
 
 public class GCMCommand extends WebCommand{
 
@@ -47,17 +47,19 @@ public class GCMCommand extends WebCommand{
     private static final Logger logger = Logger.getLogger(GCMCommand.class.getName());
 	
     @Inject
+    @Proxy
 	private SpaceStatusService statusService;
     
     @Inject
+    @Proxy
 	private GCMDataService gcmDataService;
     
     @Inject
+    @Proxy
 	private GCMAuthService gcmAuthService;
     
 	@Override
 	public void process() throws ServletException, IOException {
-		this.registerService(gcmDataService, gcmAuthService, statusService);
 		
 		try{
 			final GCMAuth authToken = gcmAuthService.getAuthToken();
@@ -66,9 +68,11 @@ public class GCMCommand extends WebCommand{
 			}else{
 				SpaceStatus status = statusService.currentStatus();
 				final String token = req.getParameter("token");
-				if(token != null && token.equals(Encryption.encryptSHA256(authToken.getToken()+KeyFactory.keyToString(status.getKey())))){
+				if(token != null && token.equals(Encryption.encryptSHA256(authToken.getToken()+status.getId()))){
 					MessageFormat.fitMessageSize(status);
-					gcmDataService.sendMessageToDevices(authToken.getToken(), this.formatter.format(status, AppConstants.LEVEL_VIEW));
+					final String kind = req.getParameter("format");
+					
+					gcmDataService.sendMessageToDevices(authToken.getToken(), FormatFactory.getFormatter(kind).format(status, AppConstants.LEVEL_VIEW));
 					this.handleSuccess("Messages were sent to the GCM server!", null);
 				}else{
 					this.handleSuccess("The given token couldn't be 'decrypted! The message couldn't be send ...'", null);

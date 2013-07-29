@@ -18,8 +18,8 @@
  */
 package de.hackerspacebremen.data.api;
 
-import de.hackerspacebremen.deprecated.data.api.BasicDAO;
+import de.hackerspacebremen.data.entities.GCMAuth;
 
-public interface GCMAuthDAO extends BasicDAO{
+public interface GCMAuthDAO extends de.hackerspacebremen.data.api.BasicDAO<GCMAuth>{
 
 }

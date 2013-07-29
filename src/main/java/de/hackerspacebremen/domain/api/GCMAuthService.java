@@ -19,10 +19,9 @@
 package de.hackerspacebremen.domain.api;
 
 import de.hackerspacebremen.data.entities.GCMAuth;
-import de.hackerspacebremen.deprecated.business.api.BasicService;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
+import de.hackerspacebremen.domain.val.ValidationException;
 
-public interface GCMAuthService extends BasicService{
+public interface GCMAuthService{
 
 	GCMAuth getAuthToken() 
 				throws ValidationException;

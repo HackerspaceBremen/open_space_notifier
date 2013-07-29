@@ -18,57 +18,41 @@
  */
 package de.hackerspacebremen.domain.val;
 
-import javax.annotation.Resource;
+import com.google.inject.Inject;
 
-import org.springframework.stereotype.Service;
-
-import de.hackerspacebremen.data.entities.DoorKeyKeeper;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.deprecated.business.validation.BasicServiceValidation;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 
-@Service
-public class SpaceStatusServiceValidation extends BasicServiceValidation 
+public class SpaceStatusServiceValidation extends Validation 
 										  implements SpaceStatusService{
 
-	@Resource(name="spaceStatusServiceImpl")
 	private SpaceStatusService spaceStatusService;
-	
-	// needed for di
-	public SpaceStatusServiceValidation(){
-		this.basicService = this.spaceStatusService;
-	}
-	
+
+	@Inject
 	public SpaceStatusServiceValidation(final SpaceStatusService service){
-		this.basicService = service;
-		this.spaceStatusService = (SpaceStatusService) basicService;
+		this.spaceStatusService = service;
 	}
 	
 	@Override
-	public SpaceStatus openSpace(final DoorKeyKeeper keeper, final String message) throws ValidationException{
-		this.validateNull(keeper, 16);
-//		return ((SpaceStatusService)this.basicService).openSpace(keeper, message);
-		return spaceStatusService.openSpace(keeper, message);
+	public SpaceStatus openSpace(final String changedBy, final String message) throws ValidationException{
+		this.validateNull(changedBy, 16);
+		return spaceStatusService.openSpace(changedBy, message);
 	}
 
 	@Override
-	public SpaceStatus closeSpace(final DoorKeyKeeper keeper, final String message) throws ValidationException{
-		this.validateNull(keeper, 16);
-//		return ((SpaceStatusService)this.basicService).closeSpace(keeper, message);
-		return spaceStatusService.closeSpace(keeper, message);
+	public SpaceStatus closeSpace(final String changedBy, final String message) throws ValidationException{
+		this.validateNull(changedBy, 16);
+		return spaceStatusService.closeSpace(changedBy, message);
 	}
 
 	@Override
 	public SpaceStatus currentStatus() throws ValidationException{
-//		return ((SpaceStatusService)this.basicService).currentStatus();
 		return spaceStatusService.currentStatus();
 	}
 
 	@Override
 	public SpaceStatus changeMessage(final SpaceStatus status, final String message) throws ValidationException {
 		this.validateNull(status, 20);
-//		return ((SpaceStatusService)this.basicService).changeMessage(status, message);
 		return spaceStatusService.changeMessage(status, message);
 	}
 }

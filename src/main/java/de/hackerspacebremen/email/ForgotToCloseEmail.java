@@ -31,7 +31,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.data.entities.DoorKeyKeeper;
 import de.hackerspacebremen.util.Constants;
 import de.hackerspacebremen.util.PropertyHelper;
 
@@ -39,6 +38,7 @@ import de.hackerspacebremen.util.PropertyHelper;
  * @author Steve
  *
  */
+// TODO This implementation needs a make over
 public class ForgotToCloseEmail implements SendEmail{
 
 	/**
@@ -47,10 +47,21 @@ public class ForgotToCloseEmail implements SendEmail{
 	private static final Logger logger = Logger
 			.getLogger(ForgotToCloseEmail.class.getName());
 	
-	private final DoorKeyKeeper keeper;
+	// TODO this field is needed for getEmail() and getFullName()
+	private final String keeper;
 	
-	public ForgotToCloseEmail(final DoorKeyKeeper keeper){
+	public ForgotToCloseEmail(final String keeper){
 		this.keeper = keeper;
+	}
+	
+	private String getEmail(){
+		// TODO implement ldap access to get email
+		return "";
+	}
+	
+	private String getFullName(){
+		// TODO implement ldap access to get full name
+		return "";
 	}
 	
 	/* (non-Javadoc)
@@ -68,14 +79,14 @@ public class ForgotToCloseEmail implements SendEmail{
 			msg.setFrom(new InternetAddress(AppConstants.ADMIN_EMAIL,
 					PropertyHelper.getEmailPropertyValue("email.sender.name")));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
-					keeper.getEmail(), keeper.getFullName()));
+					getEmail(), getFullName()));
 			msg.setSubject(
 					PropertyHelper.getEmailPropertyValue("email.forgot2close.subject"),
 					Constants.UTF8);
 			msg.setHeader("Content-Type", "text/plain; charset=utf-8");
 			final MessageFormat form = new MessageFormat(
 					PropertyHelper.getEmailPropertyValue("email.forgot2close.content"));
-			msg.setText(form.format(new String[] { keeper.getFullName(), url }));
+			msg.setText(form.format(new String[] { getFullName(), url }));
 			Transport.send(msg);
 		} catch (MessagingException e) {
 			logger.warning("MessagingException: " + e.getMessage());

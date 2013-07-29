@@ -20,72 +20,61 @@ package de.hackerspacebremen.domain;
 
 import java.util.Date;
 
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
 
 import com.google.appengine.api.datastore.Text;
+import com.google.inject.Inject;
 
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.api.SpaceStatusDAO;
-import de.hackerspacebremen.data.entities.DoorKeyKeeper;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.deprecated.business.BasicServiceImpl;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
+import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.email.StatusEmail;
 
 @Service
-public class SpaceStatusServiceImpl extends BasicServiceImpl 
-	implements SpaceStatusService{
+public class SpaceStatusServiceImpl implements SpaceStatusService{
 	
-	@Resource(name="spaceStatusMem")
-	public SpaceStatusDAO spaceStatusDAO;
+	private SpaceStatusDAO spaceStatusDAO;
 	
-	// needed for di
-	public SpaceStatusServiceImpl(){
-		this.basicDAO = this.spaceStatusDAO;
-	}
-	
-	public SpaceStatusServiceImpl(final SpaceStatusDAO dao){
-		this.basicDAO = dao;
-		this.spaceStatusDAO = (SpaceStatusDAO) basicDAO;
+	@Inject
+	public SpaceStatusServiceImpl(final SpaceStatusDAO spaceStatusDAO){
+		this.spaceStatusDAO = spaceStatusDAO;
 	}
 	
 	@Override
-	public SpaceStatus openSpace(final DoorKeyKeeper keeper, final String message) {
+	public SpaceStatus openSpace(final String changedBy, final String message) {
 		final SpaceStatus status = new SpaceStatus();
-		status.setOpenedBy(keeper.getKey());
+		status.setOpenedBy(changedBy);
 		status.setStatus(AppConstants.OPEN);
 		status.setTime(new Date().getTime());
 		if(message != null){
 			status.setMessage(new Text(message));
 		}
-//		final SpaceStatus result = ((SpaceStatusDAO)this.basicDAO).persist(status);
-		final SpaceStatus result = spaceStatusDAO.persist(status);
-		new StatusEmail(message, true).send();
+		final SpaceStatus result = this.spaceStatusDAO.persist(status);
+		// TODO create new task in taskquery for email with key
+		// new StatusEmail(message, true).send();
 		return result;
 	}
-
+	
 	@Override
-	public SpaceStatus closeSpace(final DoorKeyKeeper keeper, final String message) {
+	public SpaceStatus closeSpace(final String changedBy, final String message) {
 		final SpaceStatus status = new SpaceStatus();
-		status.setOpenedBy(keeper.getKey());
+		status.setOpenedBy(changedBy);
 		status.setStatus(AppConstants.CLOSED);
 		status.setTime(new Date().getTime());
 		if(message != null){
 			status.setMessage(new Text(message));
 		}
-//		final SpaceStatus result = ((SpaceStatusDAO)this.basicDAO).persist(status);
-		final SpaceStatus result = spaceStatusDAO.persist(status);
+		final SpaceStatus result = this.spaceStatusDAO.persist(status);
 		new StatusEmail(message, false).send();
 		return result;
 	}
 
 	@Override
 	public SpaceStatus currentStatus() {
-//		return ((SpaceStatusDAO)this.basicDAO).findCurrentStatus();
-		return spaceStatusDAO.findCurrentStatus();
+		return this.spaceStatusDAO.findCurrentStatus();
+		
 	}
 
 	@Override
@@ -95,7 +84,6 @@ public class SpaceStatusServiceImpl extends BasicServiceImpl
 		}else{
 			status.setMessage(new Text(message));
 		}
-//		return ((SpaceStatusDAO)this.basicDAO).persist(status);
-		return spaceStatusDAO.persist(status);
+		return this.spaceStatusDAO.persist(status);
 	}
 }

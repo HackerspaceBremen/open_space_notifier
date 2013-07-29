@@ -23,11 +23,13 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import de.hackerspacebremen.util.ErrorMessages;
+
 
 @Service
-public class MyErrorMessages implements de.hackerspacebremen.deprecated.presentation.ErrorMessages{
+public class MyErrorMessages implements ErrorMessages{
 
-private final Map<Integer,String> errorMessages = new HashMap<Integer, String>();
+	private final Map<Integer,String> errorMessages = new HashMap<Integer, String>();
 	
 	public MyErrorMessages(){
 		errorMessages.put(Integer.valueOf(1), "Either no Keykeeper with the given name exists " +

@@ -137,7 +137,7 @@ function changeStatusRequest(){
 			url: servlet,
 			dataType: 'json',
 			type: 'POST',
-			data: "name=" + login + "&pass=" + pass + "&message=" + message,
+			data: "name=" + login + "&pass=" + encodeURIComponent(pass) + "&message=" + message,
 			success: function(data, textStatus, jqXHR){
 				//var res = JSON.parse(jqXHR.responseText);
 				$('#message').val("")

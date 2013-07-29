@@ -23,50 +23,53 @@ import java.util.List;
 
 import com.google.android.gcm.server.Constants;
 import com.google.android.gcm.server.Result;
+import com.google.inject.Inject;
 
 import de.hackerspacebremen.data.api.GCMDataDAO;
 import de.hackerspacebremen.data.entities.GCMData;
-import de.hackerspacebremen.deprecated.business.BasicServiceImpl;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.GCMDataService;
+import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.gcm.GCMMessageSender;
 
-public class GCMDataServiceImpl extends BasicServiceImpl implements GCMDataService{
+public class GCMDataServiceImpl implements GCMDataService{
 
 //	/**
 //	 * static attribute used for logging.
 //	*/
 //	private static final Logger logger = Logger.getLogger(GCMDataServiceImpl.class.getName());
 	
+	private GCMDataDAO gcmDataDAO;
+	
+	@Inject
 	public GCMDataServiceImpl(final GCMDataDAO dao){
-		this.basicDAO = dao;
+		this.gcmDataDAO = dao;
 	}
 	
 	@Override
 	public void register(final String deviceId, final String registrationId) {
-		GCMData gcmData = ((GCMDataDAO)this.basicDAO).findByDeviceId(deviceId);
+		GCMData gcmData = gcmDataDAO.findByDeviceId(deviceId);
 		if(gcmData == null){
 			gcmData = new GCMData();
 			gcmData.setDeviceId(deviceId);
 			gcmData.setRegistrationId(registrationId);
-			((GCMDataDAO)this.basicDAO).persist(gcmData);
+			gcmDataDAO.persist(gcmData);
 		}else if(!gcmData.getRegistrationId().equals(registrationId)){
 			gcmData.setDeviceId(deviceId);
 			gcmData.setRegistrationId(registrationId);
-			((GCMDataDAO)this.basicDAO).persist(gcmData);
+			gcmDataDAO.persist(gcmData);
 		}
 	}
 	
 	@Override
 	public void unregister(final String deviceId)
 			throws ValidationException {
-		GCMData gcmData = ((GCMDataDAO)this.basicDAO).findByDeviceId(deviceId);
-		((GCMDataDAO)this.basicDAO).delete(gcmData);
+		GCMData gcmData = gcmDataDAO.findByDeviceId(deviceId);
+		gcmDataDAO.delete(gcmData);
 	}
 
 	@Override
 	public void sendMessageToDevices(final String authToken, final String message) throws IOException{
-		final List<GCMData> devices = ((GCMDataDAO)this.basicDAO).findAll();
+		final List<GCMData> devices = gcmDataDAO.findAll();
 		for(final GCMData gcmData : devices){
 			final GCMMessageSender sender = new GCMMessageSender(message);
 			final Result result = sender.sendMessage(gcmData.getRegistrationId());
@@ -75,13 +78,13 @@ public class GCMDataServiceImpl extends BasicServiceImpl implements GCMDataServi
 				if (canonicalRegId != null) {
 					// same device has more than on registration ID: update database
 					gcmData.setRegistrationId(canonicalRegId);
-					((GCMDataDAO)this.basicDAO).persist(gcmData);
+					gcmDataDAO.persist(gcmData);
 				}
 			} else {
 				String error = result.getErrorCodeName();
 				if (error.equals(Constants.ERROR_NOT_REGISTERED)) {
 					// application has been removed from device - unregister database
-					((GCMDataDAO)this.basicDAO).delete(gcmData);
+					gcmDataDAO.delete(gcmData);
 				}
 			}
 		}

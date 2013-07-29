@@ -18,60 +18,46 @@
  */
 package de.hackerspacebremen.data.entities;
 
-import javax.jdo.annotations.Extension;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Text;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.deprecated.data.annotations.Entity;
-import de.hackerspacebremen.deprecated.data.annotations.FormatPart;
-import de.hackerspacebremen.deprecated.data.entity.BasicEntity;
+import de.hackerspacebremen.data.annotations.Entity;
+import de.hackerspacebremen.data.annotations.FormatPart;
 import flexjson.JSON;
 
-@PersistenceCapable
 @Entity(name="SpaceStatus")
+@com.googlecode.objectify.annotation.Entity
 public final class SpaceStatus implements BasicEntity{
-
-	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
-	@FormatPart(key="ST1")
-	private Key key;
 	
-	@Persistent
+	@Id
+	@FormatPart(key="ST1")
+	private Long id;
+	
 	@FormatPart(key="ST2", level=AppConstants.LEVEL_VIEW)
+	@Index
 	private long time;
 	
-	@Persistent
-	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	@FormatPart(key="ST3", level=AppConstants.LEVEL_VIEW)
+	@Index
 	private String status;
 	
-	/**
-	 * opened by {@link DoorKeyKeeper}.
-	 */
-	@Persistent
-	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	@FormatPart(key="ST4")
-	private Key openedBy;
+	private String openedBy;
 
-	@Persistent
-	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	@FormatPart(key="ST5", level=AppConstants.LEVEL_VIEW)
 	private Text message;
+
+	public Long getId(){
+		return id;
+	}
+
+	public void setId(Long id){
+		this.id = id;
+	}
 	
-	public Key getKey() {
-		return key;
-	}
-
-	public void setKey(Key key) {
-		this.key = key;
-	}
-
 	@JSON
 	public long getTime() {
 		return time;
@@ -90,12 +76,11 @@ public final class SpaceStatus implements BasicEntity{
 		this.status = status;
 	}
 
-	@JSON
-	public Key getOpenedBy() {
+	public String getOpenedBy() {
 		return openedBy;
 	}
 
-	public void setOpenedBy(Key openedBy) {
+	public void setOpenedBy(final String openedBy) {
 		this.openedBy = openedBy;
 	}
 

@@ -18,20 +18,23 @@
  */
 package de.hackerspacebremen.domain.val;
 
+import com.google.inject.Inject;
+
 import de.hackerspacebremen.data.entities.GCMAuth;
-import de.hackerspacebremen.deprecated.business.validation.BasicServiceValidation;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.GCMAuthService;
 
-public class GCMAuthServiceValidation extends BasicServiceValidation implements GCMAuthService{
+public class GCMAuthServiceValidation extends Validation implements GCMAuthService{
 
+	private GCMAuthService gcmAuthService;
+	
+	@Inject
 	public GCMAuthServiceValidation(final GCMAuthService service){
-		this.basicService = service;
+		this.gcmAuthService = service;
 	}
 
 	@Override
 	public GCMAuth getAuthToken() throws ValidationException{
-		return ((GCMAuthService)basicService).getAuthToken();
+		return gcmAuthService.getAuthToken();
 	}
 
 }

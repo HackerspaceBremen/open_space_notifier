@@ -26,16 +26,17 @@ import javax.servlet.ServletException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.appengine.api.utils.SystemProperty;
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.commands.helper.StatusTimeFormat;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.deprecated.format.FormatException;
-import de.hackerspacebremen.deprecated.presentation.WebCommand;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
+import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.format.FormatException;
 import de.hackerspacebremen.format.MessageFormat;
+import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
 
 public class ViewStatusCommand extends WebCommand{
@@ -46,6 +47,7 @@ public class ViewStatusCommand extends WebCommand{
     private static final Logger logger = Logger.getLogger(ViewStatusCommand.class.getName());
 	
     @Inject
+    @Proxy
 	private SpaceStatusService statusService;
     
     @Override
@@ -53,11 +55,13 @@ public class ViewStatusCommand extends WebCommand{
     	super.handleSuccess(message, result);
     	try{
 	    	this.result.addValue("api", "0.12");
-			this.result.addValue("space", "RevSpace");
-			this.result.addValue("url", "https:\\/\\/www.hackerspace-bremen.de");
+			this.result.addValue("space", "Hackerspace Bremen e.V.");
+			this.result.addValue("url", "https://www.hackerspace-bremen.de");
 			final JSONObject iconJSON = new JSONObject();
-			iconJSON.put("open", "TODO");
-			iconJSON.put("closed", "TODO");
+			final String url = "http://"+SystemProperty.applicationVersion.get() + "." 
+					+ SystemProperty.applicationId.get()+".appspot.com/";
+			iconJSON.put("open", url+"images/status_auf_48px.png");
+			iconJSON.put("closed", url+"images/status_zu_48px.png");
 			this.result.addValue("icon", iconJSON);
 			this.result.addValue("address", "Bornstrasse 14/15, 28195 Bremen, Germany");
 			final JSONObject contactJSON = new JSONObject();
@@ -65,13 +69,17 @@ public class ViewStatusCommand extends WebCommand{
 			contactJSON.put("twitter", "@hspacehb");
 			contactJSON.put("email", "info@hackerspace-bremen.de");
 			this.result.addValue("contact", contactJSON);
-			this.result.addValue("logo", "TODO");
+			this.result.addValue("logo", url+"images/hackerspace_icon.png");
 			this.result.addValue("lat", 53.08178f);
 			this.result.addValue("lon", 8.805831f);
 			final JSONObject status = new JSONObject(result);
 			this.result.addValue("open", status.getString("ST3").equals("OPEN"));
 			this.result.addValue("status", status.getString("ST5"));
-			this.result.addValue("lastchange", Long.valueOf(status.getString("ST2")));
+			try{
+				this.result.addValue("lastchange", Long.valueOf(status.getString("ST2")));
+			}catch(NumberFormatException nfe){
+				// this is no problem
+			}
     	}catch(JSONException e){
     		logger.warning("JSONException occured: " + e.getMessage());
     	}
@@ -79,8 +87,6 @@ public class ViewStatusCommand extends WebCommand{
     
 	@Override
 	public void process() throws ServletException, IOException {
-		this.registerService(statusService);
-		
 		final boolean htmlEncoded = (req.getParameter("htmlEncoded")!=null && req.getParameter("htmlEncoded").equals("true"));
 		try {
 			final SpaceStatus status = statusService.currentStatus();
@@ -88,6 +94,7 @@ public class ViewStatusCommand extends WebCommand{
 				this.handleError(17);
 			}else{
 				if(htmlEncoded){
+					this.result.addValue("lastchange", Long.valueOf(status.getTime()));
 					MessageFormat.htmlEncode(status);
 				}
 				String resultWithFormat = this.formatter.format(status, AppConstants.LEVEL_VIEW);

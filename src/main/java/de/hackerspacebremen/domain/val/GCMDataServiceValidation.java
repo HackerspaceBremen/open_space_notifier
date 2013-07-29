@@ -20,21 +20,24 @@ package de.hackerspacebremen.domain.val;
 
 import java.io.IOException;
 
-import de.hackerspacebremen.deprecated.business.validation.BasicServiceValidation;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
+import com.google.inject.Inject;
+
 import de.hackerspacebremen.domain.api.GCMDataService;
 
-public class GCMDataServiceValidation extends BasicServiceValidation implements GCMDataService{
+public class GCMDataServiceValidation extends Validation implements GCMDataService{
 
+	private GCMDataService gcmDataService;
+	
+	@Inject
 	public GCMDataServiceValidation(final GCMDataService service){
-		this.basicService = service;
+		this.gcmDataService = service;
 	}
 	
 	@Override
 	public void register(final String deviceId, final String registrationId) throws ValidationException{
 		this.validateIfEmpty(deviceId, 7);
 		this.validateIfEmpty(registrationId, 8);
-		((GCMDataService)this.basicService).register(deviceId, registrationId);
+		gcmDataService.register(deviceId, registrationId);
 	}
 
 	@Override
@@ -42,14 +45,14 @@ public class GCMDataServiceValidation extends BasicServiceValidation implements 
 			throws IOException, ValidationException {
 		this.validateIfEmpty(authToken, 9);
 		this.validateIfEmpty(message, 10);
-		((GCMDataService)this.basicService).sendMessageToDevices(authToken, message);
+		gcmDataService.sendMessageToDevices(authToken, message);
 	}
 
 	@Override
 	public void unregister(final String deviceId)
 			throws ValidationException {
 		this.validateIfEmpty(deviceId, 7);
-		((GCMDataService)this.basicService).unregister(deviceId);
+		gcmDataService.unregister(deviceId);
 	}
 
 }

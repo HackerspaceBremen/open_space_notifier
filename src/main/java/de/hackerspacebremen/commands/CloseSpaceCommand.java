@@ -23,7 +23,6 @@ import java.util.Date;
 
 import javax.servlet.ServletException;
 
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
@@ -31,55 +30,54 @@ import com.google.appengine.api.taskqueue.TaskOptions.Method;
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.data.entities.DoorKeyKeeper;
 import de.hackerspacebremen.data.entities.GCMAuth;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.deprecated.presentation.WebCommand;
-import de.hackerspacebremen.deprecated.util.Encryption;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
-import de.hackerspacebremen.domain.api.DoorKeyKeeperService;
 import de.hackerspacebremen.domain.api.GCMAuthService;
-import de.hackerspacebremen.domain.api.GCMDataService;
+import de.hackerspacebremen.domain.api.LDAPService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
+import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.modules.binding.annotations.Proxy;
+import de.hackerspacebremen.util.Encryption;
 
 public class CloseSpaceCommand extends WebCommand{
-
-	@Inject
-	private DoorKeyKeeperService keeperService;
 	
 	@Inject
+	@Proxy
 	private SpaceStatusService statusService;
 	
 	@Inject
-	private GCMAuthService gcmAuthService;
+	@Proxy
+	private LDAPService ldapService;
 	
 	@Inject
-	private GCMDataService gcmDataService;
+	@Proxy
+	private GCMAuthService gcmAuthService;
 	
 	@Override
 	public void process() throws ServletException, IOException {
-		this.registerService(statusService, keeperService, gcmAuthService, gcmDataService);
 		try{
-			final DoorKeyKeeper keeper = keeperService.findKeyKeeper(this.req.getParameter("name"), this.req.getParameter("pass"));
-			if(keeper==null){
-				this.handleError(1);
-			}else{
+			final String name = this.req.getParameter("name");
+			final String pass = this.req.getParameter("pass");
+			final String message = this.req.getParameter("message");
+			if(ldapService.authenticate(name, pass)){
 				SpaceStatus status = statusService.currentStatus();
 				if(status == null || status.getStatus().equals(AppConstants.OPEN)){
-					status = statusService.closeSpace(keeper, this.req.getParameter("message"));
+					status = statusService.closeSpace(name, message);
 					final GCMAuth authToken = gcmAuthService.getAuthToken();
 					if(authToken!=null){
 						final Queue queue = QueueFactory.getDefaultQueue();
 						TaskOptions taskOpt = TaskOptions.Builder.withUrl("/cmd/gcm");
 						taskOpt.method(Method.POST);
 						taskOpt.taskName("task_cd2m_close_" + new Date().getTime());
-						taskOpt.param("token", Encryption.encryptSHA256(authToken.getToken()+KeyFactory.keyToString(status.getKey())));
+						taskOpt.param("token", Encryption.encryptSHA256(authToken.getToken()+status.getId()));
 						queue.add(taskOpt);
 					}
 					this.handleSuccess("Space was closed", null);
 				}else{
 					this.handleError(4);
 				}
+			}else{
+				this.handleError(1);
 			}
 		}catch(ValidationException ve){
 			this.handleError(ve);

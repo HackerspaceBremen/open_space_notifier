@@ -18,38 +18,28 @@
  */
 package de.hackerspacebremen.data.entities;
 
-import javax.jdo.annotations.Extension;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import com.googlecode.objectify.annotation.Id;
 
-import com.google.appengine.api.datastore.Key;
+import de.hackerspacebremen.data.annotations.Entity;
+import de.hackerspacebremen.data.annotations.FormatPart;
 
-import de.hackerspacebremen.deprecated.data.annotations.Entity;
-import de.hackerspacebremen.deprecated.data.annotations.FormatPart;
-import de.hackerspacebremen.deprecated.data.entity.BasicEntity;
-
-@PersistenceCapable
+@com.googlecode.objectify.annotation.Entity
 @Entity(name="GCMAuth")
 public final class GCMAuth implements BasicEntity{
 
-	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
+	@Id
 	@FormatPart(key="GCMAuth1")
-	private Key key;
+	private Long id;
 	
-	@Persistent
-	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	@FormatPart(key="GCMAuth2")
 	private String token;
 
-	public Key getKey() {
-		return key;
+	public Long getId() {
+		return id;
 	}
 
-	public void setKey(Key key) {
-		this.key = key;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getToken() {

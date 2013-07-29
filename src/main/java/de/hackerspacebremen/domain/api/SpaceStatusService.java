@@ -18,16 +18,14 @@
  */
 package de.hackerspacebremen.domain.api;
 
-import de.hackerspacebremen.data.entities.DoorKeyKeeper;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.deprecated.business.api.BasicService;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
+import de.hackerspacebremen.domain.val.ValidationException;
 
-public interface SpaceStatusService extends BasicService{
+public interface SpaceStatusService{
 
-	SpaceStatus openSpace(DoorKeyKeeper keeper, String message) throws ValidationException;
+	SpaceStatus openSpace(String changedBy, String message) throws ValidationException;
 	
-	SpaceStatus closeSpace(DoorKeyKeeper keeper, String message) throws ValidationException;
+	SpaceStatus closeSpace(String changedBy, String message) throws ValidationException;
 	
 	SpaceStatus changeMessage(SpaceStatus status, String message) throws ValidationException;
 	

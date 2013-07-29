@@ -19,9 +19,8 @@
 package de.hackerspacebremen.data.api;
 
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.deprecated.data.api.BasicDAO;
 
-public interface SpaceStatusDAO extends BasicDAO{
+public interface SpaceStatusDAO extends BasicDAO<SpaceStatus>{
 	
 	SpaceStatus findCurrentStatus();
 }

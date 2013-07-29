@@ -27,13 +27,13 @@ import com.google.inject.Inject;
 
 import de.hackerspacebremen.commands.helper.StatusTimeFormat;
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.data.entities.DoorKeyKeeper;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.deprecated.format.FormatException;
-import de.hackerspacebremen.deprecated.presentation.WebCommand;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
-import de.hackerspacebremen.domain.api.DoorKeyKeeperService;
+import de.hackerspacebremen.domain.api.LDAPService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
+import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.format.FormatException;
+import de.hackerspacebremen.format.FormatFactory;
+import de.hackerspacebremen.modules.binding.annotations.Proxy;
 
 public class MessageCommand extends WebCommand{
 
@@ -43,14 +43,16 @@ public class MessageCommand extends WebCommand{
     private static final Logger logger = Logger.getLogger(MessageCommand.class.getName());
 	
     @Inject
+    @Proxy
 	private SpaceStatusService statusService;
     
     @Inject
-	private DoorKeyKeeperService keeperService;
+    @Proxy
+	private LDAPService ldapService;
+    
     
 	@Override
 	public void process() throws ServletException, IOException {
-		this.registerService(statusService, keeperService);
 		
 		try{
 			final String name = this.req.getParameter("name");
@@ -63,16 +65,14 @@ public class MessageCommand extends WebCommand{
 			logger.info("format: " + format);
 			logger.info("time: " + time);
 			
-			final DoorKeyKeeper keeper = keeperService.findKeyKeeper(name, pass);
-			if(keeper==null){
-				this.handleError(18);
-			}else{
+			if(ldapService.authenticate(name, pass)){
 				final SpaceStatus status = statusService.currentStatus();
 				final String timeOfCurrent;
 				if(format==null || format.isEmpty()){
 					timeOfCurrent = "" + status.getTime();
 				}else{
-					timeOfCurrent = new StatusTimeFormat(this.formatter.format(status, AppConstants.LEVEL_VIEW), status).createTimeFormat(format);
+					final String kind = req.getParameter("format");
+					timeOfCurrent = new StatusTimeFormat(FormatFactory.getFormatter(kind).format(status, AppConstants.LEVEL_VIEW), status).createTimeFormat(format);
 				}
 				if(time != null && timeOfCurrent.equals(time)){
 					statusService.changeMessage(status, message);
@@ -80,6 +80,8 @@ public class MessageCommand extends WebCommand{
 				}else{
 					this.handleError(19);
 				}
+			}else{
+				this.handleError(18);
 			}
 		}catch(ValidationException ve){
 			this.handleError(ve);

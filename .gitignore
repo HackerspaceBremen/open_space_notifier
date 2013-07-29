@@ -6,3 +6,5 @@
 *.ear
 /target
 /lib
+
+/src/main/secret.properties

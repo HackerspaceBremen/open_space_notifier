@@ -23,7 +23,6 @@ import java.util.Date;
 
 import javax.servlet.ServletException;
 
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
@@ -31,46 +30,44 @@ import com.google.appengine.api.taskqueue.TaskOptions.Method;
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.data.entities.DoorKeyKeeper;
 import de.hackerspacebremen.data.entities.GCMAuth;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.deprecated.presentation.WebCommand;
-import de.hackerspacebremen.deprecated.util.Encryption;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
-import de.hackerspacebremen.domain.api.DoorKeyKeeperService;
 import de.hackerspacebremen.domain.api.GCMAuthService;
+import de.hackerspacebremen.domain.api.LDAPService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
+import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.modules.binding.annotations.Proxy;
+import de.hackerspacebremen.util.Encryption;
 
 
 public class OpenSpaceCommand extends WebCommand {
-
+	
 	@Inject
+	@Proxy
 	private SpaceStatusService statusService;
+	
+	@Inject
+	@Proxy
+	private LDAPService ldapService;
 
 	@Inject
-	private DoorKeyKeeperService keeperService;
-
-	@Inject
+	@Proxy
 	private GCMAuthService gcmAuthService;
 
 	@Override
 	public void process() throws ServletException, IOException {
-		this.registerService(statusService, keeperService, gcmAuthService);
-
+		
+		
 		try {
 			final String name = this.req.getParameter("name");
 			final String pass = this.req.getParameter("pass");
 			final String message = this.req.getParameter("message");
 
-			final DoorKeyKeeper keeper = keeperService
-					.findKeyKeeper(name, pass);
-			if (keeper == null) {
-				this.handleError(1);
-			} else {
+			if (ldapService.authenticate(name, pass)) {
 				SpaceStatus status = statusService.currentStatus();
 				if (status == null
 						|| status.getStatus().equals(AppConstants.CLOSED)) {
-					status = statusService.openSpace(keeper, message);
+					status = statusService.openSpace(name, message);
 					final GCMAuth authToken = gcmAuthService.getAuthToken();
 					if (authToken != null) {
 						final Queue queue = QueueFactory.getDefaultQueue();
@@ -82,15 +79,15 @@ public class OpenSpaceCommand extends WebCommand {
 						taskOpt.param(
 								"token",
 								Encryption.encryptSHA256(authToken.getToken()
-										+ KeyFactory.keyToString(status
-												.getKey())));
+										+ status.getId()));
 						queue.add(taskOpt);
 					}
 					this.handleSuccess("Space was opened", null);
 				} else {
 					this.handleError(3);
 				}
-
+			}else{
+				this.handleError(1);
 			}
 		} catch (ValidationException ve) {
 			this.handleError(ve);

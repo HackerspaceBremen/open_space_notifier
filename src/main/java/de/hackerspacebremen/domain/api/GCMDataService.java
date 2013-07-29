@@ -20,10 +20,9 @@ package de.hackerspacebremen.domain.api;
 
 import java.io.IOException;
 
-import de.hackerspacebremen.deprecated.business.api.BasicService;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
+import de.hackerspacebremen.domain.val.ValidationException;
 
-public interface GCMDataService extends BasicService{
+public interface GCMDataService{
 
 	void register(String deviceId, String registrationId) 
 				throws ValidationException;

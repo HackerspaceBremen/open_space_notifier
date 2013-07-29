@@ -21,35 +21,38 @@ package de.hackerspacebremen.domain;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.google.inject.Inject;
+
 import de.hackerspacebremen.data.api.GCMAuthDAO;
 import de.hackerspacebremen.data.entities.GCMAuth;
-import de.hackerspacebremen.deprecated.business.BasicServiceImpl;
-import de.hackerspacebremen.deprecated.util.Generator;
 import de.hackerspacebremen.domain.api.GCMAuthService;
+import de.hackerspacebremen.util.Generator;
 
-public class GCMAuthServiceImpl extends BasicServiceImpl implements GCMAuthService{
+public class GCMAuthServiceImpl implements GCMAuthService{
 
 	/**
 	 * static attribute used for logging.
 	*/
 	private static final Logger logger = Logger.getLogger(GCMAuthServiceImpl.class.getName());
 	
+	private GCMAuthDAO gcmAuthDAO;
+	
+	@Inject
 	public GCMAuthServiceImpl(final GCMAuthDAO dao){
-		this.basicDAO = dao;
+		this.gcmAuthDAO = dao;
 	}
 	
 	@Override
 	public GCMAuth getAuthToken() {
-		final GCMAuthDAO dao = (GCMAuthDAO) this.basicDAO;
-		final List<GCMAuth> list = dao.findAll();
+		final List<GCMAuth> list = gcmAuthDAO.findAll();
 		final GCMAuth result;
 		if(list.isEmpty()){
-			result = getNewToken(dao);
+			result = getNewToken(gcmAuthDAO);
 		}else if(list.size()>1){
 			for(final GCMAuth auth : list){
-				dao.delete(auth);
+				gcmAuthDAO.delete(auth);
 			}
-			result = getNewToken(dao);
+			result = getNewToken(gcmAuthDAO);
 		}else{
 			result = list.get(0);
 		}

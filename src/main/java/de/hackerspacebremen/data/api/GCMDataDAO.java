@@ -19,9 +19,8 @@
 package de.hackerspacebremen.data.api;
 
 import de.hackerspacebremen.data.entities.GCMData;
-import de.hackerspacebremen.deprecated.data.api.BasicDAO;
 
-public interface GCMDataDAO extends BasicDAO{
+public interface GCMDataDAO extends BasicDAO<GCMData>{
 
 	GCMData findByDeviceId(final String deviceId);
 }

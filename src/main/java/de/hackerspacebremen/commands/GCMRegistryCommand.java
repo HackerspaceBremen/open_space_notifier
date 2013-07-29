@@ -24,19 +24,19 @@ import javax.servlet.ServletException;
 
 import com.google.inject.Inject;
 
-import de.hackerspacebremen.deprecated.presentation.WebCommand;
-import de.hackerspacebremen.deprecated.validation.ValidationException;
 import de.hackerspacebremen.domain.api.GCMDataService;
+import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.modules.binding.annotations.Proxy;
 
 
 public class GCMRegistryCommand extends WebCommand{
 	
 	@Inject
+	@Proxy
 	private GCMDataService gcmService;
 
 	@Override
 	public void process() throws ServletException, IOException {
-		this.registerService(gcmService);
 		try{
 			gcmService.register(req.getParameter("deviceId"), req.getParameter("registrationId"));
 			this.handleSuccess("Your registry was successful", null);
