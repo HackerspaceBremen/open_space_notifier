@@ -137,7 +137,7 @@ function changeStatusRequest(){
 			url: servlet,
 			dataType: 'json',
 			type: 'POST',
-			data: "name=" + login + "&pass=" + encodeURIComponent(pass) + "&message=" + message,
+			data: "name=" + login + "&pass=" + encodeURIComponent(pass) + "&message=" + encodeURIComponent(message),
 			success: function(data, textStatus, jqXHR){
 				//var res = JSON.parse(jqXHR.responseText);
 				$('#message').val("")
@@ -171,7 +171,7 @@ function changeMessageRequest(){
 		url: servlet,
 		dataType: 'json',
 		type: 'POST',
-		data: "name=" + login + "&pass=" + pass + "&message=" + message + "&format=" + format + "&time=" + time,
+		data: "name=" + login + "&pass=" + encodeURIComponent(pass) + "&message=" + encodeURIComponent(message) + "&format=" + format + "&time=" + time,
 		success: function(data, textStatus, jqXHR){
 			//var res = JSON.parse(jqXHR.responseText);
 			$('#message').val("")

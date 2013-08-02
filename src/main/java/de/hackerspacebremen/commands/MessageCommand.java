@@ -19,6 +19,7 @@
 package de.hackerspacebremen.commands;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -34,6 +35,7 @@ import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.format.FormatException;
 import de.hackerspacebremen.format.FormatFactory;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
+import de.hackerspacebremen.util.Constants;
 
 public class MessageCommand extends WebCommand{
 
@@ -56,8 +58,22 @@ public class MessageCommand extends WebCommand{
 		
 		try{
 			final String name = this.req.getParameter("name");
-			final String pass = this.req.getParameter("pass");
-			final String message = this.req.getParameter("message");
+			final String encoded = this.req.getParameter("encoded");
+			
+			final String pass; 
+			final String message;
+			
+			if(encoded != null && encoded.equals("true")){
+				pass = URLDecoder.decode(this.req.getParameter("pass"),Constants.UTF8);
+				if(this.req.getParameter("message")!=null){
+					message = URLDecoder.decode(this.req.getParameter("message"),Constants.UTF8);
+				}else{
+					message = null;
+				}
+			}else{
+				pass = this.req.getParameter("pass");
+				message = this.req.getParameter("message");
+			}
 			final String format = this.req.getParameter("format");
 			final String time = this.req.getParameter("time");
 			

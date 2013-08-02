@@ -19,6 +19,8 @@
 package de.hackerspacebremen.util;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -38,8 +40,9 @@ public final class PropertyHelper {
     public static String getSecretPropertyValue(final String key){
 		Properties properties = new Properties();
 		String result = null;
+		final URL resource = PropertyHelper.class.getClassLoader().getResource("secret.properties");
 		try {
-			properties.load(PropertyHelper.class.getClassLoader().getResourceAsStream("secret.properties"));
+			properties.load(new InputStreamReader(resource.openStream(), Constants.UTF8));
 			final String keyBeginning;
 			if(AppConstants.PROD){
 				keyBeginning="project.";
@@ -57,8 +60,9 @@ public final class PropertyHelper {
 	public static String getEmailPropertyValue(final String key){
 		Properties properties = new Properties();
 		String result = null;
+		final URL resource = PropertyHelper.class.getClassLoader().getResource("email_text.properties");
 		try {
-		    properties.load(PropertyHelper.class.getClassLoader().getResourceAsStream("email_text.properties"));
+			properties.load(new InputStreamReader(resource.openStream(), Constants.UTF8));
 		    result = properties.getProperty(key);
 		} catch (IOException e) {
 			logger.warning("property with key '" + key + "' couldn't be found");
@@ -70,8 +74,9 @@ public final class PropertyHelper {
 	public static String getConstantsPropertyValue(final String key){
 		Properties properties = new Properties();
 		String result = null;
+		final URL resource = PropertyHelper.class.getClassLoader().getResource("constants.properties");
 		try {
-		    properties.load(PropertyHelper.class.getClassLoader().getResourceAsStream("constants.properties"));
+			properties.load(new InputStreamReader(resource.openStream(), Constants.UTF8));
 		    result = properties.getProperty(key);
 		} catch (IOException e) {
 			logger.warning("property with key '" + key + "' couldn't be found");

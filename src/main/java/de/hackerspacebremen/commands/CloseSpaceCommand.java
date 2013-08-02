@@ -19,7 +19,9 @@
 package de.hackerspacebremen.commands;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
@@ -37,9 +39,15 @@ import de.hackerspacebremen.domain.api.LDAPService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
+import de.hackerspacebremen.util.Constants;
 import de.hackerspacebremen.util.Encryption;
 
 public class CloseSpaceCommand extends WebCommand{
+	
+	/**
+     * static attribute used for logging.
+     */
+    private static final Logger logger = Logger.getLogger(CloseSpaceCommand.class.getName());
 	
 	@Inject
 	@Proxy
@@ -57,8 +65,23 @@ public class CloseSpaceCommand extends WebCommand{
 	public void process() throws ServletException, IOException {
 		try{
 			final String name = this.req.getParameter("name");
-			final String pass = this.req.getParameter("pass");
-			final String message = this.req.getParameter("message");
+			final String encoded = this.req.getParameter("encoded");
+			
+			final String pass; 
+			final String message;
+			
+			if(encoded != null && encoded.equals("true")){
+				pass = URLDecoder.decode(this.req.getParameter("pass"),Constants.UTF8);
+				if(this.req.getParameter("message")!=null){
+					message = URLDecoder.decode(this.req.getParameter("message"),Constants.UTF8);
+				}else{
+					message = null;
+				}
+			}else{
+				pass = this.req.getParameter("pass");
+				message = this.req.getParameter("message");
+			}
+			
 			if(ldapService.authenticate(name, pass)){
 				SpaceStatus status = statusService.currentStatus();
 				if(status == null || status.getStatus().equals(AppConstants.OPEN)){

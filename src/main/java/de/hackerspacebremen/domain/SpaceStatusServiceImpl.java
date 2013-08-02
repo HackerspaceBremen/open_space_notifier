@@ -19,12 +19,14 @@
 package de.hackerspacebremen.domain;
 
 import java.util.Date;
+import java.util.logging.Logger;
 
 import org.springframework.stereotype.Service;
 
 import com.google.appengine.api.datastore.Text;
 import com.google.inject.Inject;
 
+import de.hackerspacebremen.commands.GCMCommand;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.api.SpaceStatusDAO;
 import de.hackerspacebremen.data.entities.SpaceStatus;
@@ -49,6 +51,7 @@ public class SpaceStatusServiceImpl implements SpaceStatusService{
 		status.setStatus(AppConstants.OPEN);
 		status.setTime(new Date().getTime());
 		if(message != null){
+			
 			status.setMessage(new Text(message));
 		}
 		final SpaceStatus result = this.spaceStatusDAO.persist(status);

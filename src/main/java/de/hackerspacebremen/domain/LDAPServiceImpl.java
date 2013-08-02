@@ -20,8 +20,6 @@ public final class LDAPServiceImpl implements LDAPService {
 	public boolean authenticate(final String login, final String pass){
 		boolean result = false;
 		
-		logger.info("pass(evil!!!): " + pass);
-		
 		if(pass== null ||pass.isEmpty()){
 			logger.info("password is empty!!!");
 		}
@@ -34,8 +32,7 @@ public final class LDAPServiceImpl implements LDAPService {
 		    		"Basic "+authString);
 		    
 		    result = connection.getResponseCode() == HttpURLConnection.HTTP_OK;
-            logger.info("result: " + result);
-		} catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
 		    logger.warning("MalformedURLException occured: " + e.getMessage());
 		} catch (IOException e) {
 		    logger.warning("IOException occured: " + e.getMessage());
