@@ -16,7 +16,7 @@
  * Contributors:
  *     Steve Liedtke <sliedtke57@gmail.com>
  */
-package de.hackerspacebremen.presentation;
+package de.hackerspacebremen.presentation.apns;
 
 import java.io.IOException;
 
@@ -24,33 +24,22 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
-import de.hackerspacebremen.MyErrorMessages;
-import de.hackerspacebremen.commands.MessageCommand;
+import de.hackerspacebremen.presentation.OSNServlet;
 
 @Singleton
-public final class MessageServlet extends OSNServlet{
+public final class APNSRegistryServlet extends OSNServlet{
 
+	
 	/**
 	 * generated serialVersionUID.
 	 */
-	private static final long serialVersionUID = -862199584366404088L;
+	private static final long serialVersionUID = 8333045002930323152L;
 
-	private final Provider<MessageCommand> messageCommand;
-	
-	@Inject
-	public MessageServlet(final Provider<MessageCommand> messageCommand){
-		this.messageCommand = messageCommand;
-	}
-	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		final MessageCommand cmd = messageCommand.get();
-		cmd.init(req, resp, MyErrorMessages.class);
-		cmd.process();
+		// TODO
 	}
 }

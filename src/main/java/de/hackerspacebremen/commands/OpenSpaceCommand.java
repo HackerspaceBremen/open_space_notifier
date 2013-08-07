@@ -88,7 +88,7 @@ public class OpenSpaceCommand extends WebCommand {
 					if (authToken != null) {
 						final Queue queue = QueueFactory.getDefaultQueue();
 						TaskOptions taskOpt = TaskOptions.Builder
-								.withUrl("/cmd/gcm");
+								.withUrl("/v2/task/gcm");
 						taskOpt.method(Method.POST);
 						taskOpt.taskName("task_cd2m_open_"
 								+ new Date().getTime());

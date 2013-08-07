@@ -16,7 +16,7 @@
  * Contributors:
  *     Steve Liedtke <sliedtke57@gmail.com>
  */
-package de.hackerspacebremen.presentation;
+package de.hackerspacebremen.presentation.command;
 
 import java.io.IOException;
 
@@ -29,27 +29,28 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import de.hackerspacebremen.MyErrorMessages;
-import de.hackerspacebremen.commands.GCMUnregistryCommand;
+import de.hackerspacebremen.commands.MessageCommand;
+import de.hackerspacebremen.presentation.OSNServlet;
 
 @Singleton
-public class GCMUnregistryServlet extends OSNServlet{
-	
+public final class MessageServlet extends OSNServlet{
+
 	/**
 	 * generated serialVersionUID.
 	 */
-	private static final long serialVersionUID = -2551829179508555855L;
+	private static final long serialVersionUID = -862199584366404088L;
 
-	private final Provider<GCMUnregistryCommand> gcmUnregistryCommand;
+	private final Provider<MessageCommand> messageCommand;
 	
 	@Inject
-	public GCMUnregistryServlet(final Provider<GCMUnregistryCommand> gcmUnregistryCommand){
-		this.gcmUnregistryCommand = gcmUnregistryCommand;
+	public MessageServlet(final Provider<MessageCommand> messageCommand){
+		this.messageCommand = messageCommand;
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		final GCMUnregistryCommand cmd = gcmUnregistryCommand.get();
+		final MessageCommand cmd = messageCommand.get();
 		cmd.init(req, resp, MyErrorMessages.class);
 		cmd.process();
 	}

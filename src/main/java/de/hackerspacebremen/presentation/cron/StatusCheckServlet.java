@@ -16,7 +16,7 @@
  * Contributors:
  *     Steve Liedtke <sliedtke57@gmail.com>
  */
-package de.hackerspacebremen.presentation;
+package de.hackerspacebremen.presentation.cron;
 
 import java.io.IOException;
 
@@ -29,28 +29,31 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import de.hackerspacebremen.MyErrorMessages;
-import de.hackerspacebremen.commands.OpenSpaceCommand;
+import de.hackerspacebremen.commands.StatusCheckCommand;
+import de.hackerspacebremen.presentation.OSNServlet;
 
+/**
+ * @author Steve Liedtke
+ *
+ */
 @Singleton
-public class OpenServlet extends OSNServlet{
+public class StatusCheckServlet extends OSNServlet{
 
 	/**
 	 * generated serialVersionUID.
 	 */
-	private static final long serialVersionUID = 7640757653414982468L;
+	private static final long serialVersionUID = -4783560706796066027L;
 	
-	
-	private final Provider<OpenSpaceCommand> openSpaceCommand;
+	private final Provider<StatusCheckCommand> statusCheckCommand;
 	
 	@Inject
-	public OpenServlet(final Provider<OpenSpaceCommand> openSpaceCommand){
-		this.openSpaceCommand = openSpaceCommand;
+	public StatusCheckServlet(final Provider<StatusCheckCommand> statusCheckCommand){
+		this.statusCheckCommand = statusCheckCommand;
 	}
 	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		final OpenSpaceCommand cmd = openSpaceCommand.get();
+		final StatusCheckCommand cmd = statusCheckCommand.get();
 		cmd.init(req, resp, MyErrorMessages.class);
 		cmd.process();
 	}

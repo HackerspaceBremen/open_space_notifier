@@ -16,10 +16,9 @@
  * Contributors:
  *     Steve Liedtke <sliedtke57@gmail.com>
  */
-package de.hackerspacebremen.presentation;
+package de.hackerspacebremen.presentation.gcm;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -30,40 +29,29 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import de.hackerspacebremen.MyErrorMessages;
-import de.hackerspacebremen.commands.StatusCheckCommand;
+import de.hackerspacebremen.commands.GCMUnregistryCommand;
+import de.hackerspacebremen.presentation.OSNServlet;
 
-/**
- * @author Steve Liedtke
- *
- */
 @Singleton
-public class StatusCheckServlet extends OSNServlet{
-
+public class GCMUnregistryServlet extends OSNServlet{
+	
 	/**
 	 * generated serialVersionUID.
 	 */
-	private static final long serialVersionUID = -4783560706796066027L;
-	
-	/**
-     * static attribute used for logging.
-     */
-    private static final Logger logger = Logger.getLogger(StatusCheckServlet.class.getName());
+	private static final long serialVersionUID = -2551829179508555855L;
 
-    private final Provider<StatusCheckCommand> statusCheckCommand;
+	private final Provider<GCMUnregistryCommand> gcmUnregistryCommand;
 	
 	@Inject
-	public StatusCheckServlet(final Provider<StatusCheckCommand> statusCheckCommand){
-		this.statusCheckCommand = statusCheckCommand;
+	public GCMUnregistryServlet(final Provider<GCMUnregistryCommand> gcmUnregistryCommand){
+		this.gcmUnregistryCommand = gcmUnregistryCommand;
 	}
 	
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		final String cronHeader = req.getHeader("X-AppEngine-Cron");
-		logger.info("cronHeader: " + cronHeader);
-		if(cronHeader !=null && cronHeader.equals("true")){
-			final StatusCheckCommand cmd = statusCheckCommand.get();
-			cmd.init(req, resp, MyErrorMessages.class);
-			cmd.process();
-		}
+		final GCMUnregistryCommand cmd = gcmUnregistryCommand.get();
+		cmd.init(req, resp, MyErrorMessages.class);
+		cmd.process();
 	}
 }

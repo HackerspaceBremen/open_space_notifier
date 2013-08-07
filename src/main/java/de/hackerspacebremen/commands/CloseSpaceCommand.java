@@ -89,7 +89,7 @@ public class CloseSpaceCommand extends WebCommand{
 					final GCMAuth authToken = gcmAuthService.getAuthToken();
 					if(authToken!=null){
 						final Queue queue = QueueFactory.getDefaultQueue();
-						TaskOptions taskOpt = TaskOptions.Builder.withUrl("/cmd/gcm");
+						TaskOptions taskOpt = TaskOptions.Builder.withUrl("v2/task/gcm");
 						taskOpt.method(Method.POST);
 						taskOpt.taskName("task_cd2m_close_" + new Date().getTime());
 						taskOpt.param("token", Encryption.encryptSHA256(authToken.getToken()+status.getId()));

@@ -16,7 +16,7 @@
  * Contributors:
  *     Steve Liedtke <sliedtke57@gmail.com>
  */
-package de.hackerspacebremen.presentation;
+package de.hackerspacebremen.presentation.command;
 
 import java.io.IOException;
 
@@ -29,27 +29,29 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import de.hackerspacebremen.MyErrorMessages;
-import de.hackerspacebremen.commands.GCMCommand;
+import de.hackerspacebremen.commands.OpenSpaceCommand;
+import de.hackerspacebremen.presentation.OSNServlet;
 
 @Singleton
-public class GCMServlet extends OSNServlet{
+public class OpenServlet extends OSNServlet{
 
 	/**
 	 * generated serialVersionUID.
 	 */
-	private static final long serialVersionUID = 8059017124262050044L;
-
-	private final Provider<GCMCommand> gcmCommand;
+	private static final long serialVersionUID = 7640757653414982468L;
+	
+	
+	private final Provider<OpenSpaceCommand> openSpaceCommand;
 	
 	@Inject
-	public GCMServlet(final Provider<GCMCommand> gcmCommand){
-		this.gcmCommand = gcmCommand;
+	public OpenServlet(final Provider<OpenSpaceCommand> openSpaceCommand){
+		this.openSpaceCommand = openSpaceCommand;
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		final GCMCommand cmd = gcmCommand.get();
+		final OpenSpaceCommand cmd = openSpaceCommand.get();
 		cmd.init(req, resp, MyErrorMessages.class);
 		cmd.process();
 	}

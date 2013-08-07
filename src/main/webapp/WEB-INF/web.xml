@@ -50,6 +50,10 @@
       		<url-pattern>/register</url-pattern>
       		<url-pattern>/unregister</url-pattern>
       		<url-pattern>/activate</url-pattern>
+      		<!-- VERSION 2 -->
+      		<url-pattern>/v2/cmd/*</url-pattern>
+      		<url-pattern>/v2/gcm/*</url-pattern>
+      		<url-pattern>/v2/apns/*</url-pattern>
       		<url-pattern>/</url-pattern>
       	</web-resource-collection>
       	<user-data-constraint>
@@ -57,36 +61,24 @@
         </user-data-constraint>
   	</security-constraint>
   	<security-constraint>
+        <web-resource-collection>
+            <url-pattern>/v2/task/*</url-pattern>
+            <url-pattern>/v2/cron/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+  	<security-constraint>
     	<web-resource-collection>
       		<web-resource-name>httpGets</web-resource-name>
       		<url-pattern>/status</url-pattern>
+      		<!-- VERSION 2 -->
+      		<url-pattern>/v2/status</url-pattern>
       		<http-method>GET</http-method>
       	</web-resource-collection>
       	<user-data-constraint>
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
   	</security-constraint>
-	<security-constraint>
-    	<web-resource-collection>
-      		<web-resource-name>switch</web-resource-name>
-      		<url-pattern>/open</url-pattern>
-      		<url-pattern>/close</url-pattern>
-      		<http-method>POST</http-method>
-      	</web-resource-collection>
-      	<user-data-constraint>
-            <transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
-  	</security-constraint>
-<!--  <servlet> -->
-<!--   <servlet-name>SystemServiceServlet</servlet-name> -->
-<!--   <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class> -->
-<!--   <init-param> -->
-<!--    <param-name>services</param-name> -->
-<!--    <param-value/> -->
-<!--   </init-param> -->
-<!--  </servlet> -->
-<!--  <servlet-mapping> -->
-<!--   <servlet-name>SystemServiceServlet</servlet-name> -->
-<!--   <url-pattern>/_ah/spi/*</url-pattern> -->
-<!--  </servlet-mapping> -->
 </web-app>

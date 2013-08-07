@@ -16,7 +16,7 @@
  * Contributors:
  *     Steve Liedtke <sliedtke57@gmail.com>
  */
-package de.hackerspacebremen.presentation;
+package de.hackerspacebremen.presentation.gcm;
 
 import java.io.IOException;
 
@@ -30,6 +30,7 @@ import com.google.inject.Singleton;
 
 import de.hackerspacebremen.MyErrorMessages;
 import de.hackerspacebremen.commands.GCMRegistryCommand;
+import de.hackerspacebremen.presentation.OSNServlet;
 
 @Singleton
 public final class GCMRegistryServlet extends OSNServlet{
@@ -44,12 +45,6 @@ public final class GCMRegistryServlet extends OSNServlet{
 	@Inject
 	public GCMRegistryServlet(final Provider<GCMRegistryCommand> gcmRegistryCommand){
 		this.gcmRegistryCommand = gcmRegistryCommand;
-	}
-	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		resp.sendRedirect("/registry.html");
 	}
 	
 	@Override
