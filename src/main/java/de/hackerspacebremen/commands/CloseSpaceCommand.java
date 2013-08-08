@@ -20,34 +20,22 @@ package de.hackerspacebremen.commands;
 
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.util.Date;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
-import com.google.appengine.api.taskqueue.Queue;
-import com.google.appengine.api.taskqueue.QueueFactory;
-import com.google.appengine.api.taskqueue.TaskOptions;
-import com.google.appengine.api.taskqueue.TaskOptions.Method;
 import com.google.inject.Inject;
 
+import de.hackerspacebremen.commands.helper.StatusTaskStarter;
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.data.entities.GCMAuth;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.domain.api.GCMAuthService;
-import de.hackerspacebremen.domain.api.LDAPService;
+import de.hackerspacebremen.domain.api.AuthenticationService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
-import de.hackerspacebremen.util.Encryption;
 
 public class CloseSpaceCommand extends WebCommand{
 	
-	/**
-     * static attribute used for logging.
-     */
-    private static final Logger logger = Logger.getLogger(CloseSpaceCommand.class.getName());
 	
 	@Inject
 	@Proxy
@@ -55,11 +43,10 @@ public class CloseSpaceCommand extends WebCommand{
 	
 	@Inject
 	@Proxy
-	private LDAPService ldapService;
+	private AuthenticationService authService;
 	
 	@Inject
-	@Proxy
-	private GCMAuthService gcmAuthService;
+	private StatusTaskStarter statusTaskStarter;
 	
 	@Override
 	public void process() throws ServletException, IOException {
@@ -82,19 +69,11 @@ public class CloseSpaceCommand extends WebCommand{
 				message = this.req.getParameter("message");
 			}
 			
-			if(ldapService.authenticate(name, pass)){
+			if(authService.authenticate(name, pass)){
 				SpaceStatus status = statusService.currentStatus();
 				if(status == null || status.getStatus().equals(AppConstants.OPEN)){
 					status = statusService.closeSpace(name, message);
-					final GCMAuth authToken = gcmAuthService.getAuthToken();
-					if(authToken!=null){
-						final Queue queue = QueueFactory.getDefaultQueue();
-						TaskOptions taskOpt = TaskOptions.Builder.withUrl("v2/task/gcm");
-						taskOpt.method(Method.POST);
-						taskOpt.taskName("task_cd2m_close_" + new Date().getTime());
-						taskOpt.param("token", Encryption.encryptSHA256(authToken.getToken()+status.getId()));
-						queue.add(taskOpt);
-					}
+					this.statusTaskStarter.startTasks(status);
 					this.handleSuccess("Space was closed", null);
 				}else{
 					this.handleError(4);

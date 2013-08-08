@@ -55,4 +55,10 @@ public class SpaceStatusServiceValidation extends Validation
 		this.validateNull(status, 20);
 		return spaceStatusService.changeMessage(status, message);
 	}
+
+	@Override
+	public SpaceStatus findById(final Long id) throws ValidationException {
+		this.validateNull(id, 22);
+		return spaceStatusService.findById(id);
+	}
 }

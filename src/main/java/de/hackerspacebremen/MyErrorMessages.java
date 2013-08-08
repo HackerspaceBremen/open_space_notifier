@@ -55,6 +55,8 @@ public class MyErrorMessages implements ErrorMessages{
 		errorMessages.put(Integer.valueOf(19), "The status changed while you entered the message");
 		errorMessages.put(Integer.valueOf(20), "The given status is null");
 		errorMessages.put(Integer.valueOf(21), "The param hash is empty");
+		errorMessages.put(Integer.valueOf(22), "The given id doesn't exist in the database!");
+		errorMessages.put(Integer.valueOf(23), "The given key should at least have one character!");
 		
 		errorMessages.put(Integer.valueOf(66), "An validation exception occured! Please contact the admin");
 		errorMessages.put(Integer.valueOf(77), "An format exception occured! Please contact the admin");

@@ -7,18 +7,18 @@ import java.util.logging.Logger;
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.domain.api.LDAPService;
+import de.hackerspacebremen.domain.api.AuthenticationService;
 import de.hackerspacebremen.domain.val.ValidationException;
 
-public class LDAPServiceDemo implements LDAPService{
+public class AuthenticateServiceDemo implements AuthenticationService{
 	
 	/**
      * static attribute used for logging.
      */
-    private static final Logger logger = Logger.getLogger(LDAPServiceDemo.class.getName());
+    private static final Logger logger = Logger.getLogger(AuthenticateServiceDemo.class.getName());
 
     @Inject
-	private LDAPService ldapService;
+	private AuthenticationService authService;
 	
 	@Override
 	public boolean authenticate(final String name, final String password)
@@ -33,7 +33,7 @@ public class LDAPServiceDemo implements LDAPService{
 		if(!AppConstants.PROD && name.equals("makerfaire") && (day == 2 || day == 3 || day == 10) && month == 7 && year == 2013){
 			result = true;
 		}else{
-			result = ldapService.authenticate(name, password);
+			result = authService.authenticate(name, password);
 		}
 		return result;
 	}

@@ -19,20 +19,17 @@
 package de.hackerspacebremen.domain;
 
 import java.util.Date;
-import java.util.logging.Logger;
 
 import org.springframework.stereotype.Service;
 
 import com.google.appengine.api.datastore.Text;
 import com.google.inject.Inject;
 
-import de.hackerspacebremen.commands.GCMCommand;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.api.SpaceStatusDAO;
 import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.email.StatusEmail;
 
 @Service
 public class SpaceStatusServiceImpl implements SpaceStatusService{
@@ -46,32 +43,27 @@ public class SpaceStatusServiceImpl implements SpaceStatusService{
 	
 	@Override
 	public SpaceStatus openSpace(final String changedBy, final String message) {
-		final SpaceStatus status = new SpaceStatus();
-		status.setOpenedBy(changedBy);
-		status.setStatus(AppConstants.OPEN);
-		status.setTime(new Date().getTime());
-		if(message != null){
-			
-			status.setMessage(new Text(message));
-		}
-		final SpaceStatus result = this.spaceStatusDAO.persist(status);
-		// TODO create new task in taskquery for email with key
-		// new StatusEmail(message, true).send();
-		return result;
+		return changeState(changedBy, message, true);
 	}
 	
 	@Override
 	public SpaceStatus closeSpace(final String changedBy, final String message) {
+		return changeState(changedBy, message, false);
+	}
+
+	private SpaceStatus changeState(final String changedBy, final String message, final boolean open) {
 		final SpaceStatus status = new SpaceStatus();
 		status.setOpenedBy(changedBy);
-		status.setStatus(AppConstants.CLOSED);
+		if(open){
+			status.setStatus(AppConstants.OPEN);
+		}else{
+			status.setStatus(AppConstants.CLOSED);
+		}
 		status.setTime(new Date().getTime());
 		if(message != null){
 			status.setMessage(new Text(message));
 		}
-		final SpaceStatus result = this.spaceStatusDAO.persist(status);
-		new StatusEmail(message, false).send();
-		return result;
+		return this.spaceStatusDAO.persist(status);
 	}
 
 	@Override
@@ -88,5 +80,10 @@ public class SpaceStatusServiceImpl implements SpaceStatusService{
 			status.setMessage(new Text(message));
 		}
 		return this.spaceStatusDAO.persist(status);
+	}
+
+	@Override
+	public SpaceStatus findById(final Long id) throws ValidationException {
+		return this.spaceStatusDAO.findById(id);
 	}
 }

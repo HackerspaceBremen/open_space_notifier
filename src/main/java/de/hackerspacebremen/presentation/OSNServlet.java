@@ -6,6 +6,7 @@ import com.googlecode.objectify.ObjectifyService;
 
 import de.hackerspacebremen.data.entities.GCMAuth;
 import de.hackerspacebremen.data.entities.GCMData;
+import de.hackerspacebremen.data.entities.Property;
 import de.hackerspacebremen.data.entities.SpaceStatus;
 
 public class OSNServlet extends HttpServlet {
@@ -19,5 +20,6 @@ public class OSNServlet extends HttpServlet {
         ObjectifyService.register(SpaceStatus.class);
         ObjectifyService.register(GCMData.class);
         ObjectifyService.register(GCMAuth.class);
+        ObjectifyService.register(Property.class);
     }
 }

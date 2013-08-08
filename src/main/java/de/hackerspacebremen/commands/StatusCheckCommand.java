@@ -47,10 +47,6 @@ public class StatusCheckCommand extends WebCommand{
     @Proxy
 	private SpaceStatusService statusService;
     
-//    @Inject
-//    @Proxy
-//	private LDAPService ldapService;
-    
 	/* (non-Javadoc)
 	 * @see de.hackerspacebremen.commands.WebCommand#process()
 	 */
@@ -61,16 +57,8 @@ public class StatusCheckCommand extends WebCommand{
 			final SpaceStatus currentStatus = statusService.currentStatus();
 			if(currentStatus.getStatus()!=null && currentStatus.getStatus().equals("OPEN")){
 				logger.info("The space wasn't closed - START closing space!");
-				
-				// TODO use ldap access to do this
-//				if(keeper == null){
-//					this.handleError(99);
-//				}else{
-					statusService.closeSpace("ADMIN - AUTOMATIC", PropertyHelper.getConstantsPropertyValue("constants.automatic.close"));
-					// TODO reimplement this with ldap access
-					// new ForgotToCloseEmail(keeper).send();
-					this.handleSuccess("The space is now closed"/* - An email was sent to the email " + keeper.getEmail()*/, null);
-//				}
+				statusService.closeSpace("ADMIN - AUTOMATIC", PropertyHelper.getConstantsPropertyValue("constants.automatic.close"));
+				this.handleSuccess("The space is now closed"/* - An email was sent to the email " + keeper.getEmail()*/, null);
 			}else{
 				logger.info("The space was correctly closed");
 			}

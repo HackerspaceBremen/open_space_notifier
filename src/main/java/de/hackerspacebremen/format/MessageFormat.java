@@ -39,7 +39,7 @@ public final class MessageFormat {
 	
 	public static String fitMessageSize(final String message){
 		String result = message;
-		if(message!=null && message.length()>500){
+		if(message!=null && message.length()>AppConstants.MESSAGE_MAX_SIZE){
 			result = message.substring(0, AppConstants.MESSAGE_MAX_SIZE) + " [..]";
 		}
 		return result;

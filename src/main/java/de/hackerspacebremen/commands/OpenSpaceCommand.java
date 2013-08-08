@@ -20,26 +20,19 @@ package de.hackerspacebremen.commands;
 
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 
-import com.google.appengine.api.taskqueue.Queue;
-import com.google.appengine.api.taskqueue.QueueFactory;
-import com.google.appengine.api.taskqueue.TaskOptions;
-import com.google.appengine.api.taskqueue.TaskOptions.Method;
 import com.google.inject.Inject;
 
+import de.hackerspacebremen.commands.helper.StatusTaskStarter;
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.data.entities.GCMAuth;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.domain.api.GCMAuthService;
-import de.hackerspacebremen.domain.api.LDAPService;
+import de.hackerspacebremen.domain.api.AuthenticationService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
-import de.hackerspacebremen.util.Encryption;
 
 
 public class OpenSpaceCommand extends WebCommand {
@@ -50,12 +43,12 @@ public class OpenSpaceCommand extends WebCommand {
 	
 	@Inject
 	@Proxy
-	private LDAPService ldapService;
-
+	private AuthenticationService authService;
+	
 	@Inject
-	@Proxy
-	private GCMAuthService gcmAuthService;
+	private StatusTaskStarter statusTaskStarter;
 
+	
 	@Override
 	public void process() throws ServletException, IOException {
 		
@@ -79,25 +72,12 @@ public class OpenSpaceCommand extends WebCommand {
 				message = this.req.getParameter("message");
 			}
 
-			if (ldapService.authenticate(name, pass)) {
+			if (authService.authenticate(name, pass)) {
 				SpaceStatus status = statusService.currentStatus();
 				if (status == null
 						|| status.getStatus().equals(AppConstants.CLOSED)) {
 					status = statusService.openSpace(name, message);
-					final GCMAuth authToken = gcmAuthService.getAuthToken();
-					if (authToken != null) {
-						final Queue queue = QueueFactory.getDefaultQueue();
-						TaskOptions taskOpt = TaskOptions.Builder
-								.withUrl("/v2/task/gcm");
-						taskOpt.method(Method.POST);
-						taskOpt.taskName("task_cd2m_open_"
-								+ new Date().getTime());
-						taskOpt.param(
-								"token",
-								Encryption.encryptSHA256(authToken.getToken()
-										+ status.getId()));
-						queue.add(taskOpt);
-					}
+					statusTaskStarter.startTasks(status);
 					this.handleSuccess("Space was opened", null);
 				} else {
 					this.handleError(3);
@@ -112,4 +92,6 @@ public class OpenSpaceCommand extends WebCommand {
 		// closing all
 		super.process();
 	}
+
+	
 }

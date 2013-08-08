@@ -29,7 +29,7 @@ import com.google.inject.Inject;
 import de.hackerspacebremen.commands.helper.StatusTimeFormat;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.domain.api.LDAPService;
+import de.hackerspacebremen.domain.api.AuthenticationService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.format.FormatException;
@@ -50,7 +50,7 @@ public class MessageCommand extends WebCommand{
     
     @Inject
     @Proxy
-	private LDAPService ldapService;
+	private AuthenticationService authService;
     
     
 	@Override
@@ -81,7 +81,7 @@ public class MessageCommand extends WebCommand{
 			logger.info("format: " + format);
 			logger.info("time: " + time);
 			
-			if(ldapService.authenticate(name, pass)){
+			if(authService.authenticate(name, pass)){
 				final SpaceStatus status = statusService.currentStatus();
 				final String timeOfCurrent;
 				if(format==null || format.isEmpty()){

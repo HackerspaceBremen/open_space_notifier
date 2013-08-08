@@ -58,7 +58,7 @@ public class ViewStatusCommand extends WebCommand{
 			this.result.addValue("space", "Hackerspace Bremen e.V.");
 			this.result.addValue("url", "https://www.hackerspace-bremen.de");
 			final JSONObject iconJSON = new JSONObject();
-			final String url = "http://"+SystemProperty.applicationVersion.get() + "." 
+			final String url = "http://"/*+SystemProperty.applicationVersion.get() + "."*/ 
 					+ SystemProperty.applicationId.get()+".appspot.com/";
 			iconJSON.put("open", url+"images/status_auf_48px.png");
 			iconJSON.put("closed", url+"images/status_zu_48px.png");
@@ -76,7 +76,7 @@ public class ViewStatusCommand extends WebCommand{
 			this.result.addValue("open", status.getString("ST3").equals("OPEN"));
 			this.result.addValue("status", status.getString("ST5"));
 			try{
-				this.result.addValue("lastchange", Long.valueOf(status.getString("ST2")));
+				this.result.addValue("lastchange", Long.valueOf(Long.valueOf(status.getString("ST2")).longValue()/1000L));
 			}catch(NumberFormatException nfe){
 				// this is no problem
 			}

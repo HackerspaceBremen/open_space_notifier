@@ -3,9 +3,7 @@ package de.hackerspacebremen.domain.api;
 import de.hackerspacebremen.domain.val.ValidationException;
 
 
-public interface LDAPService {
+public interface AuthenticationService {
 
 	boolean authenticate(final String name, final String password) throws ValidationException;
-	
-	// TODO get email and full name over login name
 }

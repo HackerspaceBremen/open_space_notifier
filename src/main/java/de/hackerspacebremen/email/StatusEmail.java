@@ -31,6 +31,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import de.hackerspacebremen.common.AppConstants;
+import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.util.Constants;
 import de.hackerspacebremen.util.PropertyHelper;
 
@@ -38,38 +39,27 @@ import de.hackerspacebremen.util.PropertyHelper;
  * @author Steve
  *
  */
-public class StatusEmail implements SendEmail{
+public class StatusEmail{
 	
+	private static final String EMAIL_ADDRESSED_ADDRESS = "email.addressed.address";
+
 	/**
      * static attribute used for logging.
      */
     private static final Logger logger = Logger.getLogger(StatusEmail.class.getName());
 
-	private final String message;
-	
-	private final boolean opened;
-	
-	private final String senderAddress;
-	
-	public StatusEmail(final String message, final boolean opened){
-		this.message = de.hackerspacebremen.format.MessageFormat.fitMessageSize(message);
-		this.opened = opened;
-		this.senderAddress = PropertyHelper.getSecretPropertyValue("email.addressed.address");
-	}
-	
-	
-	/* (non-Javadoc)
-	 * @see de.hackerspacebremen.email.SendEmail#send()
-	 */
-	@Override
-	public void send() {
+	public void send(final SpaceStatus spaceStatus) {
+		final String message = de.hackerspacebremen.format.MessageFormat.fitMessageSize(spaceStatus.getMessage().toString());
+		final boolean opened = spaceStatus.getStatus().equals(AppConstants.OPEN);
+		final String senderAddress = PropertyHelper.getSecretPropertyValue(EMAIL_ADDRESSED_ADDRESS);
 		final Session session = Session.getDefaultInstance(new Properties(), null);
 		final MimeMessage msg = new MimeMessage(session);
 		final String url = "https://"+System.getProperty("com.google.appengine.application.id")+".appspot.com/";
 		try {
+			logger.info("Admin email: " + AppConstants.ADMIN_EMAIL);
 			msg.setFrom(new InternetAddress(AppConstants.ADMIN_EMAIL, "Hackerspace Bremen"));
 	        msg.addRecipient(Message.RecipientType.TO,
-	                         new InternetAddress(this.senderAddress, "Hackerspace Bremen Mailingliste"));
+	                         new InternetAddress(senderAddress, "Hackerspace Bremen Mailingliste"));
 	        if(opened){
 	        	msg.setSubject(PropertyHelper.getEmailPropertyValue("email.statuschanged.subject.opened"), Constants.UTF8);
 	        }else{
@@ -94,8 +84,7 @@ public class StatusEmail implements SendEmail{
 	        	messageVariable2 = message + "'";
 	        }
 	        
-	        // set Type and Charset in Headerfield 'Content-Type'
-            msg.setHeader("Content-Type", "text/plain; charset=utf-8");
+	        msg.setHeader("Content-Type", "text/plain; charset=utf-8");
 	        final MessageFormat form = new MessageFormat(PropertyHelper.getEmailPropertyValue("email.statuschanged.content"));
 	        msg.setText(form.format(new String[]{status, messageVariable, messageVariable2, url, negatedStatus}));
 	        Transport.send(msg);

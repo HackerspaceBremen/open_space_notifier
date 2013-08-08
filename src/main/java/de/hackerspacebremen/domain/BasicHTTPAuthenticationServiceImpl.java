@@ -8,14 +8,14 @@ import java.util.logging.Logger;
 
 import org.apache.commons.codec.binary.Base64;
 
-import de.hackerspacebremen.domain.api.LDAPService;
+import de.hackerspacebremen.domain.api.AuthenticationService;
 
-public final class LDAPServiceImpl implements LDAPService {
+public final class BasicHTTPAuthenticationServiceImpl implements AuthenticationService {
 
 	/**
      * static attribute used for logging.
      */
-    private static final Logger logger = Logger.getLogger(LDAPServiceImpl.class.getName());
+    private static final Logger logger = Logger.getLogger(BasicHTTPAuthenticationServiceImpl.class.getName());
 	
 	public boolean authenticate(final String login, final String pass){
 		boolean result = false;
