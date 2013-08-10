@@ -36,7 +36,7 @@ public final class SpeakingDateFormat {
 	
 	private static final DateTimeFormatter FMT_DATE_YEAR = DateTimeFormat.forPattern("dd.MM.yyyy");
 	
-	private static String[] FORMAT_ADS = {"Heute", "Gestern", "um", "Uhr"};
+	private static String[] FORMAT_ADS = {"heute", "gestern", "um", "Uhr"};
 	
 	private static String[] WEEKDAYS = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
 	
@@ -46,12 +46,12 @@ public final class SpeakingDateFormat {
 	
 	public static void setFormat(final String format){
 		if(format!=null && format.equals("de")){
-			final String[] deFormat = {"Heute", "Gestern", "um", "Uhr"};
+			final String[] deFormat = {"heute", "gestern", "um", "Uhr"};
 			final String[] deWeekdays = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
 			FORMAT_ADS = deFormat;
 			WEEKDAYS = deWeekdays;
 		}else {
-			final String[] enFormat ={"Today", "Yesterday", "at", "o'clock"}; 
+			final String[] enFormat ={"today", "yesterday", "at", "o'clock"}; 
 			final String[] enWeekdays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 			FORMAT_ADS = enFormat;
 			WEEKDAYS = enWeekdays;

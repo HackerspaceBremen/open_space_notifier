@@ -6,6 +6,7 @@ import de.hackerspacebremen.data.api.PropertyDAO;
 import de.hackerspacebremen.data.entities.Property;
 import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.exceptions.NotCompletelyConfigured;
 
 public class PropertyServiceImpl implements PropertyService{
 
@@ -14,9 +15,13 @@ public class PropertyServiceImpl implements PropertyService{
 	
 	@Override
 	public String findValueByKey(final String key) throws ValidationException {
-		final Property property = propertyDAO.findByKey(key);
+		Property property = propertyDAO.findByKey(key);
 		if(property==null){
-			// TODO create dummy value
+			property = new Property();
+			property.setKey(key);
+			property.setValue("DUMMY!!!");
+			propertyDAO.persist(property);
+			throw new NotCompletelyConfigured();
 		}
 		return property.getValue();
 	}

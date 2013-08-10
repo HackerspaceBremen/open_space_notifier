@@ -24,6 +24,7 @@ import java.util.List;
 import com.google.android.gcm.server.Constants;
 import com.google.android.gcm.server.Result;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 import de.hackerspacebremen.data.api.GCMDataDAO;
 import de.hackerspacebremen.data.entities.GCMData;
@@ -32,18 +33,12 @@ import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.gcm.GCMMessageSender;
 
 public class GCMDataServiceImpl implements GCMDataService{
-
-//	/**
-//	 * static attribute used for logging.
-//	*/
-//	private static final Logger logger = Logger.getLogger(GCMDataServiceImpl.class.getName());
 	
+	@Inject
 	private GCMDataDAO gcmDataDAO;
 	
 	@Inject
-	public GCMDataServiceImpl(final GCMDataDAO dao){
-		this.gcmDataDAO = dao;
-	}
+	private Provider<GCMMessageSender> gcmMessageSender;
 	
 	@Override
 	public void register(final String deviceId, final String registrationId) {
@@ -68,11 +63,11 @@ public class GCMDataServiceImpl implements GCMDataService{
 	}
 
 	@Override
-	public void sendMessageToDevices(final String authToken, final String message) throws IOException{
+	public void sendMessageToDevices(final String authToken, final String message) throws IOException, ValidationException{
 		final List<GCMData> devices = gcmDataDAO.findAll();
 		for(final GCMData gcmData : devices){
-			final GCMMessageSender sender = new GCMMessageSender(message);
-			final Result result = sender.sendMessage(gcmData.getRegistrationId());
+			final GCMMessageSender sender = gcmMessageSender.get();
+			final Result result = sender.sendMessage(message, gcmData.getRegistrationId());
 			if (result.getMessageId() != null) {
 				String canonicalRegId = result.getCanonicalRegistrationId();
 				if (canonicalRegId != null) {
@@ -88,28 +83,5 @@ public class GCMDataServiceImpl implements GCMDataService{
 				}
 			}
 		}
-//		for(final Result result : multiResult.getResults()){
-//			if (result.getMessageId() != null) {
-//				String canonicalRegId = result.getCanonicalRegistrationId();
-//				if (canonicalRegId != null) {
-//					// same device has more than on registration ID: update database
-//					logger.warning("canonicalRegId: " + canonicalRegId);
-//				}
-//			} else {
-//				String error = result.getErrorCodeName();
-//				if (error.equals(Constants.ERROR_NOT_REGISTERED)) {
-//					// application has been removed from device - unregister database
-//					logger.warning("canonicalRegId: " + result.getCanonicalRegistrationId());
-//				}
-//			}
-//		}
 	}
-	
-//	private List<String> deviceList(final List<GCMData> devices){
-//		final List<String> result = new ArrayList<String>(devices.size());
-//		for(final GCMData device : devices){
-//			result.add(device.getRegistrationId());
-//		}
-//		return result;
-//	}
 }

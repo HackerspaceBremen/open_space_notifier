@@ -25,7 +25,7 @@ window.onload=function(){
 
 function fetchStatus(){
 	$.ajax({
-		url: "/status?format=de&htmlEncoded=true",
+		url: "/v2/status?format=de&htmlEncoded=true",
 		dataType: 'json',
 		success: function(data, textStatus, jqXHR){
 			var res = JSON.parse(jqXHR.responseText);
@@ -129,9 +129,9 @@ function changeStatusRequest(){
 		var message = $('#message').val();
 		var servlet;
 		if(btn.attr('class')=="OPEN"){
-			servlet = "/cmd/close";
+			servlet = "/v2/cmd/close";
 		}else{
-			servlet = "/cmd/open";
+			servlet = "/v2/cmd/open";
 		}
 		$.ajax({
 			url: servlet,
@@ -166,21 +166,19 @@ function changeMessageRequest(){
 	var time = $('#status_text').html();
 	console.log("name=" + login + "&pass=" + pass + "&message=" + message + "&format=" + format + "&time=" + time);
 	
-	var servlet = "/cmd/message";
+	var servlet = "/v2/cmd/message";
 	$.ajax({
 		url: servlet,
 		dataType: 'json',
 		type: 'POST',
 		data: "name=" + login + "&pass=" + encodeURIComponent(pass) + "&message=" + encodeURIComponent(message) + "&format=" + format + "&time=" + time,
 		success: function(data, textStatus, jqXHR){
-			//var res = JSON.parse(jqXHR.responseText);
 			$('#message').val("")
 			alert("Die Statusnachricht des Spaces wurde erfolgreich ge"+unescape("%E4")+"ndert!");
 		},
 		error: function(jqXHR, textStatus, errorThrown){
-			//var res = JSON.parse(jqXHR.responseText);
 			alert(unescape("%C4")+"nderung der Statusnachricht konnte nicht durchgef"+unescape("%FC")+"hrt werden! "+
-					+"Ursache daf�r kann eine "+unescape("%C4")+"nderung des Status sein.");
+					+"Ursache daf"+unescape("%FC")+"r kann eine "+unescape("%C4")+"nderung des Status sein.");
 			
 		},
 		complete: function(jqXHR, textStatus){

@@ -30,8 +30,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.google.inject.Inject;
+
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.domain.api.PropertyService;
+import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
 import de.hackerspacebremen.util.PropertyHelper;
 
@@ -41,29 +46,34 @@ import de.hackerspacebremen.util.PropertyHelper;
  */
 public class StatusEmail{
 	
-	private static final String EMAIL_ADDRESSED_ADDRESS = "email.addressed.address";
+	private static final String PROJECT_ADMIN_EMAIL = "project.admin.email";
+
+	private static final String EMAIL_ADDRESSED_ADDRESS = "project.email.addressed.address";
 
 	/**
      * static attribute used for logging.
      */
     private static final Logger logger = Logger.getLogger(StatusEmail.class.getName());
+    
+    @Inject
+    @Proxy
+    private PropertyService propertyService;
 
 	public void send(final SpaceStatus spaceStatus) {
 		final String message = de.hackerspacebremen.format.MessageFormat.fitMessageSize(spaceStatus.getMessage().toString());
 		final boolean opened = spaceStatus.getStatus().equals(AppConstants.OPEN);
-		final String senderAddress = PropertyHelper.getSecretPropertyValue(EMAIL_ADDRESSED_ADDRESS);
-		final Session session = Session.getDefaultInstance(new Properties(), null);
-		final MimeMessage msg = new MimeMessage(session);
-		final String url = "https://"+System.getProperty("com.google.appengine.application.id")+".appspot.com/";
 		try {
-			logger.info("Admin email: " + AppConstants.ADMIN_EMAIL);
-			msg.setFrom(new InternetAddress(AppConstants.ADMIN_EMAIL, "Hackerspace Bremen"));
+			final String senderAddress = propertyService.findValueByKey(EMAIL_ADDRESSED_ADDRESS);
+			final Session session = Session.getDefaultInstance(new Properties(), null);
+			final MimeMessage msg = new MimeMessage(session);
+			final String url = "https://"+System.getProperty("com.google.appengine.application.id")+".appspot.com/";
+			msg.setFrom(new InternetAddress(propertyService.findValueByKey(PROJECT_ADMIN_EMAIL), "Hackerspace Bremen"));
 	        msg.addRecipient(Message.RecipientType.TO,
 	                         new InternetAddress(senderAddress, "Hackerspace Bremen Mailingliste"));
 	        if(opened){
 	        	msg.setSubject(PropertyHelper.getEmailPropertyValue("email.statuschanged.subject.opened"), Constants.UTF8);
 	        }else{
-	        	msg.setSubject(PropertyHelper.getEmailPropertyValue("email.statuschanged.subject.closed"));
+	        	msg.setSubject(PropertyHelper.getEmailPropertyValue("email.statuschanged.subject.closed"), Constants.UTF8);
 	        }
 	        final String status;
 	        final String negatedStatus;
@@ -92,7 +102,9 @@ public class StatusEmail{
 			logger.warning("MessagingException: " + e.getMessage());
 		} catch (UnsupportedEncodingException e) {
 			logger.warning("UnsupportedEncodingException: " + e.getMessage());
-		}	
+		} catch(ValidationException e){
+			logger.warning("ValidationException: " + e.getMessage());
+		}
 	}
 
 }

@@ -126,6 +126,12 @@
 			<artifactId>commons-codec</artifactId>
 			<version>1.8</version>
 		</dependency>
+		<!-- Twitter library -->
+		<dependency>
+			<groupId>org.twitter4j</groupId>
+			<artifactId>twitter4j-appengine</artifactId>
+			<version>3.0.3</version>
+		</dependency>
 	</dependencies>
 
     <build>

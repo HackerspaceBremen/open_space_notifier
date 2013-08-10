@@ -18,7 +18,6 @@
  */
 package de.hackerspacebremen.common;
 
-import de.hackerspacebremen.util.PropertyHelper;
 
 public final class AppConstants {
 
@@ -34,11 +33,5 @@ public final class AppConstants {
 	
 	public static final int MESSAGE_MAX_SIZE = 500;
 	
-	public static final String ADMIN_EMAIL;
-	
 	public static final boolean PROD = !System.getProperty("com.google.appengine.application.id").contains("test");
-	
-	static{
-		ADMIN_EMAIL = PropertyHelper.getSecretPropertyValue("admin.email");
-	}
 }

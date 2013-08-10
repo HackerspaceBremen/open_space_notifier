@@ -24,8 +24,6 @@ import java.net.URL;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import de.hackerspacebremen.common.AppConstants;
-
 /**
  * @author Steve
  *
@@ -37,44 +35,10 @@ public final class PropertyHelper {
      */
     private static final Logger logger = Logger.getLogger(PropertyHelper.class.getName());
     
-    public static String getSecretPropertyValue(final String key){
-		Properties properties = new Properties();
-		String result = null;
-		final URL resource = PropertyHelper.class.getClassLoader().getResource("secret.properties");
-		try {
-			properties.load(new InputStreamReader(resource.openStream(), Constants.UTF8));
-			final String keyBeginning;
-			if(AppConstants.PROD){
-				keyBeginning="project.";
-			}else{
-				keyBeginning="project.test.";
-			}
-		    result = properties.getProperty(keyBeginning+key);
-		} catch (IOException e) {
-			logger.warning("property with key '" + key + "' couldn't be found");
-		}
-		
-		return result;
-	}
-	
-	public static String getEmailPropertyValue(final String key){
+    public static String getEmailPropertyValue(final String key){
 		Properties properties = new Properties();
 		String result = null;
 		final URL resource = PropertyHelper.class.getClassLoader().getResource("email_text.properties");
-		try {
-			properties.load(new InputStreamReader(resource.openStream(), Constants.UTF8));
-		    result = properties.getProperty(key);
-		} catch (IOException e) {
-			logger.warning("property with key '" + key + "' couldn't be found");
-		}
-		
-		return result;
-	}
-	
-	public static String getConstantsPropertyValue(final String key){
-		Properties properties = new Properties();
-		String result = null;
-		final URL resource = PropertyHelper.class.getClassLoader().getResource("constants.properties");
 		try {
 			properties.load(new InputStreamReader(resource.openStream(), Constants.UTF8));
 		    result = properties.getProperty(key);

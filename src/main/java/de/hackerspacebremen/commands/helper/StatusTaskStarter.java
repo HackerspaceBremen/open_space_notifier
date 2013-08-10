@@ -7,6 +7,7 @@ import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.GCMAuth;
@@ -28,6 +29,9 @@ public final class StatusTaskStarter {
 	@Proxy
 	private GCMAuthService gcmAuthService;
 	
+	@Inject
+	private Provider<Date> dateProvider;
+	
 	public void startTasks(final SpaceStatus status) throws ValidationException{
 		final boolean open = status.getStatus().equals(AppConstants.OPEN);
 		this.startMailTask(status, open);
@@ -47,10 +51,10 @@ public final class StatusTaskStarter {
 		taskOpt.method(Method.POST);
 		if(open){
 			taskOpt.taskName("task_mail_open"
-					+ new Date().getTime());
+					+ dateProvider.get().getTime());
 		}else{
 			taskOpt.taskName("task_mail_close"
-					+ new Date().getTime());
+					+ dateProvider.get().getTime());
 		}
 		taskOpt.param(
 				"statusId",
@@ -67,10 +71,10 @@ public final class StatusTaskStarter {
 			taskOpt.method(Method.POST);
 			if(open){
 				taskOpt.taskName("task_gcm_open_"
-						+ new Date().getTime());
+						+ dateProvider.get().getTime());
 			}else{
 				taskOpt.taskName("task_gcm_close_"
-						+ new Date().getTime());
+						+ dateProvider.get().getTime());
 			}
 			taskOpt.param(
 					"token",

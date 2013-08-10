@@ -19,70 +19,67 @@
 package de.hackerspacebremen.gcm;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.List;
 
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.MulticastResult;
 import com.google.android.gcm.server.Result;
 import com.google.android.gcm.server.Sender;
+import com.google.inject.Inject;
 
-import de.hackerspacebremen.util.PropertyHelper;
+import de.hackerspacebremen.domain.api.PropertyService;
+import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.modules.binding.annotations.Proxy;
 
 public final class GCMMessageSender {
 	
-	private final String message;
+	@Inject
+	@Proxy
+	private PropertyService propertyService;
 	
-	public GCMMessageSender(final String message){
-		this.message = message;
-	}
-	
-	public MulticastResult sendMessage(final List<String> devices) throws IOException{
-		Sender sender = new Sender(PropertyHelper.getSecretPropertyValue("key"));
-		Message gcmMessage = new Message.Builder().addData("payload", this.message).collapseKey("0").build();
+	public MulticastResult sendMessage(final String message, final List<String> devices) throws IOException, ValidationException{
+		Sender sender = new Sender(propertyService.findValueByKey("project.key"));
+		Message gcmMessage = new Message.Builder().addData("payload", message).collapseKey("0").build();
 		return sender.send(gcmMessage, devices, 5);
 	}
 	
-	public Result sendMessage(final String device) throws IOException{
-		Sender sender = new Sender(PropertyHelper.getSecretPropertyValue("key"));
-		Message gcmMessage = new Message.Builder().addData("payload", this.message).collapseKey("0").build();
+	public Result sendMessage(final String message, final String device) throws IOException, ValidationException{
+		Sender sender = new Sender(propertyService.findValueByKey("project.key"));
+		Message gcmMessage = new Message.Builder().addData("payload", message).collapseKey("0").build();
 		return sender.send(gcmMessage, device, 5);
 	}
 	
-	@Deprecated
-	public static int sendMessage(final String auth_token, final String registrationId,
-			final String message) throws IOException{
-		StringBuilder postDataBuilder = new StringBuilder();
-		postDataBuilder.append("registration_id=")
-				.append(registrationId);
-		postDataBuilder.append("&collapse_key=0");
-		postDataBuilder.append("&data.payload=")
-				.append(URLEncoder.encode(message, "UTF-8"));
-
-		byte[] postData = postDataBuilder.toString().getBytes("UTF-8");
-
-		// Hit the dm URL.
-
-		URL url = new URL("https://android.clients.google.com/c2dm/send");
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection(); 
-		conn.setDoOutput(true);
-		conn.setUseCaches(false);
-		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Content-Type",
-				"application/x-www-form-urlencoded;charset=UTF-8");
-		conn.setRequestProperty("Content-Length",
-				Integer.toString(postData.length));
-		conn.setRequestProperty("Authorization", "GoogleLogin auth="
-				+ auth_token);
-
-		OutputStream out = conn.getOutputStream();
-		out.write(postData);
-		out.close();
-
-		int responseCode = conn.getResponseCode();
-		return responseCode;
-	}
+//	@Deprecated
+//	public static int sendMessage(final String auth_token, final String registrationId,
+//			final String message) throws IOException{
+//		StringBuilder postDataBuilder = new StringBuilder();
+//		postDataBuilder.append("registration_id=")
+//				.append(registrationId);
+//		postDataBuilder.append("&collapse_key=0");
+//		postDataBuilder.append("&data.payload=")
+//				.append(URLEncoder.encode(message, "UTF-8"));
+//
+//		byte[] postData = postDataBuilder.toString().getBytes("UTF-8");
+//
+//		// Hit the dm URL.
+//
+//		URL url = new URL("https://android.clients.google.com/c2dm/send");
+//		HttpURLConnection conn = (HttpURLConnection) url.openConnection(); 
+//		conn.setDoOutput(true);
+//		conn.setUseCaches(false);
+//		conn.setRequestMethod("POST");
+//		conn.setRequestProperty("Content-Type",
+//				"application/x-www-form-urlencoded;charset=UTF-8");
+//		conn.setRequestProperty("Content-Length",
+//				Integer.toString(postData.length));
+//		conn.setRequestProperty("Authorization", "GoogleLogin auth="
+//				+ auth_token);
+//
+//		OutputStream out = conn.getOutputStream();
+//		out.write(postData);
+//		out.close();
+//
+//		int responseCode = conn.getResponseCode();
+//		return responseCode;
+//	}
 }
