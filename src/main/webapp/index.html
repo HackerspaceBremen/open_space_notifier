@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- The HTML 4.01 Transitional DOCTYPE declaration-->
+<!-- above set at the top of the file will set     -->
+<!-- the browser's rendering engine into           -->
+<!-- "Quirks Mode". Replacing this declaration     -->
+<!-- with a "Standards Mode" doctype is supported, -->
+<!-- but may lead to some differences in layout.   -->
+
+<!-- /* -->
+<!--  * Hackerspace Bremen Backend - An Open-Space-Notifier -->
+<!--  *  -->
+<!--  * Copyright (C) 2012 Steve Liedtke <sliedtke57@gmail.com> -->
+<!--  *  -->
+<!--  * This program is free software; you can redistribute it and/or modify it under the terms of the  -->
+<!--  * GNU General Public License as published by the Free Software Foundation; either version 3 of  -->
+<!--  * the License, or (at your option) any later version. -->
+<!--  *  -->
+<!--  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;  -->
+<!--  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See  -->
+<!--  * the GNU General Public License for more details. -->
+<!--  *  -->
+<!--  * You can find a copy of the GNU General Public License on http://www.gnu.org/licenses/gpl.html. -->
+<!--  *  -->
+<!--  * Contributors: -->
+<!--  *     Steve Liedtke <sliedtke57@gmail.com> -->
+<!--  */ -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Hackerspace Bremen</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script>
+		document.write('<script src=js/' +
+		('__proto__' in {} ? 'zepto' : 'jquery') +
+		'.min.js><\/script>');
+	</script>
+    <script src="js/request.js"></script>
+  </head>
+
+  <body>
+   	<div id="sectionHeader">
+   		<img src="./images/banner.jpg">
+   	</div>
+    <div id="wrapper">
+	    <div id="sectionContent">
+	    	<h3 id="welcome">Willkommen auf dem Backend der Hackerspace-Bremen App!</h3>
+			
+			<p id="info">
+				Diese Seite soll nur zur manuellen &Ouml;ffnung oder Schlie&szlig;ung des Spaces dienen.
+				Dies kann nur von Mitgliedern gemacht werden!
+			</p>
+			
+			<p id="status_text">
+				Aktueller Status wird geladen ...
+			</p>
+			<p id="status_message">
+				
+			</p>
+			
+			<fieldset class="login_field_normal" id="login_field">
+				<legend>Space Status &auml;ndern</legend>
+				<p id="error_message"></p>
+				<p>
+					<label for="message">Statusnachricht:</label>
+					<textarea id="message" cols="30" rows="4" onkeydown="removeInputError('#message');"></textarea>
+				</p>
+				<p>
+					<label for="login">Login:</label>
+					<input id="login" type="text" onkeydown="removeInputError('#login');">
+				</p>
+				<p>
+					<label for="pass">Passwort:</label>
+					<input id="pass" type="password" onkeydown="removeInputError('#pass');">
+				</p>
+				<p>
+					<input id="change_btn" type="button" disabled="disabled" value="&Auml;ndere den Status" onclick="changeStatusRequest();">
+					<input id="change_message_btn" type="button" disabled="disabled" value="&Auml;ndere die Statusmessage" onclick="changeMessageRequest();">
+				</p>
+			</fieldset>
+	    </div>
+	    <div id="sectionAdditional">
+	    	<fieldset id="links">
+				<legend>Links</legend>
+				<p>
+					<a href="http://www.hackerspace-bremen.de/">Hackerspace Bremen Homepage</a>
+				</p>
+				<p>
+					<a href="https://play.google.com/store/apps/details?id=de.hackerspacebremen">Android-App</a>
+				</p>
+				<p>
+					<a href="http://code.google.com/p/hackerspace-bremen/wiki/Backend">Webinterface Zugriff</a>
+				</p>
+				<p>
+					<a href="https://chrome.google.com/webstore/detail/apadeikhfnipflbiglhdcilnfocbikhc">Chrome Extension</a>
+				</p> 
+			</fieldset>
+	    </div>
+  	</div>
+  </body>
+</html>

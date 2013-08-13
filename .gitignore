@@ -4,6 +4,9 @@
 *.jar
 *.war
 *.ear
-/src/secret.properties
-/war/WEB-INF/classes
-/war/WEB-INF/classes/secret.properties
+/target
+/lib
+
+/src/main/secret.properties
+
+/.settings/com.google.gdt.eclipse.core.prefs
