@@ -8,3 +8,7 @@
 /lib
 
 /src/main/secret.properties
+
+/.settings/com.google.gdt.eclipse.core.prefs
+
+/.settings
