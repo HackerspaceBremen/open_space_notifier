@@ -56,7 +56,7 @@ public class ViewStatusCommand extends WebCommand{
     	try{
 	    	this.result.addValue("api", "0.12");
 			this.result.addValue("space", "Hackerspace Bremen e.V.");
-			this.result.addValue("url", "https://www.hackerspace-bremen.de");
+			this.result.addValue("url", "http://www.hackerspace-bremen.de");
 			final JSONObject iconJSON = new JSONObject();
 			final String url = "http://"/*+SystemProperty.applicationVersion.get() + "."*/ 
 					+ SystemProperty.applicationId.get()+".appspot.com/";
