@@ -74,7 +74,11 @@ public class ViewStatusCommand extends WebCommand{
 			this.result.addValue("lon", 8.805831f);
 			final JSONObject status = new JSONObject(result);
 			this.result.addValue("open", status.getString("ST3").equals("OPEN"));
-			this.result.addValue("status", status.getString("ST5"));
+			if(status.has("ST5")){
+				this.result.addValue("status", status.getString("ST5"));
+			}else{
+				this.result.addValue("status", "");
+			}
 			try{
 				this.result.addValue("lastchange", Long.valueOf(Long.valueOf(status.getString("ST2")).longValue()/1000L));
 			}catch(NumberFormatException nfe){
@@ -89,20 +93,16 @@ public class ViewStatusCommand extends WebCommand{
 	public void process() throws ServletException, IOException {
 		final boolean htmlEncoded = (req.getParameter("htmlEncoded")!=null && req.getParameter("htmlEncoded").equals("true"));
 		try {
-			final SpaceStatus status = statusService.currentStatus();
+			final SpaceStatus status = statusService.currentCopyStatus();
 			if(status == null){
 				this.handleError(17);
 			}else{
-				logger.info("message before:" + status.getMessage().toString());
 				if(htmlEncoded){
 					this.result.addValue("lastchange", Long.valueOf(status.getTime()));
 					MessageFormat.htmlEncode(status);
 				}
-				logger.info("htmlEncoded: " + htmlEncoded);
 				String resultWithFormat = this.formatter.format(status, AppConstants.LEVEL_VIEW);
-				logger.info("resultWithFormat after formatter: " + resultWithFormat);
 				resultWithFormat = new StatusTimeFormat(resultWithFormat, status).createOtherFormat(req.getParameter("format"));
-				logger.info("resultWithFormat after StatusTimeFormat: " + resultWithFormat);
 				this.handleSuccess("Status found", 
 						resultWithFormat);
 			}

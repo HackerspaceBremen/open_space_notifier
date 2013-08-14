@@ -59,7 +59,11 @@ public final class SpaceStatus implements BasicEntity{
 		this.time = originalStatus.getTime();
 		this.status = originalStatus.getStatus();
 		this.openedBy = originalStatus.getOpenedBy();
-		this.message = new Text(originalStatus.getMessage().getValue());
+		if(originalStatus.getMessage()==null){
+			this.message = null;
+		}else{
+			this.message = new Text(originalStatus.getMessage().getValue());
+		}
 	}
 
 	public Long getId(){
