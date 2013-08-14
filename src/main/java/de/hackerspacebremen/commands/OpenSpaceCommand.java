@@ -73,7 +73,7 @@ public class OpenSpaceCommand extends WebCommand {
 			}
 
 			if (authService.authenticate(name, pass)) {
-				SpaceStatus status = statusService.currentStatus();
+				SpaceStatus status = statusService.currentCopyStatus();
 				if (status == null
 						|| status.getStatus().equals(AppConstants.CLOSED)) {
 					status = statusService.openSpace(name, message);
