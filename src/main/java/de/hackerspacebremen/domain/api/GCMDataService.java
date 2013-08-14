@@ -30,6 +30,6 @@ public interface GCMDataService{
 	void unregister(String deviceId) 
 			throws ValidationException;
 
-	void sendMessageToDevices(String authToken, String message) 
+	void sendMessageToDevices(String message) 
 				throws IOException, ValidationException;
 }

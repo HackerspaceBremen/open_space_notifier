@@ -41,11 +41,10 @@ public class GCMDataServiceValidation extends Validation implements GCMDataServi
 	}
 
 	@Override
-	public void sendMessageToDevices(final String authToken, final String message)
+	public void sendMessageToDevices(final String message)
 			throws IOException, ValidationException {
-		this.validateIfEmpty(authToken, 9);
 		this.validateIfEmpty(message, 10);
-		gcmDataService.sendMessageToDevices(authToken, message);
+		gcmDataService.sendMessageToDevices(message);
 	}
 
 	@Override

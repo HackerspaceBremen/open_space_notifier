@@ -29,6 +29,8 @@ public interface SpaceStatusService{
 	
 	SpaceStatus changeMessage(SpaceStatus status, String message) throws ValidationException;
 	
+	SpaceStatus currentCopyStatus() throws ValidationException;
+	
 	SpaceStatus currentStatus() throws ValidationException;
 	
 	SpaceStatus findById(Long id) throws ValidationException;

@@ -46,6 +46,11 @@ public class SpaceStatusServiceValidation extends Validation
 	}
 
 	@Override
+	public SpaceStatus currentCopyStatus() throws ValidationException{
+		return spaceStatusService.currentCopyStatus();
+	}
+	
+	@Override
 	public SpaceStatus currentStatus() throws ValidationException{
 		return spaceStatusService.currentStatus();
 	}
