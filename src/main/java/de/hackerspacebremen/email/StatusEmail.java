@@ -60,7 +60,7 @@ public class StatusEmail{
     private PropertyService propertyService;
 
 	public void send(final SpaceStatus spaceStatus) {
-		final String message = de.hackerspacebremen.format.MessageFormat.fitMessageSize(spaceStatus.getMessage().toString());
+		final String message = de.hackerspacebremen.format.MessageFormat.fitMessageSize(spaceStatus.getMessage().getValue());
 		final boolean opened = spaceStatus.getStatus().equals(AppConstants.OPEN);
 		try {
 			final String senderAddress = propertyService.findValueByKey(EMAIL_ADDRESSED_ADDRESS);
