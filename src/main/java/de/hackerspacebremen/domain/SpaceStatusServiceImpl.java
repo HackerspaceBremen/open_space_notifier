@@ -67,9 +67,13 @@ public class SpaceStatusServiceImpl implements SpaceStatusService{
 	}
 
 	@Override
+	public SpaceStatus currentCopyStatus() {
+		return new SpaceStatus(this.spaceStatusDAO.findCurrentStatus());
+	}
+	
+	@Override
 	public SpaceStatus currentStatus() {
 		return this.spaceStatusDAO.findCurrentStatus();
-		
 	}
 
 	@Override

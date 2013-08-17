@@ -63,7 +63,7 @@ public class GCMDataServiceImpl implements GCMDataService{
 	}
 
 	@Override
-	public void sendMessageToDevices(final String authToken, final String message) throws IOException, ValidationException{
+	public void sendMessageToDevices(final String message) throws IOException, ValidationException{
 		final List<GCMData> devices = gcmDataDAO.findAll();
 		for(final GCMData gcmData : devices){
 			final GCMMessageSender sender = gcmMessageSender.get();

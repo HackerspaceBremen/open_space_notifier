@@ -53,7 +53,7 @@ public class StatusCheckCommand extends WebCommand{
 	public void process() throws ServletException, IOException {
 		
 		try{
-			final SpaceStatus currentStatus = statusService.currentStatus();
+			final SpaceStatus currentStatus = statusService.currentCopyStatus();
 			if(currentStatus.getStatus()!=null && currentStatus.getStatus().equals("OPEN")){
 				logger.info("The space wasn't closed - START closing space!");
 				statusService.closeSpace("ADMIN - AUTOMATIC", "");

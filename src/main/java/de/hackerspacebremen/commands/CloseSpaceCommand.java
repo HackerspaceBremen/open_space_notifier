@@ -70,7 +70,7 @@ public class CloseSpaceCommand extends WebCommand{
 			}
 			
 			if(authService.authenticate(name, pass)){
-				SpaceStatus status = statusService.currentStatus();
+				SpaceStatus status = statusService.currentCopyStatus();
 				if(status == null || status.getStatus().equals(AppConstants.OPEN)){
 					status = statusService.closeSpace(name, message);
 					this.statusTaskStarter.startTasks(status);

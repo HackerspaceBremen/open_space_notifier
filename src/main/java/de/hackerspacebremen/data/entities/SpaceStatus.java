@@ -49,6 +49,22 @@ public final class SpaceStatus implements BasicEntity{
 
 	@FormatPart(key="ST5", level=AppConstants.LEVEL_VIEW)
 	private Text message;
+	
+	public SpaceStatus(){
+		// constructor for objectify
+	}
+	
+	public SpaceStatus(final SpaceStatus originalStatus){
+		this.id = Long.valueOf(0L);
+		this.time = originalStatus.getTime();
+		this.status = originalStatus.getStatus();
+		this.openedBy = originalStatus.getOpenedBy();
+		if(originalStatus.getMessage()==null){
+			this.message = null;
+		}else{
+			this.message = new Text(originalStatus.getMessage().getValue());
+		}
+	}
 
 	public Long getId(){
 		return id;
