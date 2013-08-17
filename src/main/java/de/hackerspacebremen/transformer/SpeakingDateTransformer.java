@@ -42,7 +42,7 @@ public class SpeakingDateTransformer extends AbstractTransformer{
 	
 	private static final DateTimeFormatter FMT_DATE_YEAR = DateTimeFormat.forPattern("dd.MM.yyyy");
 	
-	private String[] FORMAT_ADS = {"Heute", "Gestern", "um", "Uhr"};
+	private String[] FORMAT_ADS = {"heute", "gestern", "um", "Uhr"};
 	
 	private String[] WEEKDAYS = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
 	
@@ -57,7 +57,7 @@ public class SpeakingDateTransformer extends AbstractTransformer{
 		if(langFormat!=null){
 			switch(langFormat){
 			case GERMAN:
-				FORMAT_ADS = new String[] {"Heute", "Gestern", "um", "Uhr"};
+				FORMAT_ADS = new String[] {"heute", "gestern", "um", "Uhr"};
 				WEEKDAYS = new String[]{"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
 				break;
 			case ENGLISH:

@@ -132,6 +132,12 @@
 			<artifactId>twitter4j-appengine</artifactId>
 			<version>3.0.3</version>
 		</dependency>
+		<!-- RSS and atom library -->
+		<dependency>
+			<groupId>rome</groupId>
+			<artifactId>rome</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 
     <build>

@@ -18,9 +18,15 @@
  */
 package de.hackerspacebremen.data.api;
 
+import java.util.List;
+
 import de.hackerspacebremen.data.entities.SpaceStatus;
 
 public interface SpaceStatusDAO extends BasicDAO<SpaceStatus>{
 	
 	SpaceStatus findCurrentStatus();
+	
+	List<SpaceStatus> findAllOrdered();
+	
+	List<SpaceStatus> findAllOrdered(int maxEntries);
 }

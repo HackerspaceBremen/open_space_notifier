@@ -2,6 +2,8 @@ package de.hackerspacebremen.modules;
 
 import com.google.inject.servlet.ServletModule;
 
+import de.hackerspacebremen.presentation.StatusAtomServlet;
+import de.hackerspacebremen.presentation.StatusRSSServlet;
 import de.hackerspacebremen.presentation.StatusServlet;
 import de.hackerspacebremen.presentation.apns.APNSRegistryServlet;
 import de.hackerspacebremen.presentation.apns.APNSUnregistryServlet;
@@ -31,6 +33,8 @@ public class ServletsModule extends ServletModule {
 		
 		// version 2
 		serve("/v2/status").with(StatusServlet.class);
+		serve("/v2/status.rss").with(StatusRSSServlet.class);
+		serve("/v2/status.atom").with(StatusAtomServlet.class);
 		
 		// commands
 		serve("/v2/cmd/open").with(OpenServlet.class);
