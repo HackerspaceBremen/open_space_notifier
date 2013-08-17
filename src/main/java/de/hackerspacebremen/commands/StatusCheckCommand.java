@@ -25,6 +25,7 @@ import javax.servlet.ServletException;
 
 import com.google.inject.Inject;
 
+import de.hackerspacebremen.commands.helper.StatusTaskStarter;
 import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
@@ -46,6 +47,9 @@ public class StatusCheckCommand extends WebCommand{
     @Proxy
 	private SpaceStatusService statusService;
     
+    @Inject
+	private StatusTaskStarter statusTaskStarter;
+    
 	/* (non-Javadoc)
 	 * @see de.hackerspacebremen.commands.WebCommand#process()
 	 */
@@ -56,7 +60,8 @@ public class StatusCheckCommand extends WebCommand{
 			final SpaceStatus currentStatus = statusService.currentCopyStatus();
 			if(currentStatus.getStatus()!=null && currentStatus.getStatus().equals("OPEN")){
 				logger.info("The space wasn't closed - START closing space!");
-				statusService.closeSpace("ADMIN - AUTOMATIC", "");
+				final SpaceStatus status = statusService.closeSpace("ADMIN - AUTOMATIC", "");
+				this.statusTaskStarter.startTasks(status);
 				this.handleSuccess("The space is now closed"/* - An email was sent to the email " + keeper.getEmail()*/, null);
 			}else{
 				logger.info("The space was correctly closed");
