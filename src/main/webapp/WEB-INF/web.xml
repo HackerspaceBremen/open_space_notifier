@@ -76,6 +76,7 @@
       		<!-- VERSION 2 -->
       		<url-pattern>/v2/status</url-pattern>
       		<url-pattern>/v2/status.rss</url-pattern>
+      		<url-pattern>/v2/status.atom</url-pattern>
       		<http-method>GET</http-method>
       	</web-resource-collection>
       	<user-data-constraint>

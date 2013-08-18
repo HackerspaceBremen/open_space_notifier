@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.domain.api.FeedService;
+import de.hackerspacebremen.modules.binding.annotations.Atom;
 import de.hackerspacebremen.modules.binding.annotations.RSS;
 
 public class AtomCommand extends WebCommand{
 
 	@Inject
-	@RSS
+	@Atom
 	private FeedService feedService;
 	
 	@Override
