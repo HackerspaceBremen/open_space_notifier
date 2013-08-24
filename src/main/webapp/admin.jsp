@@ -1,10 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- The HTML 4.01 Transitional DOCTYPE declaration-->
-<!-- above set at the top of the file will set     -->
-<!-- the browser's rendering engine into           -->
-<!-- "Quirks Mode". Replacing this declaration     -->
-<!-- with a "Standards Mode" doctype is supported, -->
-<!-- but may lead to some differences in layout.   -->
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
 <!-- /* -->
 <!--  * Hackerspace Bremen Backend - An Open-Space-Notifier -->
@@ -26,18 +20,25 @@
 <!--  */ -->
 
 <html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Registrierung erfolgreich</title>
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
-  </head>
+  <jsp:include page="basicJSPs/head.jsp" />
 
   <body>
-    <article>
-    	Deine Registrierung ist nun abgeschlossen! Der Vorstand wird nun innerhalb der nächsten 24 Stunden über deine Registrierung informiert und entscheidet,
-    	ob du die Erlaubnis kriegst den Space öffnen und schließen zu dürfen!
-    	
-    	<a href="/">Hier geht es zurück zur Startseite!</a>
-    </article>
+   	<jsp:include page="basicJSPs/nav.jsp" />
+   	<div class="row">
+   		<div class="large-9 push-3 columns">
+	      
+	      <h2>Admin-Bereich</h2>
+				
+			<p id="info">
+				Willkommen im Admin-Bereich!</br></br>
+				<b>Wähle links eine Einstellungsoption aus, um fortzufahren.</b>
+			</p>
+	            
+	    </div>
+	    
+	    <jsp:include page="basicJSPs/adminMenue.jsp" />
+   	</div>
+   	
+   	<jsp:include page="basicJSPs/footer.jsp" />
   </body>
 </html>

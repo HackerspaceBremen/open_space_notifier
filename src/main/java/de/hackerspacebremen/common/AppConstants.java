@@ -21,9 +21,7 @@ package de.hackerspacebremen.common;
 
 public final class AppConstants {
 
-	private AppConstants(){
-		// nothing to implement
-	}
+	
 	
 	public static final String OPEN = "OPEN";
 	
@@ -34,4 +32,8 @@ public final class AppConstants {
 	public static final int MESSAGE_MAX_SIZE = 500;
 	
 	public static final boolean PROD = !System.getProperty("com.google.appengine.application.id").contains("test");
+	
+	private AppConstants(){
+		// nothing to implement
+	}
 }

@@ -1,10 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- The HTML 4.01 Transitional DOCTYPE declaration-->
-<!-- above set at the top of the file will set     -->
-<!-- the browser's rendering engine into           -->
-<!-- "Quirks Mode". Replacing this declaration     -->
-<!-- with a "Standards Mode" doctype is supported, -->
-<!-- but may lead to some differences in layout.   -->
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
 <!-- /* -->
 <!--  * Hackerspace Bremen Backend - An Open-Space-Notifier -->
@@ -26,15 +20,24 @@
 <!--  */ -->
 
 <html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Registrierung nicht erfolgreich</title>
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
-  </head>
+  <jsp:include page="basicJSPs/head.jsp">
+  	<jsp:param name="child" value="true" />
+  </jsp:include>
 
   <body>
-    <article>
-    	Deine Registrierung konnte nicht abgeschlossen werden! Versuche es später erneut oder kontaktiere den Administrator!
-    </article>
+   	<jsp:include page="basicJSPs/nav.jsp" />
+   	<div class="row">
+   		<div class="large-9 push-3 columns">
+	      
+	      <h2>Automatische Aufgaben</h2>
+				
+			<!-- TODO -->
+	            
+	    </div>
+	    
+	    <jsp:include page="basicJSPs/adminMenue.jsp" />
+   	</div>
+   	
+   	<jsp:include page="basicJSPs/footer.jsp" />
   </body>
 </html>

@@ -62,8 +62,12 @@
   	</security-constraint>
   	<security-constraint>
         <web-resource-collection>
+            <web-resource-name>Admin</web-resource-name>
             <url-pattern>/v2/task/*</url-pattern>
             <url-pattern>/v2/cron/*</url-pattern>
+            <url-pattern>/admin</url-pattern>
+            <url-pattern>/admin**.jsp</url-pattern>
+            <url-pattern>/admin/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>

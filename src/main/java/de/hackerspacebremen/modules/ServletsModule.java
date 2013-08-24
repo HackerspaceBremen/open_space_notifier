@@ -13,6 +13,12 @@ import de.hackerspacebremen.presentation.command.OpenServlet;
 import de.hackerspacebremen.presentation.cron.StatusCheckServlet;
 import de.hackerspacebremen.presentation.gcm.GCMRegistryServlet;
 import de.hackerspacebremen.presentation.gcm.GCMUnregistryServlet;
+import de.hackerspacebremen.presentation.jsps.AdminAuthServlet;
+import de.hackerspacebremen.presentation.jsps.AdminAutomaticServlet;
+import de.hackerspacebremen.presentation.jsps.AdminEmailServlet;
+import de.hackerspacebremen.presentation.jsps.AdminPushServlet;
+import de.hackerspacebremen.presentation.jsps.AdminServlet;
+import de.hackerspacebremen.presentation.jsps.AdminSocialServlet;
 import de.hackerspacebremen.presentation.tasks.APNSTaskServlet;
 import de.hackerspacebremen.presentation.tasks.GCMTaskServlet;
 import de.hackerspacebremen.presentation.tasks.MailTaskServlet;
@@ -56,5 +62,13 @@ public class ServletsModule extends ServletModule {
 		serve("/v2/task/gcm").with(GCMTaskServlet.class);
 		serve("/v2/task/apns").with(APNSTaskServlet.class);
 		serve("/v2/task/mail").with(MailTaskServlet.class);
+		
+		// jsps
+		serve("/admin").with(AdminServlet.class);
+		serve("/admin/email").with(AdminEmailServlet.class);
+		serve("/admin/push").with(AdminPushServlet.class);
+		serve("/admin/auth").with(AdminAuthServlet.class);
+		serve("/admin/social").with(AdminSocialServlet.class);
+		serve("/admin/automatic").with(AdminAutomaticServlet.class);
 	}
 }
