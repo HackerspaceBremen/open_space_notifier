@@ -24,8 +24,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
+import de.hackerspacebremen.MyErrorMessages;
+import de.hackerspacebremen.commands.push.APNSUnregistryCommand;
 import de.hackerspacebremen.presentation.OSNServlet;
 
 @Singleton
@@ -37,9 +41,18 @@ public final class APNSUnregistryServlet extends OSNServlet{
 	 */
 	private static final long serialVersionUID = 4091954254896318556L;
 
+	private final Provider<APNSUnregistryCommand> apnsUnregistryCommand;
+	
+	@Inject
+	public APNSUnregistryServlet(final Provider<APNSUnregistryCommand> apnsUnregistryCommand){
+		this.apnsUnregistryCommand = apnsUnregistryCommand;
+	}
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// TODO
+		final APNSUnregistryCommand cmd = apnsUnregistryCommand.get();
+		cmd.init(req, resp, MyErrorMessages.class);
+		cmd.process();
 	}
 }

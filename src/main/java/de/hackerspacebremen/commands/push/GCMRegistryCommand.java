@@ -16,7 +16,7 @@
  * Contributors:
  *     Steve Liedtke <sliedtke57@gmail.com>
  */
-package de.hackerspacebremen.commands;
+package de.hackerspacebremen.commands.push;
 
 import java.io.IOException;
 
@@ -24,6 +24,7 @@ import javax.servlet.ServletException;
 
 import com.google.inject.Inject;
 
+import de.hackerspacebremen.commands.WebCommand;
 import de.hackerspacebremen.domain.api.GCMDataService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;

@@ -16,7 +16,7 @@
  * Contributors:
  *     Steve Liedtke <sliedtke57@gmail.com>
  */
-package de.hackerspacebremen.commands;
+package de.hackerspacebremen.commands.push;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -25,6 +25,7 @@ import javax.servlet.ServletException;
 
 import com.google.inject.Inject;
 
+import de.hackerspacebremen.commands.WebCommand;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.domain.api.GCMDataService;

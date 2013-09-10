@@ -29,7 +29,7 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import de.hackerspacebremen.MyErrorMessages;
-import de.hackerspacebremen.commands.GCMRegistryCommand;
+import de.hackerspacebremen.commands.push.GCMRegistryCommand;
 import de.hackerspacebremen.presentation.OSNServlet;
 
 @Singleton

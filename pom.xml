@@ -120,6 +120,12 @@
 				<artifactId>gcm-server</artifactId>
 				<version>1.0.2</version>
 		</dependency>
+		<!-- APNS -->
+		<dependency>
+            <groupId>com.notnoop.apns</groupId>
+            <artifactId>apns</artifactId>
+            <version>0.2.3</version>
+        </dependency>
 		<!-- Commons codec -->
 		<dependency>
 			<groupId>commons-codec</groupId>

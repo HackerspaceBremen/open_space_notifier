@@ -24,8 +24,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
+import de.hackerspacebremen.MyErrorMessages;
+import de.hackerspacebremen.commands.push.APNSCommand;
 import de.hackerspacebremen.presentation.OSNServlet;
 
 @Singleton
@@ -36,10 +40,19 @@ public class APNSTaskServlet extends OSNServlet{
 	 * generated serialVersionUID.
 	 */
 	private static final long serialVersionUID = -3408223150190634281L;
+	
+	private final Provider<APNSCommand> apnsCommand;
+	
+	@Inject
+	public APNSTaskServlet(final Provider<APNSCommand> apnsCommand){
+		this.apnsCommand = apnsCommand;
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// TODO
+		final APNSCommand cmd = apnsCommand.get();
+		cmd.init(req, resp, MyErrorMessages.class);
+		cmd.process();
 	}
 }

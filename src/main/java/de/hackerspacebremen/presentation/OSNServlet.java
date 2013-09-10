@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServlet;
 
 import com.googlecode.objectify.ObjectifyService;
 
+import de.hackerspacebremen.data.entities.APNSData;
 import de.hackerspacebremen.data.entities.GCMData;
 import de.hackerspacebremen.data.entities.Property;
 import de.hackerspacebremen.data.entities.SpaceStatus;
@@ -18,6 +19,7 @@ public class OSNServlet extends HttpServlet {
 	static {
         ObjectifyService.register(SpaceStatus.class);
         ObjectifyService.register(GCMData.class);
+        ObjectifyService.register(APNSData.class);
         ObjectifyService.register(Property.class);
     }
 }

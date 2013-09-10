@@ -2,12 +2,14 @@ package de.hackerspacebremen.modules;
 
 import com.google.inject.AbstractModule;
 
+import de.hackerspacebremen.domain.APNSDataServiceImpl;
 import de.hackerspacebremen.domain.AtomService;
 import de.hackerspacebremen.domain.BasicHTTPAuthenticationServiceImpl;
 import de.hackerspacebremen.domain.GCMDataServiceImpl;
 import de.hackerspacebremen.domain.PropertyServiceImpl;
 import de.hackerspacebremen.domain.RSSService;
 import de.hackerspacebremen.domain.SpaceStatusServiceImpl;
+import de.hackerspacebremen.domain.api.APNSDataService;
 import de.hackerspacebremen.domain.api.AuthenticationService;
 import de.hackerspacebremen.domain.api.FeedService;
 import de.hackerspacebremen.domain.api.GCMDataService;
@@ -40,6 +42,9 @@ public class DomainModule extends AbstractModule{
 		
 		bind(GCMDataService.class).to(GCMDataServiceImpl.class);
 		bind(GCMDataService.class).annotatedWith(Proxy.class).to(GCMDataServiceValidation.class);
+		
+		bind(APNSDataService.class).to(APNSDataServiceImpl.class);
+		// TODO validation is missing
 		
 		bind(PropertyService.class).to(PropertyServiceImpl.class);
 		bind(PropertyService.class).annotatedWith(Proxy.class).to(PropertyServiceValidation.class);
