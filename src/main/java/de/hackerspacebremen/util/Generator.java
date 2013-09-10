@@ -56,17 +56,24 @@ public final class Generator {
 	}
 
 	/**
-	 * This method generates a random string.
+	 * This method generates a random string. If the given length is 
+	 * zero or negative an empty string will be returned.
 	 * 
 	 * @param length
 	 *            given length of resulting string
 	 * @return random string
 	 */
 	public static String randomString(final int length) {
-		final StringBuilder sb = new StringBuilder(length);
-		for (int i = 0; i < length; i++) {
-			sb.append(ABC.charAt(new Random().nextInt(ABC.length())));
+		final String result;
+		if(length<=0){
+			result = "";
+		}else{
+			final StringBuilder sb = new StringBuilder(length);
+			for (int i = 0; i < length; i++) {
+				sb.append(ABC.charAt(new Random().nextInt(ABC.length())));
+			}
+			result = sb.toString();
 		}
-		return sb.toString();
+		return result;
 	}
 }
