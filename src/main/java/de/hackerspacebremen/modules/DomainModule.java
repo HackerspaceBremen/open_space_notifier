@@ -44,7 +44,7 @@ public class DomainModule extends AbstractModule{
 		bind(GCMDataService.class).annotatedWith(Proxy.class).to(GCMDataServiceValidation.class);
 		
 		bind(APNSDataService.class).to(APNSDataServiceImpl.class);
-		// TODO validation is missing
+		bind(APNSDataService.class).annotatedWith(Proxy.class).to(APNSDataServiceImpl.class);
 		
 		bind(PropertyService.class).to(PropertyServiceImpl.class);
 		bind(PropertyService.class).annotatedWith(Proxy.class).to(PropertyServiceValidation.class);
