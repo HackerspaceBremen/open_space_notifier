@@ -43,6 +43,8 @@ public class PropertyServiceImpl implements PropertyService{
 		properties.setApnsEnabled(
 				Boolean.valueOf(findProperty(MPNS_ENABLED, "false").getValue()));
 		properties.setGcmApiKey(findProperty(GCM_KEY, "").getValue());
+		properties.setMailEnabled(
+				Boolean.valueOf(findProperty(MAIL_ENABLED, "false").getValue()));
 		return properties;
 	}
 	

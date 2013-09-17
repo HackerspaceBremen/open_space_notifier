@@ -10,18 +10,21 @@ public final class PushProperties {
 	
 	private boolean mpnsEnabled;
 	
+	private boolean mailEnabled;
+	
 	public PushProperties(){
 		gcmEnabled = false;
 		gcmApiKey = "";
 		apnsEnabled = false;
 		mpnsEnabled = false;
+		mailEnabled = false;
 	}
 
 	public boolean isGcmEnabled() {
 		return gcmEnabled;
 	}
 
-	public void setGcmEnabled(boolean gcmEnabled) {
+	public void setGcmEnabled(final boolean gcmEnabled) {
 		this.gcmEnabled = gcmEnabled;
 	}
 
@@ -29,7 +32,7 @@ public final class PushProperties {
 		return apnsEnabled;
 	}
 
-	public void setApnsEnabled(boolean apnsEnabled) {
+	public void setApnsEnabled(final boolean apnsEnabled) {
 		this.apnsEnabled = apnsEnabled;
 	}
 
@@ -37,7 +40,7 @@ public final class PushProperties {
 		return mpnsEnabled;
 	}
 
-	public void setMpnsEnabled(boolean mpnsEnabled) {
+	public void setMpnsEnabled(final boolean mpnsEnabled) {
 		this.mpnsEnabled = mpnsEnabled;
 	}
 
@@ -45,7 +48,15 @@ public final class PushProperties {
 		return gcmApiKey;
 	}
 
-	public void setGcmApiKey(String gcmApiKey) {
+	public void setGcmApiKey(final String gcmApiKey) {
 		this.gcmApiKey = gcmApiKey;
+	}
+
+	public boolean isMailEnabled() {
+		return mailEnabled;
+	}
+
+	public void setMailEnabled(final boolean mailEnabled) {
+		this.mailEnabled = mailEnabled;
 	}
 }

@@ -22,10 +22,13 @@
 <%@ page import="com.google.inject.Guice"%>
 <%@ page import="de.hackerspacebremen.domain.api.PropertyService" %>
 <%@ page import="de.hackerspacebremen.valueobjects.PushProperties" %>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory" %>
 
 <%
 	final Injector inj = (Injector) pageContext.getServletContext().getAttribute(Injector.class.getName());
 	final PushProperties properties = inj.getInstance(PropertyService.class).fetchPushProperties();
+	final BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 %>
 
 <html>
@@ -68,14 +71,14 @@
 						  	%>
 						  	<div class="large-8 columns">
 							  	<label>Google API Key:</label>
-							  	<input type="text" id="gcm_key" name="gcm_key" value="<%=properties.getGcmApiKey() %>">
+							  	<input type="password" id="gcm_key" name="gcm_key" value="<%=properties.getGcmApiKey() %>">
 							</div>
 						  	<%
 						  	} else{
 						  	%>
 						  	<div class="large-8 columns error">
 							  	<label>Google API Key:</label>
-							  	<input type="text" id="gcm_key" name="gcm_key" value="<%=properties.getGcmApiKey() %>">
+							  	<input type="password" id="gcm_key" name="gcm_key" value="<%=properties.getGcmApiKey() %>">
 							  	<small class="error">Der Key muss mindestens ein Zeichen besitzen!</small>
 							</div>
 						  	<%
@@ -103,7 +106,17 @@
 						  	%>
 					  	</div>
 					<br/>
-					<!-- TODO -->
+					<div class="row">
+						<div class="large-8 columns">
+							<!-- TODO change form to simple div -->
+							<!-- TODO create servlet for /admin/upload/apns/certificate-->
+							<form action="<%= blobstoreService.createUploadUrl("/admin/upload/apns/certificate") %>" 
+								method="post" enctype="multipart/form-data" accept="application/x-pkcs12">
+						        <input type="file" name="myFile">
+						        <input type="submit" value="Submit">
+						    </form>
+						</div>
+					</div>
 				  </fieldset>
 			  </div>
 			  <div class="row">

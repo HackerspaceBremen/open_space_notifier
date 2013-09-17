@@ -55,7 +55,7 @@ public class APNSDataServiceImpl implements APNSDataService{
 		
 		for(final APNSData device : devices){
 		
-			// payload can be more than just the alert body
+			// maybe add sound option!
 			// see http://notnoop.github.io/java-apns/apidocs/index.html
 			final String payload = APNS.newPayload().alertBody("Can't be simpler than this!").build();
 			// get this from the database
@@ -74,5 +74,4 @@ public class APNSDataServiceImpl implements APNSDataService{
 		    // TODO remove from database?
 		}
 	}
-
 }
