@@ -43,7 +43,7 @@
 	      
 	      <h2>Push-Benachrichtigungen</h2>
 		  
-		  <form action="/admin/push" method="POST">
+		  <form action='<%= blobstoreService.createUploadUrl("/admin/push") %>' enctype="multipart/form-data" method="POST">
 		  	<div class="row">
 			  	<fieldset id="gcm_field">
 			  		<div class="row">
@@ -66,24 +66,10 @@
 					</div>
 					<br/>
 					<div class="row">
-						  	<%
-						  	if(request.getParameter("validError") == null){
-						  	%>
-						  	<div class="large-8 columns">
-							  	<label>Google API Key:</label>
-							  	<input type="password" id="gcm_key" name="gcm_key" value="<%=properties.getGcmApiKey() %>">
-							</div>
-						  	<%
-						  	} else{
-						  	%>
-						  	<div class="large-8 columns error">
-							  	<label>Google API Key:</label>
-							  	<input type="password" id="gcm_key" name="gcm_key" value="<%=properties.getGcmApiKey() %>">
-							  	<small class="error">Der Key muss mindestens ein Zeichen besitzen!</small>
-							</div>
-						  	<%
-						  	} 
-						  	%>
+					  	<div class="large-8 columns">
+						  	<label>Google API Key:</label>
+						  	<input type="password" id="gcm_key" name="gcm_key" value="<%=properties.getGcmApiKey() %>">
+						</div>
 					</div>
 				  </fieldset>
 			  </div>
@@ -108,13 +94,19 @@
 					<br/>
 					<div class="row">
 						<div class="large-8 columns">
-							<!-- TODO change form to simple div -->
-							<!-- TODO create servlet for /admin/upload/apns/certificate-->
-							<form action="<%= blobstoreService.createUploadUrl("/admin/upload/apns/certificate") %>" 
-								method="post" enctype="multipart/form-data" accept="application/x-pkcs12">
-						        <input type="file" name="myFile">
-						        <input type="submit" value="Submit">
-						    </form>
+							<label>APNS Zertifikat (.p12):</label>
+							<%
+							if(!properties.getApnsCertificate().isEmpty()){ 
+							%>
+							<b>Es wurde bereits ein Zertifikat hinterlegt!</b>
+							<%} %>
+							<input type="file" name="apns_certificate" accept="application/x-pkcs12">
+						</div>
+					</div>
+					<div class="row">
+						<div class="large-6 columns">
+							<label>APNS Passwort:</label>
+							<input type="password" id="apns_password" name="apns_password" value="<%=properties.getApnsPassword() %>">
 						</div>
 					</div>
 				  </fieldset>
@@ -126,7 +118,7 @@
 					</div>
 					<div class="large-1 columns">
 					  	<%
-					  	if(properties.isApnsEnabled()){
+					  	if(properties.isMpnsEnabled()){
 					  	%>
 					  	<input type="checkbox" id="mpns_enable" name="mpns_enable" value="true" checked="checked">
 					  	<%

@@ -28,12 +28,7 @@ public class AdminPushServlet extends OSNServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		final String validError = req.getParameter("validError");
-		String paramsAdded = "";
-		if(validError!=null){
-			paramsAdded = "?validError=" + validError;
-		}
-		req.getRequestDispatcher("/adminPush.jsp" + paramsAdded).forward(req,resp);
+		req.getRequestDispatcher("/adminPush.jsp").forward(req,resp);
 	}
 	
 	@Override

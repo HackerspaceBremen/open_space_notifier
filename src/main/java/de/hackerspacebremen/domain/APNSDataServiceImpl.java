@@ -5,19 +5,25 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreInputStream;
 import com.google.inject.Inject;
 import com.notnoop.apns.APNS;
 import com.notnoop.apns.ApnsService;
 
+import de.hackerspacebremen.common.PropertyConstants;
 import de.hackerspacebremen.data.api.APNSDataDAO;
 import de.hackerspacebremen.data.entities.APNSData;
 import de.hackerspacebremen.domain.api.APNSDataService;
+import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
 
 public class APNSDataServiceImpl implements APNSDataService{
 
 	@Inject
 	private APNSDataDAO apnsDataDAO;
+	
+	@Inject PropertyService propertyService;
 	
 	@Override
 	public void register(final String deviceId, final String token)
@@ -44,10 +50,11 @@ public class APNSDataServiceImpl implements APNSDataService{
 	@Override
 	public void sendMessageToDevices(final String message) throws IOException,
 			ValidationException {
+		final String blobKeyString = propertyService.findValueByKey(PropertyConstants.APNS_FILE_KEY_STRING);
+		final String password = propertyService.findValueByKey(PropertyConstants.APNS_PASSWORD);
 		final ApnsService service =
 			    APNS.newService()
-			    // TODO certificate
-			    //.withCert("/path/to/certificate.p12", "MyCertPassword")
+			    .withCert(new BlobstoreInputStream(new BlobKey(blobKeyString)), password)
 			    .withSandboxDestination()
 			    .build();
 		
@@ -57,10 +64,8 @@ public class APNSDataServiceImpl implements APNSDataService{
 		
 			// maybe add sound option!
 			// see http://notnoop.github.io/java-apns/apidocs/index.html
-			final String payload = APNS.newPayload().alertBody("Can't be simpler than this!").build();
-			// get this from the database
-			// TODO this service isn't final yet, so no messages are pushed
-//			service.push(device.getToken(), payload);
+			final String payload = APNS.newPayload().alertBody(message).build();
+			service.push(device.getToken(), payload);
 		
 		}
 		
@@ -69,9 +74,9 @@ public class APNSDataServiceImpl implements APNSDataService{
 
 	private void handleInactiveDevices(final ApnsService service) {
 		final Map<String, Date> inactiveDevices = service.getInactiveDevices();
-		for (String deviceToken : inactiveDevices.keySet()) {
-		    // Date inactiveAsOf = inactiveDevices.get(deviceToken);
-		    // TODO remove from database?
+		for (final String deviceToken : inactiveDevices.keySet()) {
+		    final APNSData apnsData = apnsDataDAO.findByToken(deviceToken);
+			apnsDataDAO.delete(apnsData);
 		}
 	}
 }

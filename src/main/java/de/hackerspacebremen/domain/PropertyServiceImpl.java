@@ -38,11 +38,15 @@ public class PropertyServiceImpl implements PropertyService{
 		final PushProperties properties = pushProperties.get();
 		properties.setGcmEnabled(
 				Boolean.valueOf(findProperty(GCM_ENABLED, "false").getValue()));
+		properties.setGcmApiKey(findProperty(GCM_KEY, "").getValue());
 		properties.setApnsEnabled(
 				Boolean.valueOf(findProperty(APNS_ENABLED, "false").getValue()));
-		properties.setApnsEnabled(
+		properties.setApnsCertificate(
+				findProperty(APNS_FILE_KEY_STRING, "").getValue());
+		properties.setApnsPassword(
+				findProperty(APNS_PASSWORD, "").getValue());
+		properties.setMpnsEnabled(
 				Boolean.valueOf(findProperty(MPNS_ENABLED, "false").getValue()));
-		properties.setGcmApiKey(findProperty(GCM_KEY, "").getValue());
 		properties.setMailEnabled(
 				Boolean.valueOf(findProperty(MAIL_ENABLED, "false").getValue()));
 		return properties;
@@ -61,12 +65,15 @@ public class PropertyServiceImpl implements PropertyService{
 
 	@Override
 	public PushProperties savePushProperties(boolean gcmEnabled,
-			boolean apnsEnabled, boolean mpnsEnabled, String gcmKey){
+			boolean apnsEnabled, boolean mpnsEnabled, String gcmKey, 
+			final String fileKeyString, final String apnsPassword){
 		
 		this.saveProperty(GCM_ENABLED, String.valueOf(gcmEnabled));
 		this.saveProperty(APNS_ENABLED, String.valueOf(apnsEnabled));
 		this.saveProperty(MPNS_ENABLED, String.valueOf(mpnsEnabled));
 		this.saveProperty(GCM_KEY, gcmKey);
+		this.saveProperty(APNS_FILE_KEY_STRING, fileKeyString);
+		this.saveProperty(APNS_PASSWORD, apnsPassword);
 		
 		return this.fetchPushProperties();
 	}

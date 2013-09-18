@@ -16,4 +16,9 @@ public class APNSDataDB extends AbstractObjectifyDB<APNSData> implements APNSDat
 		return APNSData.class;
 	}
 
+	@Override
+	public APNSData findByToken(final String token) {
+		return ofy().load().type(APNSData.class).filter("token", token).first().now();
+	}
+
 }

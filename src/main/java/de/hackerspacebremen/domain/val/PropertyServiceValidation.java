@@ -25,11 +25,16 @@ public class PropertyServiceValidation extends Validation
 	@Override
 	public PushProperties savePushProperties(final boolean gcmEnabled,
 			final boolean apnsEnabled, final boolean mpnsEnabled, 
-			final String gcmKey) throws ValidationException{
+			final String gcmKey, final String fileKeyString, 
+			final String apnsPassword) throws ValidationException{
 		if(gcmEnabled){
 			this.validateIfEmpty(gcmKey, 23);
 		}
-		return propertyService.savePushProperties(gcmEnabled, apnsEnabled, mpnsEnabled, gcmKey);
+		if(apnsEnabled){
+			this.validateIfEmpty(fileKeyString, 24);
+			this.validateIfEmpty(apnsPassword, 24);
+		}
+		return propertyService.savePushProperties(gcmEnabled, apnsEnabled, mpnsEnabled, gcmKey, fileKeyString, apnsPassword);
 	}
 
 }
