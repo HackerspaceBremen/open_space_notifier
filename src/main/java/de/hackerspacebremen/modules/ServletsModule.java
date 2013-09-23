@@ -5,6 +5,7 @@ import com.google.inject.servlet.ServletModule;
 import de.hackerspacebremen.presentation.StatusAtomServlet;
 import de.hackerspacebremen.presentation.StatusRSSServlet;
 import de.hackerspacebremen.presentation.StatusServlet;
+import de.hackerspacebremen.presentation.apns.APNSCertificateServlet;
 import de.hackerspacebremen.presentation.apns.APNSRegistryServlet;
 import de.hackerspacebremen.presentation.apns.APNSUnregistryServlet;
 import de.hackerspacebremen.presentation.command.CloseServlet;
@@ -15,6 +16,7 @@ import de.hackerspacebremen.presentation.gcm.GCMRegistryServlet;
 import de.hackerspacebremen.presentation.gcm.GCMUnregistryServlet;
 import de.hackerspacebremen.presentation.jsps.AdminAuthServlet;
 import de.hackerspacebremen.presentation.jsps.AdminAutomaticServlet;
+import de.hackerspacebremen.presentation.jsps.AdminCertificateServlet;
 import de.hackerspacebremen.presentation.jsps.AdminEmailServlet;
 import de.hackerspacebremen.presentation.jsps.AdminPushServlet;
 import de.hackerspacebremen.presentation.jsps.AdminServlet;
@@ -70,5 +72,7 @@ public class ServletsModule extends ServletModule {
 		serve("/admin/auth").with(AdminAuthServlet.class);
 		serve("/admin/social").with(AdminSocialServlet.class);
 		serve("/admin/automatic").with(AdminAutomaticServlet.class);
+		serve("/admin/certificate").with(AdminCertificateServlet.class);
+		serve("/admin/certificate/apns").with(APNSCertificateServlet.class);
 	}
 }

@@ -12,7 +12,6 @@ public final class PushProperties {
 	
 	private boolean mailEnabled;
 	
-	private String apnsCertificate;
 	
 	private String apnsPassword;
 	
@@ -22,7 +21,6 @@ public final class PushProperties {
 		apnsEnabled = false;
 		mpnsEnabled = false;
 		mailEnabled = false;
-		apnsCertificate = "";
 		apnsPassword = "";
 	}
 
@@ -64,14 +62,6 @@ public final class PushProperties {
 
 	public void setMailEnabled(final boolean mailEnabled) {
 		this.mailEnabled = mailEnabled;
-	}
-
-	public String getApnsCertificate() {
-		return apnsCertificate;
-	}
-
-	public void setApnsCertificate(String apnsCertificate) {
-		this.apnsCertificate = apnsCertificate;
 	}
 
 	public String getApnsPassword() {

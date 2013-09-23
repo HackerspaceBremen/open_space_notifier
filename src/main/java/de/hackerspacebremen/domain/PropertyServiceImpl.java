@@ -10,6 +10,7 @@ import de.hackerspacebremen.data.entities.Property;
 import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.exceptions.NotCompletelyConfigured;
+import de.hackerspacebremen.valueobjects.CertificateProperties;
 import de.hackerspacebremen.valueobjects.PushProperties;
 
 public class PropertyServiceImpl implements PropertyService{
@@ -19,6 +20,9 @@ public class PropertyServiceImpl implements PropertyService{
 	
 	@Inject 
 	private Provider<PushProperties> pushProperties;
+	
+	@Inject 
+	private Provider<CertificateProperties> certificateProperties;
 	
 	@Override
 	public String findValueByKey(final String key) throws ValidationException {
@@ -41,8 +45,6 @@ public class PropertyServiceImpl implements PropertyService{
 		properties.setGcmApiKey(findProperty(GCM_KEY, "").getValue());
 		properties.setApnsEnabled(
 				Boolean.valueOf(findProperty(APNS_ENABLED, "false").getValue()));
-		properties.setApnsCertificate(
-				findProperty(APNS_FILE_KEY_STRING, "").getValue());
 		properties.setApnsPassword(
 				findProperty(APNS_PASSWORD, "").getValue());
 		properties.setMpnsEnabled(
@@ -66,13 +68,12 @@ public class PropertyServiceImpl implements PropertyService{
 	@Override
 	public PushProperties savePushProperties(boolean gcmEnabled,
 			boolean apnsEnabled, boolean mpnsEnabled, String gcmKey, 
-			final String fileKeyString, final String apnsPassword){
+			 final String apnsPassword){
 		
 		this.saveProperty(GCM_ENABLED, String.valueOf(gcmEnabled));
 		this.saveProperty(APNS_ENABLED, String.valueOf(apnsEnabled));
 		this.saveProperty(MPNS_ENABLED, String.valueOf(mpnsEnabled));
 		this.saveProperty(GCM_KEY, gcmKey);
-		this.saveProperty(APNS_FILE_KEY_STRING, fileKeyString);
 		this.saveProperty(APNS_PASSWORD, apnsPassword);
 		
 		return this.fetchPushProperties();
@@ -82,6 +83,23 @@ public class PropertyServiceImpl implements PropertyService{
 		final Property property = propertyDAO.findByKey(key);
 		property.setValue(value);
 		propertyDAO.persist(property);
+	}
+
+	@Override
+	public CertificateProperties saveAPNSCertificate(final String apnsFileKeyString)
+			throws ValidationException {
+		this.saveProperty(APNS_FILE_KEY_STRING, apnsFileKeyString);
+		
+		return this.fetchCertificateProperties();
+	}
+
+	@Override
+	public CertificateProperties fetchCertificateProperties() {
+		final CertificateProperties properties = certificateProperties.get();
+		
+		properties.setApnsCertificate(
+				findProperty(APNS_FILE_KEY_STRING, "").getValue());
+		return properties;
 	}
 
 	

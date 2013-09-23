@@ -22,13 +22,10 @@
 <%@ page import="com.google.inject.Guice"%>
 <%@ page import="de.hackerspacebremen.domain.api.PropertyService" %>
 <%@ page import="de.hackerspacebremen.valueobjects.PushProperties" %>
-<%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
-<%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory" %>
 
 <%
 	final Injector inj = (Injector) pageContext.getServletContext().getAttribute(Injector.class.getName());
 	final PushProperties properties = inj.getInstance(PropertyService.class).fetchPushProperties();
-	final BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 %>
 
 <html>
@@ -43,7 +40,9 @@
 	      
 	      <h2>Push-Benachrichtigungen</h2>
 		  
-		  <form action='<%= blobstoreService.createUploadUrl("/admin/push") %>' enctype="multipart/form-data" method="POST">
+		  <form action="/admin/push" method="POST">
+		    <jsp:include page="basicJSPs/validation.jsp" />
+		  	
 		  	<div class="row">
 			  	<fieldset id="gcm_field">
 			  		<div class="row">
@@ -92,17 +91,6 @@
 						  	%>
 					  	</div>
 					<br/>
-					<div class="row">
-						<div class="large-8 columns">
-							<label>APNS Zertifikat (.p12):</label>
-							<%
-							if(!properties.getApnsCertificate().isEmpty()){ 
-							%>
-							<b>Es wurde bereits ein Zertifikat hinterlegt!</b>
-							<%} %>
-							<input type="file" name="apns_certificate" accept="application/x-pkcs12">
-						</div>
-					</div>
 					<div class="row">
 						<div class="large-6 columns">
 							<label>APNS Passwort:</label>
