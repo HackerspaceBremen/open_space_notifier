@@ -63,7 +63,7 @@ public class ViewStatusCommand extends WebCommand{
 			iconJSON.put("open", url+"images/status_auf_48px.png");
 			iconJSON.put("closed", url+"images/status_zu_48px.png");
 			this.result.addValue("icon", iconJSON);
-			this.result.addValue("address", "Bornstrasse 14/15, 28195 Bremen, Germany");
+			this.result.addValue("address", "Bornstraße 14/15, 28195 Bremen, Germany");
 			final JSONObject contactJSON = new JSONObject();
 			contactJSON.put("phone", "+49 421 14 62 92 15");
 			contactJSON.put("twitter", "@hspacehb");
