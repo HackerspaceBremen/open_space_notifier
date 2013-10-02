@@ -20,6 +20,7 @@ package de.hackerspacebremen.data.entities;
 
 
 import com.google.appengine.api.datastore.Text;
+import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
@@ -30,6 +31,7 @@ import flexjson.JSON;
 
 @Entity(name="SpaceStatus")
 @com.googlecode.objectify.annotation.Entity
+@Cache
 public final class SpaceStatus implements BasicEntity{
 	
 	@Id

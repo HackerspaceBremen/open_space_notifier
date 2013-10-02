@@ -1,5 +1,6 @@
 package de.hackerspacebremen.data.entities;
 
+import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
@@ -8,7 +9,8 @@ import de.hackerspacebremen.data.annotations.FormatPart;
 
 @com.googlecode.objectify.annotation.Entity
 @Entity(name="APNSData")
-public class APNSData implements BasicEntity {
+@Cache
+public final class APNSData implements BasicEntity {
 
 	@Id
 	@FormatPart(key="APNS1")
