@@ -30,7 +30,7 @@ public class PropertyServiceImpl implements PropertyService{
 		if(property==null){
 			property = new Property();
 			property.setKey(key);
-			property.setValue("DUMMY!!!");
+			property.setValue("");
 			propertyDAO.persist(property);
 			throw new NotCompletelyConfigured();
 		}

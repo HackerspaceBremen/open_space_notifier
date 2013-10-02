@@ -20,6 +20,7 @@ package de.hackerspacebremen.domain;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.android.gcm.server.Constants;
 import com.google.android.gcm.server.Result;
@@ -39,6 +40,11 @@ public class GCMDataServiceImpl implements GCMDataService{
 	
 	@Inject
 	private Provider<GCMMessageSender> gcmMessageSender;
+	
+	/**
+     * static attribute used for logging.
+     */
+    private static final Logger logger = Logger.getLogger(GCMDataServiceImpl.class.getName());
 	
 	@Override
 	public void register(final String deviceId, final String registrationId) {
@@ -63,24 +69,30 @@ public class GCMDataServiceImpl implements GCMDataService{
 	}
 
 	@Override
-	public void sendMessageToDevices(final String message) throws IOException, ValidationException{
+	public void sendMessageToDevices(final String message) throws ValidationException{
 		final List<GCMData> devices = gcmDataDAO.findAll();
 		for(final GCMData gcmData : devices){
 			final GCMMessageSender sender = gcmMessageSender.get();
-			final Result result = sender.sendMessage(message, gcmData.getRegistrationId());
-			if (result.getMessageId() != null) {
-				String canonicalRegId = result.getCanonicalRegistrationId();
-				if (canonicalRegId != null) {
-					// same device has more than on registration ID: update database
-					gcmData.setRegistrationId(canonicalRegId);
-					gcmDataDAO.persist(gcmData);
+			Result result;
+			try {
+				result = sender.sendMessage(message, gcmData.getRegistrationId());
+			
+				if (result.getMessageId() != null) {
+					String canonicalRegId = result.getCanonicalRegistrationId();
+					if (canonicalRegId != null) {
+						// same device has more than on registration ID: update database
+						gcmData.setRegistrationId(canonicalRegId);
+						gcmDataDAO.persist(gcmData);
+					}
+				} else {
+					String error = result.getErrorCodeName();
+					if (error.equals(Constants.ERROR_NOT_REGISTERED)) {
+						// application has been removed from device - unregister database
+						gcmDataDAO.delete(gcmData);
+					}
 				}
-			} else {
-				String error = result.getErrorCodeName();
-				if (error.equals(Constants.ERROR_NOT_REGISTERED)) {
-					// application has been removed from device - unregister database
-					gcmDataDAO.delete(gcmData);
-				}
+			} catch (IOException e) {
+				logger.severe("Unexpected IOException occured: " + e.getMessage());
 			}
 		}
 	}
