@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreInputStream;
 import com.google.inject.Inject;
 import com.notnoop.apns.APNS;
 import com.notnoop.apns.ApnsService;
+import com.notnoop.exceptions.InvalidSSLConfig;
 
 import de.hackerspacebremen.common.PropertyConstants;
 import de.hackerspacebremen.data.api.APNSDataDAO;
@@ -24,6 +26,11 @@ public class APNSDataServiceImpl implements APNSDataService{
 	private APNSDataDAO apnsDataDAO;
 	
 	@Inject PropertyService propertyService;
+	
+	/**
+     * static attribute used for logging.
+     */
+    private static final Logger logger = Logger.getLogger(APNSDataServiceImpl.class.getName());
 	
 	@Override
 	public void register(final String deviceId, final String token)
@@ -48,28 +55,37 @@ public class APNSDataServiceImpl implements APNSDataService{
 	}
 
 	@Override
-	public void sendMessageToDevices(final String message) throws IOException,
+	public void sendMessageToDevices(final String statusShort, final String message) throws 
 			ValidationException {
 		final String blobKeyString = propertyService.findValueByKey(PropertyConstants.APNS_FILE_KEY_STRING);
 		final String password = propertyService.findValueByKey(PropertyConstants.APNS_PASSWORD);
-		final ApnsService service =
-			    APNS.newService()
-			    .withCert(new BlobstoreInputStream(new BlobKey(blobKeyString)), password)
-			    .withSandboxDestination()
-			    .build();
+		ApnsService service;
+		try {
+			service = APNS.newService()
+			.withCert(new BlobstoreInputStream(new BlobKey(blobKeyString)), password)
+			.withSandboxDestination()
+			.build();
 		
-		final List<APNSData> devices = this.apnsDataDAO.findAll();
-		
-		for(final APNSData device : devices){
-		
-			// maybe add sound option!
-			// see http://notnoop.github.io/java-apns/apidocs/index.html
-			final String payload = APNS.newPayload().alertBody(message).build();
-			service.push(device.getToken(), payload);
-		
+			final List<APNSData> devices = this.apnsDataDAO.findAll();
+			
+			String apnsMessage = statusShort;
+			if(message!=null && !message.isEmpty()){
+				apnsMessage += "\n - \n"+message.substring(0, 180);
+			}
+			
+			for(final APNSData device : devices){
+			
+				// maybe add sound option!
+				// see http://notnoop.github.io/java-apns/apidocs/index.html
+				final String payload = APNS.newPayload().alertBody(apnsMessage).build();
+				service.push(device.getToken(), payload);
+			
+			}
+			
+			this.handleInactiveDevices(service);
+		} catch (InvalidSSLConfig | IOException e) {
+			logger.severe("InvalidSSLConfig or IOException occured unexpectedly: " + e.getMessage());
 		}
-		
-		this.handleInactiveDevices(service);
 	}
 
 	private void handleInactiveDevices(final ApnsService service) {

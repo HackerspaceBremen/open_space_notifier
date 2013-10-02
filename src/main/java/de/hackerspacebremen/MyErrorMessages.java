@@ -58,7 +58,11 @@ public class MyErrorMessages implements ErrorMessages{
 		errorMessages.put(Integer.valueOf(22), "The given id doesn't exist in the database!");
 		errorMessages.put(Integer.valueOf(23), "The given key should at least have one character!");
 		errorMessages.put(Integer.valueOf(24), "To enable APNS a valid password is needed");
-		errorMessages.put(Integer.valueOf(24), "To enable APNS you need to add a apns certificate(.p12)");
+		errorMessages.put(Integer.valueOf(25), "To enable APNS you need to add a apns certificate(.p12)");
+		errorMessages.put(Integer.valueOf(26), "The deviceId can't be accepted when null or empty");
+		errorMessages.put(Integer.valueOf(27), "The token can't be accepted when null or empty");
+		errorMessages.put(Integer.valueOf(28), "To unregister a not empty deviceId is needed");
+		errorMessages.put(Integer.valueOf(29), "The shortStatus can't be null or empty"); 
 		
 		errorMessages.put(Integer.valueOf(66), "An validation exception occured! Please contact the admin");
 		errorMessages.put(Integer.valueOf(77), "An format exception occured! Please contact the admin");

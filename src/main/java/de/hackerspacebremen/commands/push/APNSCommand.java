@@ -1,6 +1,7 @@
 package de.hackerspacebremen.commands.push;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.format.FormatException;
 import de.hackerspacebremen.format.FormatFactory;
 import de.hackerspacebremen.format.MessageFormat;
+import de.hackerspacebremen.format.SpeakingDateFormat;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
 
@@ -29,10 +31,10 @@ public class APNSCommand extends WebCommand{
 	@Proxy
     private APNSDataService apnsDataService;
 	
-	/**
-     * static attribute used for logging.
-     */
-    private static final Logger logger = Logger.getLogger(APNSCommand.class.getName());
+//	/**
+//     * static attribute used for logging.
+//     */
+//    private static final Logger logger = Logger.getLogger(APNSCommand.class.getName());
 
 	
 	@Override
@@ -43,18 +45,25 @@ public class APNSCommand extends WebCommand{
 			if(statusId != null && status.getId().equals(Long.valueOf(statusId))){
 				status = statusService.currentCopyStatus();
 				MessageFormat.fitSmallMessageSize(status);
-				final String kind = req.getParameter("format");
 				
-				apnsDataService.sendMessageToDevices(FormatFactory.getFormatter(kind).format(status, AppConstants.LEVEL_VIEW));
+				final Date date = new Date(status.getTime());
+				final String statusShort;
+				if(status.getStatus().equals(AppConstants.OPEN)){
+					statusShort = "Der Space  ist seit " + SpeakingDateFormat.format(date) + " ge\u00f6ffnet";
+				}else{
+					statusShort = "Der Space  ist seit " + SpeakingDateFormat.format(date) + " geschlossen";
+				}
+				
+				apnsDataService.sendMessageToDevices(statusShort, status.getMessage().toString());
 				this.handleSuccess("Messages were sent to the APNS server!", null);
 			}else{
 				this.handleSuccess("The given status id is not valid anymore! The message couldn't be send ...'", null);
 			}
 		}catch(ValidationException ve){
 			this.handleError(ve);
-		} catch (FormatException e) {
-			this.handleError(77);
-			logger.warning(Constants.FORMAT_EXCEPTION_OCCURED + e.getMessage());
+//		} catch (FormatException e) {
+//			this.handleError(77);
+//			logger.warning(Constants.FORMAT_EXCEPTION_OCCURED + e.getMessage());
 		}
 	}
 }

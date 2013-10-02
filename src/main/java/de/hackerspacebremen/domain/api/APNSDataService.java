@@ -1,7 +1,5 @@
 package de.hackerspacebremen.domain.api;
 
-import java.io.IOException;
-
 import de.hackerspacebremen.domain.val.ValidationException;
 
 public interface APNSDataService {
@@ -12,6 +10,6 @@ public interface APNSDataService {
 	void unregister(String deviceId) 
 		throws ValidationException;
 
-	void sendMessageToDevices(String message) 
-			throws IOException, ValidationException;
+	void sendMessageToDevices(String statusShort, String message) 
+			throws ValidationException;
 }
