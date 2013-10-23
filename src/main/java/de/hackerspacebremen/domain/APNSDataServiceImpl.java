@@ -74,6 +74,7 @@ public class APNSDataServiceImpl implements APNSDataService{
 			}
 			
 			for(final APNSData device : devices){
+				logger.info("device: " + device.getDeviceId());
 			
 				// maybe add sound option!
 				// see http://notnoop.github.io/java-apns/apidocs/index.html
