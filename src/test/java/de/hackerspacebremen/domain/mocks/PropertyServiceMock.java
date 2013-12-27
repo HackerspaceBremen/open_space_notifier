@@ -3,6 +3,7 @@ package de.hackerspacebremen.domain.mocks;
 import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.valueobjects.CertificateProperties;
+import de.hackerspacebremen.valueobjects.EmailProperties;
 import de.hackerspacebremen.valueobjects.PushProperties;
 
 public final class PropertyServiceMock implements PropertyService{
@@ -33,6 +34,11 @@ public final class PropertyServiceMock implements PropertyService{
 	@Override
 	public String findValueByKey(final String key) throws ValidationException {
 		return "dummy";
+	}
+
+	@Override
+	public EmailProperties fetchEmailProperties() {
+		return new EmailProperties();
 	}
 
 }

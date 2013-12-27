@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 
 import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.valueobjects.CertificateProperties;
+import de.hackerspacebremen.valueobjects.EmailProperties;
 import de.hackerspacebremen.valueobjects.PushProperties;
 
 public class PropertyServiceValidation extends Validation 
@@ -51,5 +52,8 @@ public class PropertyServiceValidation extends Validation
 		return propertyService.fetchCertificateProperties();
 	}
 
-	
+	@Override
+	public EmailProperties fetchEmailProperties() {
+		return propertyService.fetchEmailProperties();
+	}
 }

@@ -1,6 +1,7 @@
 package de.hackerspacebremen.domain;
 
 import static de.hackerspacebremen.common.PropertyConstants.*;
+import static de.hackerspacebremen.common.EmailDefaults.*;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -11,6 +12,7 @@ import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.exceptions.NotCompletelyConfigured;
 import de.hackerspacebremen.valueobjects.CertificateProperties;
+import de.hackerspacebremen.valueobjects.EmailProperties;
 import de.hackerspacebremen.valueobjects.PushProperties;
 
 public class PropertyServiceImpl implements PropertyService{
@@ -20,6 +22,9 @@ public class PropertyServiceImpl implements PropertyService{
 	
 	@Inject 
 	private Provider<PushProperties> pushProperties;
+	
+	@Inject 
+	private Provider<EmailProperties> emailProperties;
 	
 	@Inject 
 	private Provider<CertificateProperties> certificateProperties;
@@ -51,6 +56,26 @@ public class PropertyServiceImpl implements PropertyService{
 				Boolean.valueOf(findProperty(MPNS_ENABLED, "false").getValue()));
 		properties.setMailEnabled(
 				Boolean.valueOf(findProperty(MAIL_ENABLED, "false").getValue()));
+		return properties;
+	}
+	
+	@Override
+	public EmailProperties fetchEmailProperties() {
+		final EmailProperties properties = emailProperties.get();
+		properties.setSenderName(findProperty(EMAIL_SENDER_NAME, EMAIL_DEFAULT_SENDER_NAME).getValue());
+		properties.setReceiverName(findProperty(EMAIL_RECEIVER_NAME, EMAIL_DEFAULT_RECEIVER_NAME).getValue());
+		properties.setSubjectTag(findProperty(EMAIL_SUBJECT_TAG, EMAIL_DEFAULT_SUBJECT_TAG).getValue());
+		properties.setSubjectOpened(findProperty(EMAIL_SUBJECT_OPENED, EMAIL_DEFAULT_SUBJECT_OPENED).getValue());
+		properties.setSubjectClosed(findProperty(EMAIL_SUBJECT_CLOSED, EMAIL_DEFAULT_SUBJECT_CLOSED).getValue());
+		properties.setContentPart1(findProperty(EMAIL_CONTENT_PART1, EMAIL_DEFAULT_CONTENT_PART1).getValue());
+		properties.setContentPart2(findProperty(EMAIL_CONTENT_PART2, EMAIL_DEFAULT_CONTENT_PART2).getValue());
+		properties.setContentPart3(findProperty(EMAIL_CONTENT_PART3, EMAIL_DEFAULT_CONTENT_PART3).getValue());
+		properties.setContentPart4(findProperty(EMAIL_CONTENT_PART4, EMAIL_DEFAULT_CONTENT_PART4).getValue());
+		properties.setOpened(findProperty(EMAIL_OPENED, EMAIL_DEFAULT_OPENED).getValue());
+		properties.setClosed(findProperty(EMAIL_CLOSED, EMAIL_DEFAULT_CLOSED).getValue());
+		properties.setMessage(findProperty(EMAIL_MESSAGE, EMAIL_DEFAULT_MESSAGE).getValue());
+		properties.setNegatedOpened(findProperty(EMAIL_NEGATED_OPENED, EMAIL_DEFAULT_NEGATED_OPENED).getValue());
+		properties.setNegatedClosed(findProperty(EMAIL_NEGATED_CLOSED, EMAIL_DEFAULT_NEGATED_CLOSED).getValue());
 		return properties;
 	}
 	

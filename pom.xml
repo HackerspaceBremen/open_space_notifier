@@ -10,7 +10,7 @@
 
     <properties>
         <appengine.app.version>1</appengine.app.version>
-        <appengine.target.version>1.8.7</appengine.target.version>
+        <appengine.target.version>1.8.8</appengine.target.version>
         <objectify.version>4.0b3</objectify.version>
         <guice.version>3.0</guice.version>
         <testng.version>6.8.5</testng.version>

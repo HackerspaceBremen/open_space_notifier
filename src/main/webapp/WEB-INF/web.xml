@@ -48,14 +48,7 @@
         <url-pattern>/appstats/*</url-pattern>
     </servlet-mapping>
 
-    <security-constraint>
-        <web-resource-collection>
-            <url-pattern>/appstats/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>admin</role-name>
-        </auth-constraint>
-    </security-constraint>
+    
 	
 	<filter>
 		<filter-name>guiceFilter</filter-name>
@@ -100,6 +93,7 @@
             <url-pattern>/admin</url-pattern>
             <url-pattern>/admin**.jsp</url-pattern>
             <url-pattern>/admin/*</url-pattern>
+            <url-pattern>/appstats/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>

@@ -19,7 +19,6 @@
 package de.hackerspacebremen.email;
 
 import java.io.UnsupportedEncodingException;
-import java.text.MessageFormat;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -38,7 +37,7 @@ import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
-import de.hackerspacebremen.util.PropertyHelper;
+import de.hackerspacebremen.valueobjects.EmailProperties;
 
 /**
  * @author Steve
@@ -67,27 +66,28 @@ public class StatusEmail{
 			message = "";
 		}
 		final boolean opened = spaceStatus.getStatus().equals(AppConstants.OPEN);
+		final EmailProperties emailProperties = propertyService.fetchEmailProperties();
 		try {
 			final String senderAddress = propertyService.findValueByKey(EMAIL_ADDRESSED_ADDRESS);
 			final Session session = Session.getDefaultInstance(new Properties(), null);
 			final MimeMessage msg = new MimeMessage(session);
 			final String url = "https://"+System.getProperty("com.google.appengine.application.id")+".appspot.com/";
-			msg.setFrom(new InternetAddress(propertyService.findValueByKey(PROJECT_ADMIN_EMAIL), "Hackerspace Bremen"));
+			msg.setFrom(new InternetAddress(propertyService.findValueByKey(PROJECT_ADMIN_EMAIL), emailProperties.getSenderName()));
 	        msg.addRecipient(Message.RecipientType.TO,
-	                         new InternetAddress(senderAddress, "Hackerspace Bremen Mailingliste"));
+	                         new InternetAddress(senderAddress, emailProperties.getReceiverName()));
 	        if(opened){
-	        	msg.setSubject(PropertyHelper.getEmailPropertyValue("email.statuschanged.subject.opened"), Constants.UTF8);
+	        	msg.setSubject(emailProperties.getSubjectTag() + emailProperties.getSubjectOpened(), Constants.UTF8);
 	        }else{
-	        	msg.setSubject(PropertyHelper.getEmailPropertyValue("email.statuschanged.subject.closed"), Constants.UTF8);
+	        	msg.setSubject(emailProperties.getSubjectTag() + emailProperties.getSubjectClosed(), Constants.UTF8);
 	        }
 	        final String status;
 	        final String negatedStatus;
 	        if(opened){
-	        	status = PropertyHelper.getEmailPropertyValue("email.statuschanged.opened");
-	        	negatedStatus = PropertyHelper.getEmailPropertyValue("email.statuschanged.negated.opened");
+	        	status = emailProperties.getOpened();
+	        	negatedStatus = emailProperties.getNegatedOpened();
 	        }else{
-	        	status = PropertyHelper.getEmailPropertyValue("email.statuschanged.closed");
-	        	negatedStatus = PropertyHelper.getEmailPropertyValue("email.statuschanged.negated.closed");
+	        	status = emailProperties.getClosed();
+	        	negatedStatus = emailProperties.getNegatedClosed();
 	        }
 	        final String messageVariable;
 	        final String messageVariable2;
@@ -95,13 +95,14 @@ public class StatusEmail{
 	        	messageVariable = "";
 	        	messageVariable2 = "";
 	        }else{
-	        	messageVariable = PropertyHelper.getEmailPropertyValue("email.statuschanged.message");
+	        	messageVariable = emailProperties.getMessage();
 	        	messageVariable2 = message + "'";
 	        }
 	        
 	        msg.setHeader("Content-Type", "text/plain; charset=utf-8");
-	        final MessageFormat form = new MessageFormat(PropertyHelper.getEmailPropertyValue("email.statuschanged.content"));
-	        msg.setText(form.format(new String[]{status, messageVariable, messageVariable2, url, negatedStatus}));
+	        final String content = emailProperties.getContentPart1(status, messageVariable, messageVariable2) + emailProperties.getContentPart2(url) 
+	        		+ emailProperties.getContentPart3(negatedStatus) +emailProperties.getContentPart4();
+	        msg.setText(content);
 	        Transport.send(msg);
 		} catch (MessagingException e) {
 			logger.warning("MessagingException: " + e.getMessage());
@@ -111,5 +112,4 @@ public class StatusEmail{
 			logger.warning("ValidationException: " + e.getMessage());
 		}
 	}
-
 }

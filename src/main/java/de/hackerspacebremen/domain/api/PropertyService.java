@@ -2,6 +2,7 @@ package de.hackerspacebremen.domain.api;
 
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.valueobjects.CertificateProperties;
+import de.hackerspacebremen.valueobjects.EmailProperties;
 import de.hackerspacebremen.valueobjects.PushProperties;
 
 public interface PropertyService {
@@ -9,6 +10,8 @@ public interface PropertyService {
 	PushProperties fetchPushProperties();
 	
 	CertificateProperties fetchCertificateProperties();
+	
+	EmailProperties fetchEmailProperties();
 	
 	PushProperties savePushProperties(final boolean gcmEnabled, 
 			final boolean apnsEnabled, final boolean mpnsEnabled,
