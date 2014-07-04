@@ -11,6 +11,7 @@ import de.hackerspacebremen.presentation.apns.APNSUnregistryServlet;
 import de.hackerspacebremen.presentation.command.CloseServlet;
 import de.hackerspacebremen.presentation.command.MessageServlet;
 import de.hackerspacebremen.presentation.command.OpenServlet;
+import de.hackerspacebremen.presentation.command.VerifyLoginServlet;
 import de.hackerspacebremen.presentation.cron.StatusCheckServlet;
 import de.hackerspacebremen.presentation.gcm.GCMRegistryServlet;
 import de.hackerspacebremen.presentation.gcm.GCMUnregistryServlet;
@@ -48,6 +49,7 @@ public class ServletsModule extends ServletModule {
 		serve("/v2/cmd/open").with(OpenServlet.class);
 		serve("/v2/cmd/close").with(CloseServlet.class);
 		serve("/v2/cmd/message").with(MessageServlet.class);
+		serve("/v2/cmd/verifylogin").with(VerifyLoginServlet.class);
 		
 		// gcm
 		serve("/v2/gcm/register").with(GCMRegistryServlet.class);
