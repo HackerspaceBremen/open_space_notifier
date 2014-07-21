@@ -1,7 +1,7 @@
-hshb_open_notifier_appengine
+Open Space Notifier
 ============================
 
-This repository holds the source code of the open space notifier backend. The backend is hosted on an java appengine 
+This repository holds the source code of the open space notifier, which is a backend for serving the [SpaceAPI](http://spaceapi.net). The backend is hosted on an Google App Engine instance and written with Java. 
 
 
 Projectinformation
@@ -12,8 +12,8 @@ Projectinformation
 Dependencies
 ------------
 
-- objectify (https://code.google.com/p/objectify-appengine) 
-- guice (https://code.google.com/p/google-guice)
+- [Objectify](https://code.google.com/p/objectify-appengine) 
+- [Guice](https://code.google.com/p/google-guice)
 
 Continuous Integration
 ----------------------
