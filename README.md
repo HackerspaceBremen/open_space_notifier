@@ -18,8 +18,8 @@ Dependencies
 Continuous Integration
 ----------------------
 
-The project is build, tested and (in the future) deployed by a jenkins service on cloudbees. You can access is as an 
-read-only anonymous user on https://dragondagda.ci.cloudbees.com/view/hshb_notifier_be%20CI
+The project is build, tested and (in the future) deployed by a Jenkins service on a private server. You can access it as an 
+read-only anonymous user on http://tools.steveliedtke.de/jenkins/view/Hackerspace%20Projekte/
 
 Developed By
 ------------
