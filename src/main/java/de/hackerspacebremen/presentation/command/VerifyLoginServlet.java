@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.Singleton;
 
 import de.hackerspacebremen.MyErrorMessages;
 import de.hackerspacebremen.commands.VerifyLoginCommand;
 import de.hackerspacebremen.presentation.OSNServlet;
 
+@Singleton
 public class VerifyLoginServlet extends OSNServlet {
 
 	/**
