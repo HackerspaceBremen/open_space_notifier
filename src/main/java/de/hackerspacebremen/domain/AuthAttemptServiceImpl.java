@@ -45,6 +45,9 @@ public class AuthAttemptServiceImpl implements AuthAttemptService{
 	/**{@inheritDoc} **/
 	@Override
 	public void clearAttemptAmounts() {
+		if(this.cache==null){
+			this.cache = this.createCache();
+		}
 		this.cache.clearAll();
 	}
 }
