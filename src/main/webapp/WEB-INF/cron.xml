@@ -9,7 +9,7 @@
 	  <cron>
 	    <url>/v2/cron/clearauthattempts</url>
 	    <description>Clear auth attempts of users (brute force prevention)</description>
-	    <schedule>every 10 minutes</schedule>
+	    <schedule>every 15 minutes</schedule>
 	    <timezone>Europe/Berlin</timezone>
 	  </cron>
 </cronentries>
