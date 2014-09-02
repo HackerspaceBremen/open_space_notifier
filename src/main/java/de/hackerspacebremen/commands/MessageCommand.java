@@ -29,6 +29,7 @@ import com.google.inject.Inject;
 import de.hackerspacebremen.commands.helper.StatusTimeFormat;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.domain.api.AuthAttemptService;
 import de.hackerspacebremen.domain.api.AuthenticationService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
@@ -51,6 +52,9 @@ public class MessageCommand extends WebCommand{
     @Inject
     @Proxy
 	private AuthenticationService authService;
+    
+    @Inject
+    private AuthAttemptService authAttemptService;
     
     
 	@Override
@@ -81,7 +85,9 @@ public class MessageCommand extends WebCommand{
 			logger.info("format: " + format);
 			logger.info("time: " + time);
 			
-			if(authService.authenticate(name, pass)){
+			if(authAttemptService.checkAttemptMax(name)){
+				this.handleError(55);
+			}else if(authService.authenticate(name, pass)){
 				final SpaceStatus status = statusService.currentStatus();
 				final String timeOfCurrent;
 				if(format==null || format.isEmpty()){

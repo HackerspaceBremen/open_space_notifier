@@ -12,6 +12,7 @@ import de.hackerspacebremen.presentation.command.CloseServlet;
 import de.hackerspacebremen.presentation.command.MessageServlet;
 import de.hackerspacebremen.presentation.command.OpenServlet;
 import de.hackerspacebremen.presentation.command.VerifyLoginServlet;
+import de.hackerspacebremen.presentation.cron.ClearAuthAttemptsServlet;
 import de.hackerspacebremen.presentation.cron.StatusCheckServlet;
 import de.hackerspacebremen.presentation.gcm.GCMRegistryServlet;
 import de.hackerspacebremen.presentation.gcm.GCMUnregistryServlet;
@@ -61,6 +62,7 @@ public class ServletsModule extends ServletModule {
 		
 		// cron jobs
 		serve("/v2/cron/statuscheck").with(StatusCheckServlet.class);
+		serve("/v2/cron/clearauthattempts").with(ClearAuthAttemptsServlet.class);
 		
 		// tasks
 		serve("/v2/task/gcm").with(GCMTaskServlet.class);

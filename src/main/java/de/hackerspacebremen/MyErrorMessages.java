@@ -63,7 +63,8 @@ public class MyErrorMessages implements ErrorMessages{
 		errorMessages.put(Integer.valueOf(27), "The token can't be accepted when null or empty");
 		errorMessages.put(Integer.valueOf(28), "To unregister a not empty deviceId is needed");
 		errorMessages.put(Integer.valueOf(29), "The shortStatus can't be null or empty"); 
-		
+		errorMessages.put(Integer.valueOf(55), "The attempt to authenticate was to high. " +
+				"You are blocked for a maximum of 15 minutes.");
 		errorMessages.put(Integer.valueOf(66), "An validation exception occured! Please contact the admin");
 		errorMessages.put(Integer.valueOf(77), "An format exception occured! Please contact the admin");
 		errorMessages.put(Integer.valueOf(88), "An json exception occured!  Please contact the admin");

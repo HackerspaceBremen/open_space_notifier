@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 
 import com.google.inject.Inject;
 
+import de.hackerspacebremen.domain.api.AuthAttemptService;
 import de.hackerspacebremen.domain.api.AuthenticationService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
@@ -17,6 +18,9 @@ public class VerifyLoginCommand extends WebCommand{
 	@Inject
 	@Proxy
 	private AuthenticationService authService;
+	
+	@Inject
+	private AuthAttemptService authAttemptService;
 	
 	@Override
 	public void process() throws ServletException, IOException {
@@ -32,7 +36,9 @@ public class VerifyLoginCommand extends WebCommand{
 		}
 		
 		try {
-			if (authService.authenticate(name, pass)) {
+			if(authAttemptService.checkAttemptMax(name)){
+				this.handleError(55);
+			}else if (authService.authenticate(name, pass)) {
 				this.handleSuccess("Credentials are valid", null);
 			}else{
 				this.handleError(1);

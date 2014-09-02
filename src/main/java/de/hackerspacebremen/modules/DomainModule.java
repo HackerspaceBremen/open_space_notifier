@@ -4,12 +4,14 @@ import com.google.inject.AbstractModule;
 
 import de.hackerspacebremen.domain.APNSDataServiceImpl;
 import de.hackerspacebremen.domain.AtomService;
+import de.hackerspacebremen.domain.AuthAttemptServiceImpl;
 import de.hackerspacebremen.domain.BasicHTTPAuthenticationServiceImpl;
 import de.hackerspacebremen.domain.GCMDataServiceImpl;
 import de.hackerspacebremen.domain.PropertyServiceImpl;
 import de.hackerspacebremen.domain.RSSService;
 import de.hackerspacebremen.domain.SpaceStatusServiceImpl;
 import de.hackerspacebremen.domain.api.APNSDataService;
+import de.hackerspacebremen.domain.api.AuthAttemptService;
 import de.hackerspacebremen.domain.api.AuthenticationService;
 import de.hackerspacebremen.domain.api.FeedService;
 import de.hackerspacebremen.domain.api.GCMDataService;
@@ -51,6 +53,8 @@ public class DomainModule extends AbstractModule{
 		
 		bind(FeedService.class).annotatedWith(RSS.class).to(RSSService.class);
 		bind(FeedService.class).annotatedWith(Atom.class).to(AtomService.class);
+		
+		bind(AuthAttemptService.class).to(AuthAttemptServiceImpl.class);
 	}
 
 }
