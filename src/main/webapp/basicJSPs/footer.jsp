@@ -5,11 +5,11 @@
 			<hr />
 			<div class="row">
 				<div class="small-6 columns">
-					<p>Copyright &copy; 2013 Hackerspace Bremen</p>
+					<p>Copyright &copy; 2013-14 Hackerspace Bremen</p>
 				</div>
 				<div class="small-6 columns">
 					<ul class="inline-list right">
-						<li><a href="https://github.com/HackerspaceBremen/hshb_notifier_be" target="_blank">Code on Github</a></li>
+						<li><a href="https://github.com/HackerspaceBremen/open_space_notifier" target="_blank">Code on Github</a></li>
 					</ul>
 				</div>
 			</div>
