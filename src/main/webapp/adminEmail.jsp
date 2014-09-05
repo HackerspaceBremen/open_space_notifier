@@ -148,6 +148,11 @@
 						</div>
 					</div>
 				</fieldset>
+				<div class="row">
+				  	<div class="large-4 large-offset-8 columns">
+				  		<input type="submit" value="Speichern" class="small button expand success">
+				  	</div>
+			  	</div>
 			</form>
 	            
 	    </div>

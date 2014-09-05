@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
-<nav class="top-bar fixed">
+<nav class="top-bar fixed" data-topbar role="navigation">
 	<ul class="title-area">
 		<li class="name">
 			<h1>

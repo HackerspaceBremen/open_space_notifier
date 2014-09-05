@@ -13,17 +13,6 @@
     <%
 		}
     %>
-    <%
-		if(request.getParameter("child")!=null && request.getParameter("child").equals("true")){
-	%>
-	<link rel="stylesheet" href="../stylesheets/foundation.min.css">
-    <script src="../javascripts/vendor/custom.modernizr.js"></script>
-	<%				
-		}else{
-	%>
-    <link rel="stylesheet" href="stylesheets/foundation.min.css">
-    <script src="javascripts/vendor/custom.modernizr.js"></script>
-    <%				
-		}
-	%>
+    <link rel="stylesheet" href="/stylesheets/foundation.min.css">
+    <script src="/javascripts/vendor/custom.modernizr.js"></script>
 </head>

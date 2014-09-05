@@ -21,7 +21,7 @@
 	
 	<script src="/javascripts/foundation.min.js"></script>
 	<script src="/javascripts/foundation/foundation.topbar.js"></script>
-	<script src="/javascripts/foundation.migrate.js"></script>
+<!-- 	<script src="/javascripts/foundation.migrate.js"></script> -->
 	
 	<script>
 	  $(document).foundation();

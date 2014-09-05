@@ -118,15 +118,15 @@
 							</fieldset>
 							<div class="row">			
 								<div class="large-12 columns">
-									<input id="change_message_btn" class="button" type="button" disabled="disabled" value="&Auml;ndere die Statusmessage" onclick="changeMessageRequest();">
+									<input id="change_message_btn" class="button small round" type="button" disabled="disabled" value="&Auml;ndere die Statusmessage" onclick="changeMessageRequest();">
 									<%
 									if(status == null || !status.getStatus().equals(AppConstants.OPEN)){
 									%>
-									<input id="change_btn" class="button success" type="submit" disabled="disabled" value="Öffne den Space">
+									<input id="change_btn" class="button success small round" type="submit" disabled="disabled" value="Öffne den Space">
 									<%
 									}else{
 									%>
-									<input id="change_btn" class="button error" type="submit" disabled="disabled" value="Schließe den Space">
+									<input id="change_btn" class="button error small round" type="submit" disabled="disabled" value="Schließe den Space">
 									<%
 									}
 									%>
