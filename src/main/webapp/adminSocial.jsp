@@ -29,7 +29,7 @@
    	<div class="row">
    		<div class="large-9 push-3 columns">
 	      
-	      <h2>Soziale Netzwerke</h2>
+	      <h3>Soziale Netzwerke</h3>
 				
 			<!-- TODO -->
 	            

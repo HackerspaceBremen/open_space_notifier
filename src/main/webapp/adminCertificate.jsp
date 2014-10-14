@@ -41,17 +41,19 @@
    	<div class="row">
    		<div class="large-9 push-3 columns">
 	      
-	      <h2>Push-Benachrichtigungen</h2>
+	      <h3>Push-Benachrichtigungen</h3>
 		  
 		  <form action='<%= blobstoreService.createUploadUrl("/admin/certificate/apns") %>' enctype="multipart/form-data" method="POST">
 		  	  <jsp:include page="basicJSPs/validation.jsp" />
 		  	
 			  <div class="row">
 				  <fieldset id="apns_field">
-			  			<div class="large-11 columns">
-						  	<h3>Apple Push Notification Service</h3>
+			  			<div class="row">
+				  			<div class="large-11 columns">
+							  	<h4>Apple Push Notification Service</h4>
+							</div>
 						</div>
-						
+						<br/>
 						<div class="row">
 							<div class="large-8 columns">
 								<label>APNS Zertifikat (.p12):</label>
@@ -68,7 +70,7 @@
 			  
 			  <div class="row">
 			  	<div class="large-4 large-offset-8 columns">
-			  		<input type="submit" value="Speichern" class="large button expand success">
+			  		<input type="submit" value="Speichern" class="small button round success">
 			  	</div>
 			  </div>
 		  </form>

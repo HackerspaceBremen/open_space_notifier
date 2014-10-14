@@ -38,7 +38,7 @@
    	<div class="row">
    		<div class="large-9 push-3 columns">
 	      
-	      <h2>Push-Benachrichtigungen</h2>
+	      <h3>Push-Benachrichtigungen</h3>
 		  
 		  <form action="/admin/push" method="POST">
 		    <jsp:include page="basicJSPs/validation.jsp" />
@@ -47,7 +47,7 @@
 			  	<fieldset id="gcm_field">
 			  		<div class="row">
 			  			<div class="large-11 columns">
-						  	<h3>Google Cloud Messaging</h3>
+						  	<h4>Google Cloud Messaging</h4>
 						</div>
 						<div class="large-1 columns">
 						  	<%
@@ -74,22 +74,24 @@
 			  </div>
 			  <div class="row">
 				  <fieldset id="apns_field">
-			  			<div class="large-11 columns">
-						  	<h3>Apple Push Notification Service</h3>
+			  			<div class="row">
+				  			<div class="large-11 columns">
+							  	<h4>Apple Push Notification Service</h4>
+							</div>
+							<div class="large-1 columns">
+								<%
+							  	if(properties.isApnsEnabled()){
+							  	%>
+							  	<input type="checkbox" id="apns_enable" name="apns_enable" value="true" checked="checked">
+							  	<%
+							  	}else{
+							  	%>
+							  	<input type="checkbox" id="apns_enable" name="apns_enable" value="false">
+							  	<%
+							  	} 
+							  	%>
+						  	</div>
 						</div>
-						<div class="large-1 columns">
-							<%
-						  	if(properties.isApnsEnabled()){
-						  	%>
-						  	<input type="checkbox" id="apns_enable" name="apns_enable" value="true" checked="checked">
-						  	<%
-						  	}else{
-						  	%>
-						  	<input type="checkbox" id="apns_enable" name="apns_enable" value="false">
-						  	<%
-						  	} 
-						  	%>
-					  	</div>
 					<br/>
 					<div class="row">
 						<div class="large-6 columns">
@@ -101,21 +103,23 @@
 			  </div>
 			  <div class="row">
 			  	<fieldset id="mpns_field">
-		  			<div class="large-11 columns">
-					  	<h3>Microsoft Push Notification Service</h3>
-					</div>
-					<div class="large-1 columns">
-					  	<%
-					  	if(properties.isMpnsEnabled()){
-					  	%>
-					  	<input type="checkbox" id="mpns_enable" name="mpns_enable" value="true" checked="checked">
-					  	<%
-					  	}else{
-					  	%>
-					  	<input type="checkbox" id="mpns_enable" name="mpns_enable" value="false">
-					  	<%
-					  	}
-					  	%>
+			  		<div class="row">
+			  			<div class="large-11 columns">
+						  	<h4>Microsoft Push Notification Service</h4>
+						</div>
+						<div class="large-1 columns">
+						  	<%
+						  	if(properties.isMpnsEnabled()){
+						  	%>
+						  	<input type="checkbox" id="mpns_enable" name="mpns_enable" value="true" checked="checked">
+						  	<%
+						  	}else{
+						  	%>
+						  	<input type="checkbox" id="mpns_enable" name="mpns_enable" value="false">
+						  	<%
+						  	}
+						  	%>
+				  		</div>
 				  	</div>
 				<br/>
 				<!-- TODO -->
@@ -124,7 +128,7 @@
 			  
 			  <div class="row">
 			  	<div class="large-4 large-offset-8 columns">
-			  		<input type="submit" value="Speichern" class="large button expand success">
+			  		<input type="submit" value="Speichern" class="small button round success">
 			  	</div>
 			  </div>
 		  </form>

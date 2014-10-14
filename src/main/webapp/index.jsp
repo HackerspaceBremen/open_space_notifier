@@ -104,34 +104,32 @@
 									</div>
 								</div>
 								<div class="row">			
-									<div class="large-7 columns">
+									<div class="large-6 columns">
 										<label for="login">Login:</label>
 										<input id="login" type="text">
 									</div>
-								</div>
-								<div class="row">			
-									<div class="large-7 columns">
+									<div class="large-6 columns">
 										<label for="pass">Passwort:</label>
 										<input id="pass" type="password">
 									</div>
 								</div>
-							</fieldset>
-							<div class="row">			
-								<div class="large-12 columns">
-									<input id="change_message_btn" class="button small round" type="button" disabled="disabled" value="&Auml;ndere die Statusmessage" onclick="changeMessageRequest();">
-									<%
-									if(status == null || !status.getStatus().equals(AppConstants.OPEN)){
-									%>
-									<input id="change_btn" class="button success small round" type="submit" disabled="disabled" value="Öffne den Space">
-									<%
-									}else{
-									%>
-									<input id="change_btn" class="button error small round" type="submit" disabled="disabled" value="Schließe den Space">
-									<%
-									}
-									%>
+								<div class="row">			
+									<div class="large-7 large-centered columns">
+										<input id="change_message_btn" class="button small round" type="button" disabled="disabled" value="&Auml;ndere die Statusmessage" onclick="changeMessageRequest();">
+										<%
+										if(status == null || !status.getStatus().equals(AppConstants.OPEN)){
+										%>
+										<input id="change_btn" class="button success small round" type="submit" disabled="disabled" value="Öffne den Space">
+										<%
+										}else{
+										%>
+										<input id="change_btn" class="button error small round" type="submit" disabled="disabled" value="Schließe den Space">
+										<%
+										}
+										%>
+									</div>
 								</div>
-							</div>
+							</fieldset>
 						</form>
 					</div>
 				</div>
@@ -140,7 +138,7 @@
 		      <ul class="side-nav">
 		        <li><a href="http://www.hackerspace-bremen.de/">Hackerspace Bremen Homepage</a></li>
 		        <li><a href="https://play.google.com/store/apps/details?id=de.hackerspacebremen">Android-App</a></li>
-		        <li><a href="http://code.google.com/p/hackerspace-bremen/wiki/Backend">Webinterface Zugriff</a></li>
+		        <li><a href="https://github.com/HackerspaceBremen/open_space_notifier/wiki/API-V2">API Beschreibung</a></li>
 		        <li><a href="https://chrome.google.com/webstore/detail/apadeikhfnipflbiglhdcilnfocbikhc">Chrome Extension</a></li>
 		        <li><a href="/v2/status.rss" target="_blank">RSS-Feed</a></li>
 		        <li><a href="/v2/status.atom" target="_blank">Atom-Feed</a></li>

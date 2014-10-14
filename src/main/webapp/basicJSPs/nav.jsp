@@ -12,8 +12,7 @@
 
 	<section class="top-bar-section">
 		<ul class="right">
-			<!-- Should be optional -->
-			<li><a href="/email">Eintragen</a></li>
+			<!-- TODO <li><a href="/email">Eintragen</a></li> -->
 			<li><a href="/admin">Admin</a></li>
 		</ul>
 	</section>

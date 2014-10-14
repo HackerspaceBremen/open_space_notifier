@@ -27,7 +27,7 @@
    	<div class="row">
    		<div class="large-9 push-3 columns">
 	      
-	      <h2>Admin-Bereich</h2>
+	      <h3>Admin-Bereich</h3>
 				
 			<p id="info">
 				Willkommen im Admin-Bereich!</br></br>

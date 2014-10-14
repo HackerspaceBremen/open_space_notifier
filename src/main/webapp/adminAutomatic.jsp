@@ -29,7 +29,7 @@
    	<div class="row">
    		<div class="large-9 push-3 columns">
 	      
-	      <h2>Automatische Aufgaben</h2>
+	      <h3>Automatische Aufgaben</h3>
 				
 			<!-- TODO -->
 	            
