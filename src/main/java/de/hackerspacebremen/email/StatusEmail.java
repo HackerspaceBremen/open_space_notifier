@@ -60,10 +60,10 @@ public class StatusEmail{
 
 	public void send(final SpaceStatus spaceStatus) {
 		final String message;
-		if(spaceStatus.getMessage()!=null){
-			message = de.hackerspacebremen.format.MessageFormat.fitMessageSize(spaceStatus.getMessage().getValue());
-		}else{
+		if(spaceStatus.getMessage()==null){
 			message = "";
+		}else{
+			message = de.hackerspacebremen.format.MessageFormat.fitMessageSize(spaceStatus.getMessage().getValue());
 		}
 		final boolean opened = spaceStatus.getStatus().equals(AppConstants.OPEN);
 		final EmailProperties emailProperties = propertyService.fetchEmailProperties();
@@ -75,41 +75,23 @@ public class StatusEmail{
 			msg.setFrom(new InternetAddress(propertyService.findValueByKey(PROJECT_ADMIN_EMAIL), emailProperties.getSenderName()));
 	        msg.addRecipient(Message.RecipientType.TO,
 	                         new InternetAddress(senderAddress, emailProperties.getReceiverName()));
+	        final String subject, status, negatedStatus;
 	        if(opened){
-	        	msg.setSubject(emailProperties.getSubjectTag() + emailProperties.getSubjectOpened(), Constants.UTF8);
-	        }else{
-	        	msg.setSubject(emailProperties.getSubjectTag() + emailProperties.getSubjectClosed(), Constants.UTF8);
-	        }
-	        final String status;
-	        final String negatedStatus;
-	        if(opened){
+	        	subject = emailProperties.getSubjectOpened();
 	        	status = emailProperties.getOpened();
 	        	negatedStatus = emailProperties.getNegatedOpened();
 	        }else{
+	        	subject = emailProperties.getSubjectClosed();
 	        	status = emailProperties.getClosed();
 	        	negatedStatus = emailProperties.getNegatedClosed();
 	        }
-	        final String messageVariable;
-	        final String messageVariable2;
-	        if(message == null || message.isEmpty()){
-	        	messageVariable = "";
-	        	messageVariable2 = "";
-	        }else{
-	        	messageVariable = emailProperties.getMessage();
-	        	messageVariable2 = message + "'";
-	        }
-	        
+	        msg.setSubject(emailProperties.getSubjectTag() + " " + subject, Constants.UTF8);
 	        msg.setHeader("Content-Type", "text/plain; charset=utf-8");
-	        final String content = emailProperties.getContentPart1(status, messageVariable, messageVariable2) + emailProperties.getContentPart2(url) 
-	        		+ emailProperties.getContentPart3(negatedStatus) +emailProperties.getContentPart4();
-	        msg.setText(content);
+	        msg.setText(emailProperties.getContent(status, message, url, negatedStatus));
+	        
 	        Transport.send(msg);
-		} catch (MessagingException e) {
-			logger.warning("MessagingException: " + e.getMessage());
-		} catch (UnsupportedEncodingException e) {
-			logger.warning("UnsupportedEncodingException: " + e.getMessage());
-		} catch(ValidationException e){
-			logger.warning("ValidationException: " + e.getMessage());
-		}
+		} catch (MessagingException | UnsupportedEncodingException | ValidationException e) {
+			logger.warning(e.getClass().getSimpleName() +": " + e.getMessage());
+		} 
 	}
 }

@@ -41,7 +41,7 @@
 	      
 	      	<h3>E-Mail Einstellungen</h3>
 				
-			<form action="/admin/push" method="POST">
+			<form action="/admin/email" method="POST">
 				<jsp:include page="basicJSPs/validation.jsp" />
 				
 				
@@ -102,41 +102,11 @@
 					<div class="row">
 						<div class="large-12 columns">
 							<label>Email-Inhalts</label>
-							<textarea id="content" name="content" placeholder="large-8.columns">TODO</textarea>
+							<textarea id="content" name="content" placeholder="large-8.columns"><%=properties.getContent() %></textarea>
 							<small id="content_error" hidden>Bitte füllen sie den Inhalt!</small>
-							<label>Mögliche Variablen: $STATUS$ $URL$ $NEG_STATUS$ $MESSAGE$ #VARIABLE1? #VARIABLE2?</label>
+							<label>Mögliche Variablen: $STATUS$, $URL$, $NEG_STATUS$, $MESSAGE$</label>
 						</div>
 					</div>
-					<!-- 
-					<div class="row">
-						<div class="large-12 columns">
-							<label>Teil 1 des Email-Inhalts</label>
-							<textarea id="content_part1" name="content_part1" placeholder="large-8.columns"><%=properties.getContentPart1("", "", "") %></textarea>
-							<small id="content_part1_error" hidden>Bitte füllen sie den ersten Teil des Inhalts!</small>
-							<small>#STATUS #VARIABLE1 #VARIABLE2</small>
-						</div>
-					</div>
-					<div class="row">
-						<div class="large-12 columns">
-							<label>Teil 2 des Email-Inhalts</label>
-							<textarea id="content_part2" name="content_part1" placeholder="large-8.columns"><%=properties.getContentPart2("") %></textarea> #URL
-							<small id="content_part2_error" hidden>Bitte füllen sie den zweiten Teil des Inhalts!</small>
-						</div>
-					</div>
-					<div class="row">
-						<div class="large-12 columns">
-							<label>Teil 3 des Email-Inhalts</label>
-							<input id="content_part3" name="content_part3" type="text" value="<%=properties.getContentPart3("") %>"> #NEGIERTER_STATUS
-							<small id="content_part3_error" hidden>Bitte füllen sie den dritten Teil des Inhalts!</small>
-						</div>
-					</div>
-					<div class="row">
-						<div class="large-12 columns">
-							<label>Teil 4 des Email-Inhalts</label>
-							<input id="content_part4" name="content_part4" type="text" value="<%=properties.getContentPart4() %>">
-							<small id="content_part4_error" hidden>Bitte füllen sie den vierten Teil des Inhalts!</small>
-						</div>
-					</div>-->
 					
 					<div class="row">
 						<div class="large-12 columns">

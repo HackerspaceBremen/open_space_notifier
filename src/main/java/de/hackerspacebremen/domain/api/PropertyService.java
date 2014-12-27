@@ -8,18 +8,25 @@ import de.hackerspacebremen.valueobjects.PushProperties;
 public interface PropertyService {
 
 	PushProperties fetchPushProperties();
-	
+
 	CertificateProperties fetchCertificateProperties();
-	
+
 	EmailProperties fetchEmailProperties();
-	
-	PushProperties savePushProperties(final boolean gcmEnabled, 
+
+	PushProperties savePushProperties(final boolean gcmEnabled,
 			final boolean apnsEnabled, final boolean mpnsEnabled,
-			final String gcmKey, final String apnsPassword) 
-					throws ValidationException;
-	
-	CertificateProperties saveAPNSCertificate(
-			final String apnsFileKeyString) throws ValidationException;
-	
+			final String gcmKey, final String apnsPassword)
+			throws ValidationException;
+
+	EmailProperties saveEmailProperties(final String senderName,
+			final String receiverName, final String subjectTag,
+			final String subjectOpened, final String subjectClosed,
+			final String content, final String opened, final String closed,
+			final String negatedOpened, final String negatedClosed)
+			throws ValidationException;
+
+	CertificateProperties saveAPNSCertificate(final String apnsFileKeyString)
+			throws ValidationException;
+
 	String findValueByKey(String key) throws ValidationException;
 }

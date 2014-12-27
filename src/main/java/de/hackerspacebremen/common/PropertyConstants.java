@@ -26,13 +26,15 @@ public class PropertyConstants {
 	
 	public static final String EMAIL_SUBJECT_CLOSED = "email.statuschanged.subject.closed";
 	
-	public static final String EMAIL_CONTENT_PART1 = "email.statuschanged.content";
+	public static final String EMAIL_CONTENT = "email.statuschanged.content";
 	
-	public static final String EMAIL_CONTENT_PART2 = "email.statuschanged.content.2";
-	
-	public static final String EMAIL_CONTENT_PART3 = "email.statuschanged.content.3";
-	
-	public static final String EMAIL_CONTENT_PART4 = "email.statuschanged.content.4";
+//	public static final String EMAIL_CONTENT_PART1 = "email.statuschanged.content";
+//	
+//	public static final String EMAIL_CONTENT_PART2 = "email.statuschanged.content.2";
+//	
+//	public static final String EMAIL_CONTENT_PART3 = "email.statuschanged.content.3";
+//	
+//	public static final String EMAIL_CONTENT_PART4 = "email.statuschanged.content.4";
 	
 	public static final String EMAIL_OPENED = "email.statuschanged.opened";
 	

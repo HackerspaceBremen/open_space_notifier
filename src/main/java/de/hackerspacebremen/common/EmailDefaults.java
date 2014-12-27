@@ -16,13 +16,16 @@ public class EmailDefaults {
 	
 	public static final String EMAIL_DEFAULT_SUBJECT_CLOSED = "Der Space wurde geschlossen";
 	
-	public static final String EMAIL_DEFAULT_CONTENT_PART1 = "\n\nDer Space wurde soeben ";
+	public static final String EMAIL_DEFAULT_CONTENT = "\n\nDer Space wurde soeben $STATUS$$MESSAGE$\n\nDer Space kann über die "
+			+ "URL $URL$ wieder $NEG_STATUS$\n\nFröhliches Hacken,\ndein Hackerspace Bremen Team";
 	
-	public static final String EMAIL_DEFAULT_CONTENT_PART2 = "\n\nDer Space kann über die URL ";
+//	public static final String EMAIL_DEFAULT_CONTENT_PART1 = "\n\nDer Space wurde soeben ";
 	
-	public static final String EMAIL_DEFAULT_CONTENT_PART3 = "wieder ";
+//	public static final String EMAIL_DEFAULT_CONTENT_PART2 = "\n\nDer Space kann über die URL ";
 	
-	public static final String EMAIL_DEFAULT_CONTENT_PART4 = "\n\nFröhliches Hacken,\ndein Hackerspace Bremen Team";
+//	public static final String EMAIL_DEFAULT_CONTENT_PART3 = "wieder ";
+	
+//	public static final String EMAIL_DEFAULT_CONTENT_PART4 = "\n\nFröhliches Hacken,\ndein Hackerspace Bremen Team";
 	
 	public static final String EMAIL_DEFAULT_OPENED = "geöffnet! Es wartet Mate im Space auf dich ... "
 									+ "also mach dich auf den Weg.";

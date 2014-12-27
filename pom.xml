@@ -10,7 +10,7 @@
 
     <properties>
         <appengine.app.version>1</appengine.app.version>
-        <appengine.target.version>1.9.10</appengine.target.version>
+        <appengine.target.version>1.9.17</appengine.target.version>
         <objectify.version>4.0b3</objectify.version>
         <guice.version>3.0</guice.version>
         <testng.version>6.8.5</testng.version>
@@ -114,11 +114,17 @@
 			<artifactId>spring-context</artifactId>
 			<version>3.2.3.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.14.8</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- GCM Server JAR -->
 		<dependency>
 			<groupId>com.google.android.gcm</groupId>
-				<artifactId>gcm-server</artifactId>
-				<version>1.0.2</version>
+			<artifactId>gcm-server</artifactId>
+			<version>1.0.2</version>
 		</dependency>
 		<!-- APNS -->
 		<dependency>
