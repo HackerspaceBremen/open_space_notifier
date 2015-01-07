@@ -13,6 +13,7 @@ import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.valueobjects.EmailProperties;
 import de.hackerspacebremen.valueobjects.PushProperties;
 
 /**
@@ -31,14 +32,15 @@ public final class StatusTaskStarter {
 	
 	public void startTasks(final SpaceStatus status) throws ValidationException{
 		final boolean open = status.getStatus().equals(AppConstants.OPEN);
-		final PushProperties properties = propertyService.fetchPushProperties();
-		if(properties.isMailEnabled()){
+		final PushProperties pushProperties = propertyService.fetchPushProperties();
+		final EmailProperties emailProperties = this.propertyService.fetchEmailProperties();
+		if(emailProperties.isMailEnabled()){
 			this.startMailTask(status, open);
 		}
-		if(properties.isGcmEnabled()){
+		if(pushProperties.isGcmEnabled()){
 			this.startGCMTask(status, open);
 		}
-		if(properties.isApnsEnabled()){
+		if(pushProperties.isApnsEnabled()){
 			this.startAPNSTask(status, open);
 		}
 	}

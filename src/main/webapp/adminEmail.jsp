@@ -1,3 +1,4 @@
+<%@page import="de.hackerspacebremen.valueobjects.PushProperties"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
 <!-- /* -->
@@ -39,9 +40,23 @@
    	<div class="row">
    		<div class="large-9 push-3 columns">
 	      
-	      	<h3>E-Mail Einstellungen</h3>
-				
-			<form action="/admin/email" method="POST">
+	      	<form action="/admin/email" method="POST">
+				<div class="large-11 columns">
+				  	<h3>E-Mail Einstellungen</h3>
+				</div>
+				<div class="large-1 columns">
+				  	<%
+				  	if(properties.isMailEnabled()){
+				  	%>
+				  	<input type="checkbox" id="mail_enable" name="mail_enable" value="true" checked="checked">
+				  	<%
+				  	}else{ 
+				  	%>
+				  	<input type="checkbox" id="mail_enable" name="mail_enable" value="false">
+				  	<%
+				  	} 
+				  	%>
+			  	</div>
 				<jsp:include page="basicJSPs/validation.jsp" />
 				
 				
@@ -102,7 +117,7 @@
 					<div class="row">
 						<div class="large-12 columns">
 							<label>Email-Inhalts</label>
-							<textarea id="content" name="content" placeholder="large-8.columns"><%=properties.getContent() %></textarea>
+							<textarea id="content" name="content" placeholder="large-8.columns" style="height:150px;"><%=properties.getContent() %></textarea>
 							<small id="content_error" hidden>Bitte füllen sie den Inhalt!</small>
 							<label>Mögliche Variablen: $STATUS$, $URL$, $NEG_STATUS$, $MESSAGE$</label>
 						</div>
@@ -111,6 +126,13 @@
 					<div class="row">
 						<div class="large-12 columns">
 							<h4>Variablen für Inhalt</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="large-8 columns">
+							<label>Einleitung für Statusnachricht</label>
+							<input id="message" name="message" type="text" value="<%=properties.getMessage() %>">
+							<small id="message_error" hidden>Bitte setzen Sie die Einleitung für die Statusnachricht!</small>
 						</div>
 					</div>
 					<div class="row">

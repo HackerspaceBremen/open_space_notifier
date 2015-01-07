@@ -60,15 +60,16 @@ public class PropertyServiceValidation extends Validation implements
 	}
 
 	@Override
-	public EmailProperties saveEmailProperties(final String senderName,
-			final String receiverName, final String subjectTag,
-			final String subjectOpened, final String subjectClosed,
+	public EmailProperties saveEmailProperties(final boolean mailEnabled,
+			final String senderName, final String receiverName,
+			final String subjectTag, final String subjectOpened,
+			final String subjectClosed, final String message,
 			final String content, final String opened, final String closed,
 			final String negatedOpened, final String negatedClosed)
 			throws ValidationException {
 		// TODO validation
-		return propertyService.saveEmailProperties(senderName, receiverName,
-				subjectTag, subjectOpened, subjectClosed, content, opened,
-				closed, negatedOpened, negatedClosed);
+		return propertyService.saveEmailProperties(mailEnabled, senderName,
+				receiverName, subjectTag, subjectOpened, subjectClosed,
+				message, content, opened, closed, negatedOpened, negatedClosed);
 	}
 }

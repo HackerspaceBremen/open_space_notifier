@@ -1,18 +1,28 @@
 package de.hackerspacebremen.valueobjects;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public final class PushProperties {
 
+	@Getter
+	@Setter
 	private boolean gcmEnabled;
 	
+	@Getter
+	@Setter
 	private String gcmApiKey;
 	
+	@Getter
+	@Setter
 	private boolean apnsEnabled;
 	
+	@Getter
+	@Setter
 	private boolean mpnsEnabled;
 	
-	private boolean mailEnabled;
-	
-	
+	@Getter
+	@Setter
 	private String apnsPassword;
 	
 	public PushProperties(){
@@ -20,55 +30,6 @@ public final class PushProperties {
 		gcmApiKey = "";
 		apnsEnabled = false;
 		mpnsEnabled = false;
-		mailEnabled = false;
 		apnsPassword = "";
-	}
-
-	public boolean isGcmEnabled() {
-		return gcmEnabled;
-	}
-
-	public void setGcmEnabled(final boolean gcmEnabled) {
-		this.gcmEnabled = gcmEnabled;
-	}
-
-	public boolean isApnsEnabled() {
-		return apnsEnabled;
-	}
-
-	public void setApnsEnabled(final boolean apnsEnabled) {
-		this.apnsEnabled = apnsEnabled;
-	}
-
-	public boolean isMpnsEnabled() {
-		return mpnsEnabled;
-	}
-
-	public void setMpnsEnabled(final boolean mpnsEnabled) {
-		this.mpnsEnabled = mpnsEnabled;
-	}
-
-	public String getGcmApiKey() {
-		return gcmApiKey;
-	}
-
-	public void setGcmApiKey(final String gcmApiKey) {
-		this.gcmApiKey = gcmApiKey;
-	}
-
-	public boolean isMailEnabled() {
-		return mailEnabled;
-	}
-
-	public void setMailEnabled(final boolean mailEnabled) {
-		this.mailEnabled = mailEnabled;
-	}
-
-	public String getApnsPassword() {
-		return apnsPassword;
-	}
-
-	public void setApnsPassword(String apnsPassword) {
-		this.apnsPassword = apnsPassword;
 	}
 }

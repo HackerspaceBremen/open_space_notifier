@@ -53,14 +53,14 @@ public class PropertyServiceImpl implements PropertyService {
 		properties.setApnsPassword(findProperty(APNS_PASSWORD, "").getValue());
 		properties.setMpnsEnabled(Boolean.valueOf(findProperty(MPNS_ENABLED,
 				"false").getValue()));
-		properties.setMailEnabled(Boolean.valueOf(findProperty(MAIL_ENABLED,
-				"false").getValue()));
 		return properties;
 	}
 
 	@Override
 	public EmailProperties fetchEmailProperties() {
 		final EmailProperties properties = emailProperties.get();
+		properties.setMailEnabled(Boolean.valueOf(findProperty(MAIL_ENABLED,
+				"false").getValue()));
 		properties.setSenderName(findProperty(EMAIL_SENDER_NAME,
 				EMAIL_DEFAULT_SENDER_NAME).getValue());
 		properties.setReceiverName(findProperty(EMAIL_RECEIVER_NAME,
@@ -71,14 +71,6 @@ public class PropertyServiceImpl implements PropertyService {
 				EMAIL_DEFAULT_SUBJECT_OPENED).getValue());
 		properties.setSubjectClosed(findProperty(EMAIL_SUBJECT_CLOSED,
 				EMAIL_DEFAULT_SUBJECT_CLOSED).getValue());
-		// properties.setContentPart1(findProperty(EMAIL_CONTENT_PART1,
-		// EMAIL_DEFAULT_CONTENT_PART1).getValue());
-		// properties.setContentPart2(findProperty(EMAIL_CONTENT_PART2,
-		// EMAIL_DEFAULT_CONTENT_PART2).getValue());
-		// properties.setContentPart3(findProperty(EMAIL_CONTENT_PART3,
-		// EMAIL_DEFAULT_CONTENT_PART3).getValue());
-		// properties.setContentPart4(findProperty(EMAIL_CONTENT_PART4,
-		// EMAIL_DEFAULT_CONTENT_PART4).getValue());
 		properties
 				.setContent(findProperty(EMAIL_CONTENT, EMAIL_DEFAULT_CONTENT)
 						.getValue());
@@ -145,23 +137,26 @@ public class PropertyServiceImpl implements PropertyService {
 	}
 
 	@Override
-	public EmailProperties saveEmailProperties(final String senderName,
-			final String receiverName, final String subjectTag,
-			final String subjectOpened, final String subjectClosed,
+	public EmailProperties saveEmailProperties(final boolean mailEnabled,
+			final String senderName, final String receiverName,
+			final String subjectTag, final String subjectOpened,
+			final String subjectClosed, final String message,
 			final String content, final String opened, final String closed,
 			final String negatedOpened, final String negatedClosed)
 			throws ValidationException {
+		this.saveProperty(MAIL_ENABLED, String.valueOf(mailEnabled));
 		this.saveProperty(EMAIL_SENDER_NAME, String.valueOf(senderName));
 		this.saveProperty(EMAIL_RECEIVER_NAME, String.valueOf(receiverName));
 		this.saveProperty(EMAIL_SUBJECT_TAG, String.valueOf(subjectTag));
 		this.saveProperty(EMAIL_SUBJECT_OPENED, String.valueOf(subjectOpened));
 		this.saveProperty(EMAIL_SUBJECT_CLOSED, String.valueOf(subjectClosed));
+		this.saveProperty(EMAIL_MESSAGE, String.valueOf(message));
 		this.saveProperty(EMAIL_CONTENT, String.valueOf(content));
 		this.saveProperty(EMAIL_OPENED, String.valueOf(opened));
 		this.saveProperty(EMAIL_CLOSED, String.valueOf(closed));
 		this.saveProperty(EMAIL_NEGATED_OPENED, String.valueOf(negatedOpened));
 		this.saveProperty(EMAIL_NEGATED_CLOSED, String.valueOf(negatedClosed));
-		
+
 		return this.fetchEmailProperties();
 	}
 

@@ -18,9 +18,10 @@ public interface PropertyService {
 			final String gcmKey, final String apnsPassword)
 			throws ValidationException;
 
-	EmailProperties saveEmailProperties(final String senderName,
-			final String receiverName, final String subjectTag,
-			final String subjectOpened, final String subjectClosed,
+	EmailProperties saveEmailProperties(final boolean mailEnabled,
+			final String senderName, final String receiverName,
+			final String subjectTag, final String subjectOpened,
+			final String subjectClosed, final String message,
 			final String content, final String opened, final String closed,
 			final String negatedOpened, final String negatedClosed)
 			throws ValidationException;

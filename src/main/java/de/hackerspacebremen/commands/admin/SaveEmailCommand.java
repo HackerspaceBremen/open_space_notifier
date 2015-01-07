@@ -34,12 +34,14 @@ public class SaveEmailCommand extends WebCommand {
 		final String content = req.getParameter("content");
 		final String opened = req.getParameter("opened");
 		final String closed = req.getParameter("closed");
+		final String message = req.getParameter("message");
 		final String negatedOpened = req.getParameter("negated_opened");
 		final String negatedClosed = req.getParameter("negated_closed");
+		final boolean mailEnabled = req.getParameter("mail_enable") != null;
 
 		try {
-			propertyService.saveEmailProperties(senderName, receiverName,
-					subjectTag, subjectOpened, subjectClosed, content, opened,
+			propertyService.saveEmailProperties(mailEnabled, senderName, receiverName,
+					subjectTag, subjectOpened, subjectClosed, message, content, opened,
 					closed, negatedOpened, negatedClosed);
 			req.setAttribute("result", "SUCCESS");
 			req.setAttribute("code", Integer.valueOf(0));
