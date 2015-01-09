@@ -3,14 +3,14 @@
 
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
-    <version>2.0.3-SNAPSHOT</version>
+    <version>2.1-SNAPSHOT</version>
 
     <groupId>de.hackerspacebremen</groupId>
     <artifactId>hshb_notifier_be</artifactId>
 
     <properties>
         <appengine.app.version>1</appengine.app.version>
-        <appengine.target.version>1.8.3</appengine.target.version>
+        <appengine.target.version>1.9.17</appengine.target.version>
         <objectify.version>4.0b3</objectify.version>
         <guice.version>3.0</guice.version>
         <testng.version>6.8.5</testng.version>
@@ -114,12 +114,24 @@
 			<artifactId>spring-context</artifactId>
 			<version>3.2.3.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.14.8</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- GCM Server JAR -->
 		<dependency>
 			<groupId>com.google.android.gcm</groupId>
-				<artifactId>gcm-server</artifactId>
-				<version>1.0.2</version>
+			<artifactId>gcm-server</artifactId>
+			<version>1.0.2</version>
 		</dependency>
+		<!-- APNS -->
+		<dependency>
+            <groupId>com.notnoop.apns</groupId>
+            <artifactId>apns</artifactId>
+            <version>0.2.3</version>
+        </dependency>
 		<!-- Commons codec -->
 		<dependency>
 			<groupId>commons-codec</groupId>
@@ -131,6 +143,12 @@
 			<groupId>org.twitter4j</groupId>
 			<artifactId>twitter4j-appengine</artifactId>
 			<version>3.0.3</version>
+		</dependency>
+		<!-- RSS and atom library -->
+		<dependency>
+			<groupId>rome</groupId>
+			<artifactId>rome</artifactId>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 
@@ -170,8 +188,9 @@
                 <version>${appengine.target.version}</version>
                 <configuration><jvmFlags>
 				  <jvmFlag>-Xdebug</jvmFlag>
-					<jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
+					<jvmFlag>-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
 				  </jvmFlags>
+				  <disableUpdateCheck>true</disableUpdateCheck>
 				</configuration>
             </plugin>
         </plugins>

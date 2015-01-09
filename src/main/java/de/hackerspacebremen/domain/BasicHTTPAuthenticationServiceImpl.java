@@ -24,7 +24,7 @@ public final class BasicHTTPAuthenticationServiceImpl implements AuthenticationS
 			logger.info("password is empty!!!");
 		}
 		try {
-		    URL url = new URL("https://api.hackerspace-bremen.de/auth.php");
+		    URL url = new URL("https://api.hackerspace-bremen.de/osn-login");
 		    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		    final String authString = Base64.encodeBase64String((login+":"+pass).getBytes("UTF-8"));
 		    connection.setRequestProperty("Accept-Charset", "UTF-8");

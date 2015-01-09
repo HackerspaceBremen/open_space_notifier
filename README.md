@@ -1,7 +1,7 @@
-hshb_open_notifier_appengine
+Open Space Notifier
 ============================
 
-This repository holds the source code of the open space notifier backend. The backend is hosted on an java appengine 
+This repository holds the source code of the open space notifier, which is a backend for serving the [SpaceAPI](http://spaceapi.net). The backend is hosted on an Google App Engine instance and written with Java. 
 
 
 Projectinformation
@@ -12,25 +12,25 @@ Projectinformation
 Dependencies
 ------------
 
-- objectify (https://code.google.com/p/objectify-appengine) 
-- guice (https://code.google.com/p/google-guice)
+- [Objectify](https://code.google.com/p/objectify-appengine) 
+- [Guice](https://code.google.com/p/google-guice)
 
 Continuous Integration
 ----------------------
 
-The project is build, tested and (in the future) deployed by a jenkins service on cloudbees. You can access is as an 
-read-only anonymous user on https://dragondagda.ci.cloudbees.com/view/hshb_notifier_be%20CI
+The project is build, tested and (in the future) deployed by a Jenkins service on a private server. You can access it as an 
+read-only anonymous user on the [Jenkins of Steve Liedtke](http://tools.steveliedtke.de/jenkins/view/Hackerspace%20Projekte).
 
 Developed By
 ------------
 
-* Steve Liedtke - <sliedtke57@gmail.com>
+* [Steve Liedtke](https://github.com/dragondagda)
 
 
 License
 -------
 
-  Copyright (C) 2013 Hackerspace Bremen e.V.
+  Copyright (C) 2013-14 Hackerspace Bremen e.V.
   
 	This program is free software; you can redistribute it and/or modify it under the terms of the 
 	GNU General Public License as published by the Free Software Foundation; either version 3 of 

@@ -28,10 +28,12 @@ public class ValidationException extends Exception {
 	private final int errorCode;
 
 	public ValidationException() {
+		super("see error code 66");
 		this.errorCode = 66;
 	}
 
 	public ValidationException(final int errorCode) {
+		super("see error code " + errorCode);
 		this.errorCode = errorCode;
 	}
 

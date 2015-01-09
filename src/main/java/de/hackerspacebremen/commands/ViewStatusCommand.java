@@ -23,6 +23,8 @@ import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
+import lombok.Setter;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +33,7 @@ import com.google.inject.Inject;
 
 import de.hackerspacebremen.commands.helper.StatusTimeFormat;
 import de.hackerspacebremen.common.AppConstants;
+import de.hackerspacebremen.common.SpaceAPIVersion;
 import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
@@ -50,6 +53,9 @@ public class ViewStatusCommand extends WebCommand{
     @Proxy
 	private SpaceStatusService statusService;
     
+    @Setter
+    private SpaceAPIVersion apiVersion;
+    
     @Override
     protected void handleSuccess(String message, String result) {
     	super.handleSuccess(message, result);
@@ -63,7 +69,7 @@ public class ViewStatusCommand extends WebCommand{
 			iconJSON.put("open", url+"images/status_auf_48px.png");
 			iconJSON.put("closed", url+"images/status_zu_48px.png");
 			this.result.addValue("icon", iconJSON);
-			this.result.addValue("address", "Bornstrasse 14/15, 28195 Bremen, Germany");
+			this.result.addValue("address", "Bornstraße 14/15, 28195 Bremen, Germany");
 			final JSONObject contactJSON = new JSONObject();
 			contactJSON.put("phone", "+49 421 14 62 92 15");
 			contactJSON.put("twitter", "@hspacehb");

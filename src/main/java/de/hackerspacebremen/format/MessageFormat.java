@@ -37,6 +37,12 @@ public final class MessageFormat {
 		}
 	}
 	
+	public static void fitSmallMessageSize(final SpaceStatus status){
+		if(status.getMessage() != null && status.getMessage().getValue().length()>AppConstants.MESSAGE_SMALL_MAX_SIZE){
+			status.setMessage(new Text(status.getMessage().getValue().substring(0, AppConstants.MESSAGE_SMALL_MAX_SIZE) + " [..]"));
+		}
+	}
+	
 	public static String fitMessageSize(final String message){
 		String result = message;
 		if(message!=null && message.length()>AppConstants.MESSAGE_MAX_SIZE){

@@ -28,6 +28,7 @@ import com.google.inject.Inject;
 import de.hackerspacebremen.commands.helper.StatusTaskStarter;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.domain.api.AuthAttemptService;
 import de.hackerspacebremen.domain.api.AuthenticationService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
@@ -47,12 +48,13 @@ public class OpenSpaceCommand extends WebCommand {
 	
 	@Inject
 	private StatusTaskStarter statusTaskStarter;
+	
+	@Inject
+	private AuthAttemptService authAttemptService;
 
 	
 	@Override
 	public void process() throws ServletException, IOException {
-		
-		
 		try {
 			final String name = this.req.getParameter("name");
 			final String encoded = this.req.getParameter("encoded");
@@ -72,7 +74,9 @@ public class OpenSpaceCommand extends WebCommand {
 				message = this.req.getParameter("message");
 			}
 
-			if (authService.authenticate(name, pass)) {
+			if(authAttemptService.checkAttemptMax(name)){
+				this.handleError(55);
+			}else if (authService.authenticate(name, pass)) {
 				SpaceStatus status = statusService.currentCopyStatus();
 				if (status == null
 						|| status.getStatus().equals(AppConstants.CLOSED)) {

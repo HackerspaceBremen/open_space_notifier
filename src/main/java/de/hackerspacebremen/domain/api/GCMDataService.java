@@ -18,8 +18,6 @@
  */
 package de.hackerspacebremen.domain.api;
 
-import java.io.IOException;
-
 import de.hackerspacebremen.domain.val.ValidationException;
 
 public interface GCMDataService{
@@ -31,5 +29,5 @@ public interface GCMDataService{
 			throws ValidationException;
 
 	void sendMessageToDevices(String message) 
-				throws IOException, ValidationException;
+				throws ValidationException;
 }

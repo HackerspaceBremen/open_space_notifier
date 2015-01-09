@@ -18,8 +18,6 @@
  */
 package de.hackerspacebremen.domain.val;
 
-import java.io.IOException;
-
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.domain.api.GCMDataService;
@@ -42,7 +40,7 @@ public class GCMDataServiceValidation extends Validation implements GCMDataServi
 
 	@Override
 	public void sendMessageToDevices(final String message)
-			throws IOException, ValidationException {
+			throws ValidationException {
 		this.validateIfEmpty(message, 10);
 		gcmDataService.sendMessageToDevices(message);
 	}

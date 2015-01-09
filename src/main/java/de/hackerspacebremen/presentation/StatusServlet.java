@@ -30,6 +30,7 @@ import com.google.inject.Singleton;
 
 import de.hackerspacebremen.MyErrorMessages;
 import de.hackerspacebremen.commands.ViewStatusCommand;
+import de.hackerspacebremen.common.SpaceAPIVersion;
 
 /**
  * This servlet is used to get the status of the hackerspace.
@@ -56,10 +57,32 @@ public class StatusServlet extends OSNServlet {
 		this.viewStatusCommand = viewStatusCommand;
 	}
 
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+	public void doGet(final HttpServletRequest req, final HttpServletResponse resp)
 			throws ServletException, IOException {
+		final String apiVersion = this.extractAPIversion(req.getRequestURI(), "\\/v2\\/status");
+		
 		final ViewStatusCommand cmd = viewStatusCommand.get();
 		cmd.init(req, resp, MyErrorMessages.class);
+		cmd.setApiVersion(SpaceAPIVersion.get(apiVersion));
 		cmd.process();
+	}
+	
+	private String extractAPIversion(final String uri, final String beginningPath){
+		String apiVersion = uri.replaceFirst(beginningPath, "");
+		apiVersion = apiVersion.trim();
+		apiVersion = removeLastCharIf(apiVersion, '/');
+		return apiVersion;
+	}
+	
+	private String removeLastCharIf(final String text, final char character){
+		final String result;
+		final char lastChar = text.charAt(text.length()-1);
+		if(lastChar == character){
+			result = text.substring(0, text.length()-2);
+		}else {
+			result = text;
+		}
+		
+		return result;
 	}
 }

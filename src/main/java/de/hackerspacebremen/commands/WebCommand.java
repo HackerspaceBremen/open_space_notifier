@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.google.inject.Inject;
+import com.googlecode.objectify.ObjectifyService;
 
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.format.FormatFactory;
@@ -100,5 +101,6 @@ public abstract class WebCommand {
 		final String res = result.toString();
 		resp.getWriter().append(res);
 		logger.info(res);
+		ObjectifyService.ofy().clear();
 	}
 }

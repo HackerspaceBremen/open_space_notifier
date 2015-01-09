@@ -24,8 +24,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
+import de.hackerspacebremen.MyErrorMessages;
+import de.hackerspacebremen.commands.push.APNSRegistryCommand;
 import de.hackerspacebremen.presentation.OSNServlet;
 
 @Singleton
@@ -37,9 +41,18 @@ public final class APNSRegistryServlet extends OSNServlet{
 	 */
 	private static final long serialVersionUID = 8333045002930323152L;
 
+	private final Provider<APNSRegistryCommand> apnsRegistryCommand;
+	
+	@Inject
+	public APNSRegistryServlet(final Provider<APNSRegistryCommand> apnsRegistryCommand){
+		this.apnsRegistryCommand = apnsRegistryCommand;
+	}
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// TODO
+		final APNSRegistryCommand cmd = this.apnsRegistryCommand.get();
+		cmd.init(req, resp, MyErrorMessages.class);
+		cmd.process();
 	}
 }

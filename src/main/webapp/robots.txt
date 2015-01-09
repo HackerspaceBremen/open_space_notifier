@@ -1,0 +1,12 @@
+# robots.txt of the open space notifier
+
+User-agent: *
+Disallow: /basicJSPs/
+Disallow: /WEB-INF/
+Disallow: /admin
+Disallow: /cmd/
+Disallow: /v2/
+Disallow: /status/
+Disallow: /register/
+Disallow: /unregister/
+Disallow: /cron/
