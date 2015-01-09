@@ -3,6 +3,18 @@ Open Space Notifier
 
 This repository holds the source code of the open space notifier, which is a backend for serving the [SpaceAPI](http://spaceapi.net). The backend is hosted on an Google App Engine instance and written with Java. 
 
+This project is used in the following spaces:
+* [Hackerspace Bremen](https://hackerspacehb.appspot.com)
+
+There are several clients which use the Open Space Notifier as its backend:
+* [hsbh_schedule_app_ios](https://github.com/HackerspaceBremen/hsbh_schedule_app_ios)
+* [hshb_notifier_android](https://github.com/HackerspaceBremen/hshb_notifier_android)
+* [hsp](https://github.com/HackerspaceBremen/hsp)
+* [hshb_notifier_win](https://github.com/HackerspaceBremen/hshb_notifier_win)
+* [hshb_notifier_chrome_ext](https://github.com/HackerspaceBremen/hshb_notifier_chrome_ext)
+* [hshb_aastra](https://github.com/HackerspaceBremen/hshb_aastra)
+
+Be aware that the most of these clients are created for a specific space, so you need to change the code to your needs.
 
 Projectinformation
 ------------------
@@ -23,10 +35,11 @@ Continuous Integration
 The project is build and tested by a Jenkins service on a private server. You can access it as an 
 read-only anonymous user on the [Jenkins of Steve Liedtke](http://tools.steveliedtke.de/jenkins/view/Hackerspace%20Projekte).
 
-Developed By
+Contributors
 ------------
 
-* [Steve Liedtke](https://github.com/dragondagda)
+* [dragondagda](https://github.com/dragondagda)
+* [mkochenough](https://github.com/mkochenough)
 
 
 License
