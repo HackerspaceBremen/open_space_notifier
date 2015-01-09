@@ -18,7 +18,9 @@ Dependencies
 Continuous Integration
 ----------------------
 
-The project is build, tested and (in the future) deployed by a Jenkins service on a private server. You can access it as an 
+[![Build Status](http://tools.steveliedtke.de/jenkins/job/open%20space%20notifier%20-%20master/badge/icon)](http://tools.steveliedtke.de/jenkins/job/open%20space%20notifier%20-%20master/)
+
+The project is build and tested by a Jenkins service on a private server. You can access it as an 
 read-only anonymous user on the [Jenkins of Steve Liedtke](http://tools.steveliedtke.de/jenkins/view/Hackerspace%20Projekte).
 
 Developed By
@@ -30,7 +32,7 @@ Developed By
 License
 -------
 
-  Copyright (C) 2013-14 Hackerspace Bremen e.V.
+  Copyright (C) 2013-15 Hackerspace Bremen e.V.
   
 	This program is free software; you can redistribute it and/or modify it under the terms of the 
 	GNU General Public License as published by the Free Software Foundation; either version 3 of 
