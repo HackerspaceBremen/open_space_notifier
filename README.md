@@ -11,7 +11,7 @@ There are several clients which use the Open Space Notifier as its backend:
 * [hshb_notifier_android](https://github.com/HackerspaceBremen/hshb_notifier_android)
 * [hsp](https://github.com/HackerspaceBremen/hsp)
 * [hshb_notifier_win](https://github.com/HackerspaceBremen/hshb_notifier_win)
-* [hshb_notifier_chrome_ext](https://github.com/HackerspaceBremen/hshb_notifier_chrome_ext)
+* [osn_chrome_ext](https://github.com/HackerspaceBremen/osn_chrome_ext)
 * [hshb_aastra](https://github.com/HackerspaceBremen/hshb_aastra)
 
 Be aware that the most of these clients are created for a specific space, so you need to change the code to your needs.
