@@ -20,6 +20,18 @@ Projectinformation
 ------------------
 
 - Build with maven
+- api to call the space open/closed
+- user authentification by 
+  - calling external basic http auth service
+- Push notification to users incase the space status changed
+  - Google Cloud Messaging (Android with GPlay/Chrome)
+  - APNS (not working properly yet)
+  - E-Mail
+  - More to follow: Twitter, MPNS, SNS
+- Admin-Site
+  - To set API-Keys for the application
+  - To set content of email
+  - More to follow: Visualization of User-Agents, Information about status changes (Who changed? When? etc.)
 
 Dependencies
 ------------
