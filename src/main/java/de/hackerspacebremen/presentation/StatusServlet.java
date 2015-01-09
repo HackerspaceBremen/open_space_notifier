@@ -35,54 +35,58 @@ import de.hackerspacebremen.common.SpaceAPIVersion;
 /**
  * This servlet is used to get the status of the hackerspace.
  * 
- * States:
- * -Open
- * -Close
+ * States: -Open -Close
  * 
  * @author Steve Liedtke
  */
 @Singleton
 public class StatusServlet extends OSNServlet {
-	
-	
+
 	/**
 	 * generated serialVersionUID.
 	 */
 	private static final long serialVersionUID = -8784338611898492134L;
-	
+
 	private final Provider<ViewStatusCommand> viewStatusCommand;
-	
+
 	@Inject
-	public StatusServlet(final Provider<ViewStatusCommand> viewStatusCommand){
+	public StatusServlet(final Provider<ViewStatusCommand> viewStatusCommand) {
 		this.viewStatusCommand = viewStatusCommand;
 	}
 
-	public void doGet(final HttpServletRequest req, final HttpServletResponse resp)
-			throws ServletException, IOException {
-		final String apiVersion = this.extractAPIversion(req.getRequestURI(), "\\/v2\\/status");
-		
+	public void doGet(final HttpServletRequest req,
+			final HttpServletResponse resp) throws ServletException,
+			IOException {
+		final String apiVersion = this.extractAPIversion(req.getRequestURI(),
+				"\\/v2\\/status");
+
 		final ViewStatusCommand cmd = viewStatusCommand.get();
 		cmd.init(req, resp, MyErrorMessages.class);
 		cmd.setApiVersion(SpaceAPIVersion.get(apiVersion));
 		cmd.process();
 	}
-	
-	private String extractAPIversion(final String uri, final String beginningPath){
+
+	private String extractAPIversion(final String uri,
+			final String beginningPath) {
 		String apiVersion = uri.replaceFirst(beginningPath, "");
 		apiVersion = apiVersion.trim();
 		apiVersion = removeLastCharIf(apiVersion, '/');
 		return apiVersion;
 	}
-	
-	private String removeLastCharIf(final String text, final char character){
+
+	private String removeLastCharIf(final String text, final char character) {
 		final String result;
-		final char lastChar = text.charAt(text.length()-1);
-		if(lastChar == character){
-			result = text.substring(0, text.length()-2);
-		}else {
-			result = text;
+		if (text == null || text.isEmpty()) {
+			result = "";
+		}else{
+			final char lastChar = text.charAt(text.length() - 1);
+			if (lastChar == character) {
+				result = text.substring(0, text.length() - 2);
+			} else {
+				result = text;
+			}
 		}
-		
+
 		return result;
 	}
 }
