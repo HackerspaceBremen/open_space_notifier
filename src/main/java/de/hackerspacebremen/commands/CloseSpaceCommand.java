@@ -26,6 +26,7 @@ import javax.servlet.ServletException;
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.commands.helper.StatusTaskStarter;
+import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.domain.api.AuthAttemptService;
@@ -80,7 +81,7 @@ public class CloseSpaceCommand extends WebCommand{
 				if(status == null || status.getStatus().equals(AppConstants.OPEN)){
 					status = statusService.closeSpace(name, message);
 					this.statusTaskStarter.startTasks(status);
-					this.handleSuccess("Space was closed", null);
+					this.handleSuccess(new BasicResultObject("Space was closed"));
 				}else{
 					this.handleError(4);
 				}

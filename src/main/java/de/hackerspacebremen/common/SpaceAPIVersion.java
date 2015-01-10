@@ -7,29 +7,36 @@ import lombok.Getter;
 
 public enum SpaceAPIVersion {
 
-	UNKNOWN("unknown"),
+	UNKNOWN("unknown", 0),
 
-	API_0_08("0.8"),
+	API_0_08("0.8", 8),
 
-	API_0_09("0.9"),
+	API_0_09("0.9", 9),
 
-	API_0_11("0.11"),
+	API_0_11("0.11", 11),
 
-	API_0_12("0.12"),
+	API_0_12("0.12", 12),
 
-	API_0_13("0.13");
+	API_0_13("0.13", 13);
 
 	@Getter
 	private final String value;
 	
-	private SpaceAPIVersion(final String value){
+	private final int version;
+	
+	private SpaceAPIVersion(final String value, final int version){
 		this.value = value;
+		this.version = version;
 	}
 	
 	@JsonValue
 	@Override
 	public String toString() {
 		return this.value;
+	}
+	
+	public boolean isNewer(final int versionNumber){
+		return versionNumber>=this.version;
 	}
 
 	public static SpaceAPIVersion get(final String apiVersionString) {

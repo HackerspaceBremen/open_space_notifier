@@ -44,8 +44,8 @@ public final class SpeakingDateFormat {
 		// nothing to implement
 	}
 	
-	public static void setFormat(final String format){
-		if(format!=null && format.equals("de")){
+	public static void setFormat(final LanguageFormat format){
+		if(format == LanguageFormat.GERMAN){
 			final String[] deFormat = {"heute", "gestern", "um", "Uhr"};
 			final String[] deWeekdays = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
 			FORMAT_ADS = deFormat;

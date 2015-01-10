@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 
 import com.google.inject.Inject;
 
+import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
 import de.hackerspacebremen.domain.api.AuthAttemptService;
 import de.hackerspacebremen.domain.api.AuthenticationService;
 import de.hackerspacebremen.domain.val.ValidationException;
@@ -39,7 +40,7 @@ public class VerifyLoginCommand extends WebCommand{
 			if(authAttemptService.checkAttemptMax(name)){
 				this.handleError(55);
 			}else if (authService.authenticate(name, pass)) {
-				this.handleSuccess("Credentials are valid", null);
+				this.handleSuccess(new BasicResultObject("Credentials are valid"));
 			}else{
 				this.handleError(1);
 			}

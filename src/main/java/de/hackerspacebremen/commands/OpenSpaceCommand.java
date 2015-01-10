@@ -26,6 +26,7 @@ import javax.servlet.ServletException;
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.commands.helper.StatusTaskStarter;
+import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.domain.api.AuthAttemptService;
@@ -82,7 +83,7 @@ public class OpenSpaceCommand extends WebCommand {
 						|| status.getStatus().equals(AppConstants.CLOSED)) {
 					status = statusService.openSpace(name, message);
 					statusTaskStarter.startTasks(status);
-					this.handleSuccess("Space was opened", null);
+					this.handleSuccess(new BasicResultObject("Space was opened"));
 				} else {
 					this.handleError(3);
 				}

@@ -25,10 +25,9 @@ public class FormatFactory {
 		// do nothing
 	}
 
-	public static Formatter getFormatter(final String kind) {
-		final ResultKind resultKind = ResultKind.find(kind);
+	public static Formatter getFormatter(final ResultKind kind) {
 		Formatter formatter = null;
-		switch (resultKind) {
+		switch (kind) {
 		case JSON:
 			formatter = new JSONFormatter();
 			break;

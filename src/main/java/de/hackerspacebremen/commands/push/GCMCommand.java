@@ -26,6 +26,7 @@ import javax.servlet.ServletException;
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.commands.WebCommand;
+import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.domain.api.GCMDataService;
@@ -34,6 +35,7 @@ import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.format.FormatException;
 import de.hackerspacebremen.format.FormatFactory;
 import de.hackerspacebremen.format.MessageFormat;
+import de.hackerspacebremen.format.ResultKind;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
 
@@ -60,12 +62,12 @@ public class GCMCommand extends WebCommand{
 			if(statusId != null && status.getId().equals(Long.valueOf(statusId))){
 				status = statusService.currentCopyStatus();
 				MessageFormat.fitMessageSize(status);
-				final String kind = req.getParameter("format");
+				final ResultKind kind = ResultKind.find(req.getParameter("format"));
 				
 				gcmDataService.sendMessageToDevices(FormatFactory.getFormatter(kind).format(status, AppConstants.LEVEL_VIEW));
-				this.handleSuccess("Messages were sent to the GCM server!", null);
+				this.handleSuccess(new BasicResultObject("Messages were sent to the GCM server!"));
 			}else{
-				this.handleSuccess("The given status id is not valid anymore! The message couldn't be send ...'", null);
+				this.handleSuccess(new BasicResultObject("The given status id is not valid anymore! The message couldn't be send ...'"));
 			}
 		}catch(ValidationException ve){
 			this.handleError(ve);

@@ -26,15 +26,14 @@ import javax.servlet.ServletException;
 
 import com.google.inject.Inject;
 
-import de.hackerspacebremen.commands.helper.StatusTimeFormat;
-import de.hackerspacebremen.common.AppConstants;
+import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
+import de.hackerspacebremen.commands.resultobjects.Status;
 import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.domain.api.AuthAttemptService;
 import de.hackerspacebremen.domain.api.AuthenticationService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.format.FormatException;
-import de.hackerspacebremen.format.FormatFactory;
+import de.hackerspacebremen.format.LanguageFormat;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
 
@@ -93,12 +92,11 @@ public class MessageCommand extends WebCommand{
 				if(format==null || format.isEmpty()){
 					timeOfCurrent = "" + status.getTime();
 				}else{
-					final String kind = req.getParameter("format");
-					timeOfCurrent = new StatusTimeFormat(FormatFactory.getFormatter(kind).format(status, AppConstants.LEVEL_VIEW), status).createTimeFormat(format);
+					timeOfCurrent = new Status(status, LanguageFormat.createInstance(format)).getTime();
 				}
 				if(time != null && timeOfCurrent.equals(time)){
 					statusService.changeMessage(status, message);
-					this.handleSuccess("Statusmessage was changed", null);
+					this.handleSuccess(new BasicResultObject("Statusmessage was changed"));
 				}else{
 					this.handleError(19);
 				}
@@ -107,9 +105,7 @@ public class MessageCommand extends WebCommand{
 			}
 		}catch(ValidationException ve){
 			this.handleError(ve);
-		} catch (FormatException e) {
-			this.handleError(77);
-		}
+		} 
 		
 		//closing all
 		super.process();

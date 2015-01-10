@@ -25,6 +25,7 @@ import javax.servlet.ServletException;
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.commands.WebCommand;
+import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
 import de.hackerspacebremen.domain.api.GCMDataService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
@@ -40,7 +41,7 @@ public class GCMRegistryCommand extends WebCommand{
 	public void process() throws ServletException, IOException {
 		try{
 			gcmService.register(req.getParameter("deviceId"), req.getParameter("registrationId"));
-			this.handleSuccess("Your registry was successful", null);
+			this.handleSuccess(new BasicResultObject("Your registry was successful"));
 		}catch(ValidationException e){
 			this.handleError(e);
 		}

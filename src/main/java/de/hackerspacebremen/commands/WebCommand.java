@@ -25,14 +25,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.NonNull;
+
 import org.json.JSONObject;
 
 import com.google.inject.Inject;
 import com.googlecode.objectify.ObjectifyService;
 
+import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
 import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.format.FormatFactory;
-import de.hackerspacebremen.format.Formatter;
+import de.hackerspacebremen.format.ResultKind;
 import de.hackerspacebremen.util.ErrorMessages;
 import de.hackerspacebremen.util.Result;
 
@@ -53,24 +55,16 @@ public abstract class WebCommand {
 
 	protected Result result;
 
-	protected Formatter formatter;
-
 	@Inject
 	protected ErrorMessages errorMessages;
 
 	
-	public <T extends ErrorMessages> void init(final HttpServletRequest req,
-			final HttpServletResponse resp, final Class<T> errorMessageClass) {
-		if (req == null || resp == null) {
-			logger.warning(this.getClass().getSimpleName()
-					+ ": Response and/or Request are null!");
-			throw new NullPointerException();
-		}
-		final String kind = req.getParameter("format");
+	public <T extends ErrorMessages> void init(@NonNull final HttpServletRequest req,
+			@NonNull final HttpServletResponse resp, final Class<T> errorMessageClass) {
+		final ResultKind kind = ResultKind.find(req.getParameter("format"));
 		this.result = new Result(kind, errorMessages);
 		this.req = req;
 		this.resp = resp;
-		this.formatter = FormatFactory.getFormatter(kind);
 	}
 
 	protected void handleError(ValidationException ve) {
@@ -79,26 +73,26 @@ public abstract class WebCommand {
 
 	protected void handleError(final int errorCode) {
 		resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		final String error;
-		if (this.errorMessages == null) {
-			error = "";
-		} else {
-			error = this.errorMessages.getMessage(errorCode);
-		}
-		result.addError(error, errorCode);
+		result.addError(errorCode);
 	}
 
-	protected void handleSuccess(final String message, final String result) {
+	protected void handleSuccess(final BasicResultObject result){
 		resp.setStatus(HttpServletResponse.SC_OK);
-		this.result.addSuccess(message);
-		if (result != null)
-			this.result.addResult(result);
+		this.result.addSuccess(result);
 	}
+	
+//	@Deprecated
+//	protected void handleSuccess(final String message, final String result) {
+//		resp.setStatus(HttpServletResponse.SC_OK);
+//		this.result.addSuccess(message);
+//		if (result != null)
+//			this.result.addResult(result);
+//	}
 
 	public void process() throws ServletException, IOException {
 		resp.setHeader("Content-Type", "text/javascript; charset=UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-		final String res = result.toString();
+		final String res = this.result.toString();
 		resp.getWriter().append(res);
 		logger.info(res);
 		ObjectifyService.ofy().clear();

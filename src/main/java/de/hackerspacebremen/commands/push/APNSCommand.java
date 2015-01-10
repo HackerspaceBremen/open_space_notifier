@@ -2,24 +2,21 @@ package de.hackerspacebremen.commands.push;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.commands.WebCommand;
+import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.domain.api.APNSDataService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.format.FormatException;
-import de.hackerspacebremen.format.FormatFactory;
 import de.hackerspacebremen.format.MessageFormat;
 import de.hackerspacebremen.format.SpeakingDateFormat;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
-import de.hackerspacebremen.util.Constants;
 
 public class APNSCommand extends WebCommand{
 	
@@ -30,11 +27,6 @@ public class APNSCommand extends WebCommand{
 	@Inject
 	@Proxy
     private APNSDataService apnsDataService;
-	
-//	/**
-//     * static attribute used for logging.
-//     */
-//    private static final Logger logger = Logger.getLogger(APNSCommand.class.getName());
 
 	
 	@Override
@@ -55,9 +47,9 @@ public class APNSCommand extends WebCommand{
 				}
 				
 				apnsDataService.sendMessageToDevices(statusShort, status.getMessage().toString());
-				this.handleSuccess("Messages were sent to the APNS server!", null);
+				this.handleSuccess(new BasicResultObject("Messages were sent to the APNS server!"));
 			}else{
-				this.handleSuccess("The given status id is not valid anymore! The message couldn't be send ...'", null);
+				this.handleSuccess(new BasicResultObject("The given status id is not valid anymore! The message couldn't be send ...'"));
 			}
 		}catch(ValidationException ve){
 			this.handleError(ve);

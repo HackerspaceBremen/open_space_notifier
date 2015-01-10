@@ -7,23 +7,25 @@ import org.testng.annotations.Test;
 
 import com.google.inject.Inject;
 
-import de.hackerspacebremen.commands.resultobjects.v12.ContactV12;
-import de.hackerspacebremen.commands.resultobjects.v12.IconV12;
+import de.hackerspacebremen.commands.resultobjects.v11.Icon;
 import de.hackerspacebremen.commands.resultobjects.v12.StatusV12;
+import de.hackerspacebremen.commands.resultobjects.v9.Contact;
 import de.hackerspacebremen.format.JacksonInstance;
 
 @Guice
 @Test
-public final class Statusv12Test {
+public final class StatusV12Test {
 
 	@Inject
 	private JacksonInstance jacksonInstance;
+	private static final String JSON_RESULT = "{\"api\":\"0.12\",\"space\":\"Hackerspace Bremen e.V.\",\"logo\":\"http://example.com/images/hackerspace_icon.png\",\"url\":\"http://www.hackerspace-bremen.de\",\"address\":\"Bornstraße 14/15, 28195 Bremen, Germany\",\"lat\":53.08177947998047,\"lon\":8.805830955505371,\"contact\":{\"phone\":\"+49 421 14 62 92 15\",\"twitter\":\"@hspacehb\",\"email\":\"info@hackerspace-bremen.de\"},\"icon\":{\"open\":\"http://example.com/images/status_auf_48px.png\",\"closed\":\"http://example.com/images/status_zu_48px.png\"},\"open\":false,\"status\":\"po\",\"lastchange\":1420661704,\"SUCCESS\":\"Status found\",\"RESULT\":{\"ST2\":\"1420661704902\",\"ST3\":\"CLOSED\",\"ST5\":\"po\"}}";
 	
 	public void formatTest() {
 		final StatusV12 status = this.testData();
 		
 		final String test = this.jacksonInstance.write(status);
 		Assert.assertNotNull(test);
+		Assert.assertEquals(JSON_RESULT, test);
 	}
 
 	private StatusV12 testData() {
@@ -31,7 +33,7 @@ public final class Statusv12Test {
 
 		status.setAddress("Bornstraße 14/15, 28195 Bremen, Germany");
 
-		final ContactV12 contact = new ContactV12();
+		final Contact contact = new Contact();
 		contact.setEmail("info@hackerspace-bremen.de");
 		contact.setPhone("+49 421 14 62 92 15");
 		contact.setTwitter("@hspacehb");
@@ -40,7 +42,7 @@ public final class Statusv12Test {
 		status.setError(null);
 		status.setErrorCode(null);
 
-		final IconV12 icon = new IconV12();
+		final Icon icon = new Icon();
 		icon.setOpen("http://example.com/images/status_auf_48px.png");
 		icon.setClosed("http://example.com/images/status_zu_48px.png");
 		status.setIcon(icon);

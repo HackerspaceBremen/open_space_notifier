@@ -4,33 +4,35 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;
 
+@Data
 @JsonInclude(Include.NON_NULL)
-public class AbstractResult {
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper=false)
+public class BasicResultObject {
 
-	/**
-	 * SUCCESS.
-	 */
-	@Getter
-	@Setter
 	@JsonProperty("SUCCESS")
 	private String success;
 	
-	/**
-	 * ERROR.
-	 */
 	@Getter
 	@Setter
 	@JsonProperty("ERROR")
 	private String error;
 	
-	/**
-	 * CODE.
-	 */
 	@Getter
 	@Setter
 	@JsonProperty("CODE")
 	private Integer errorCode;
+	
+	@JsonProperty("WARN")
+	private String warn;
+	
+	public BasicResultObject(final String success){
+		this.success = success;
+	}
 }

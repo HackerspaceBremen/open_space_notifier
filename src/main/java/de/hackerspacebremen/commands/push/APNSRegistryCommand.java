@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.commands.WebCommand;
+import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
 import de.hackerspacebremen.domain.api.APNSDataService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
@@ -21,7 +22,7 @@ public class APNSRegistryCommand extends WebCommand{
 	public void process() throws ServletException, IOException {
 		try{
 			apnsDataService.register(req.getParameter("deviceId"), req.getParameter("deviceToken"));
-			this.handleSuccess("Your registry was successful", null);
+			this.handleSuccess(new BasicResultObject("Your registry was successful"));
 		}catch(ValidationException e){
 			this.handleError(e);
 		}
