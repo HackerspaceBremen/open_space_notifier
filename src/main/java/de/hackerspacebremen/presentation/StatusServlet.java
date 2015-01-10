@@ -81,7 +81,11 @@ public class StatusServlet extends OSNServlet {
 		}else{
 			final char lastChar = text.charAt(text.length() - 1);
 			if (lastChar == character) {
-				result = text.substring(0, text.length() - 2);
+				if(text.length()<=1){
+					result = "";
+				}else{
+					result = text.substring(0, text.length() - 2);
+				}
 			} else {
 				result = text;
 			}

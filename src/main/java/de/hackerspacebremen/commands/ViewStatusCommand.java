@@ -19,6 +19,8 @@
 package de.hackerspacebremen.commands;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 
@@ -31,6 +33,7 @@ import de.hackerspacebremen.commands.resultobjects.Status;
 import de.hackerspacebremen.commands.resultobjects.v11.Icon;
 import de.hackerspacebremen.commands.resultobjects.v11.StatusV11;
 import de.hackerspacebremen.commands.resultobjects.v12.StatusV12;
+import de.hackerspacebremen.commands.resultobjects.v13.IssueReport;
 import de.hackerspacebremen.commands.resultobjects.v13.Location;
 import de.hackerspacebremen.commands.resultobjects.v13.SpaceFED;
 import de.hackerspacebremen.commands.resultobjects.v13.State;
@@ -118,7 +121,7 @@ public class ViewStatusCommand extends WebCommand {
 		contact.setGoogle(google);
 		// contact.setIdentica(identica);
 		contact.setIrc("irc://irc.freenode.net/#hshb");
-		// contact.setIssueMail(issueMail);
+		contact.setIssueMail("notifier@hackerspace-bremen.de");
 		// contact.setJabber(jabber);
 		// contact.setKeymaster(keymaster);
 		contact.setMailinglist("public@lists.hackerspace-bremen.de");
@@ -129,7 +132,9 @@ public class ViewStatusCommand extends WebCommand {
 		statusResult.setContact(contact);
 
 		// statusResult.setFeeds(feeds);
-		// statusResult.setIssueReportChannels(issueReportChannels);
+		final List<IssueReport>issueReports = new ArrayList<>();
+		issueReports.add(IssueReport.ISSUE_MAIL);
+		statusResult.setIssueReportChannels(issueReports);
 		final Location location = new Location();
 		location.setAddress("Bornstraße 14/15, 28195 Bremen, Germany");
 		location.setLat(53.08178);

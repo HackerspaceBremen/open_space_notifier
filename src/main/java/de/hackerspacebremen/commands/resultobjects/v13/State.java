@@ -16,7 +16,7 @@ public final class State {
 
 	private boolean open;
 	
-	private long lastchange;
+	private Long lastchange;
 	
 	@JsonProperty("trigger_person")
 	private String triggerPerson;

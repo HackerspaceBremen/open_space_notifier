@@ -23,7 +23,8 @@
 <%@ page import="com.google.inject.Injector"%>
 <%@ page import="com.google.inject.Guice"%>
 <%@ page import="de.hackerspacebremen.domain.api.SpaceStatusService" %>
-<%@ page import="de.hackerspacebremen.commands.helper.StatusTimeFormat" %>
+<%@ page import="de.hackerspacebremen.commands.resultobjects.Status" %>
+<%@ page import="de.hackerspacebremen.format.LanguageFormat" %>
 
 <%
 	final Injector inj = (Injector) pageContext.getServletContext().getAttribute(Injector.class.getName());
@@ -63,8 +64,9 @@
 								<b>Der Space wurde bisher noch nie geöffnet!</b>
 							<%
 								}else{
+									final String time = new Status(status, LanguageFormat.createInstance("de")).getTime();
 							%>
-								<%= new StatusTimeFormat("", status).createTimeFormat("de") %>
+								<%= time %>
 							<%
 								}
 							%>
