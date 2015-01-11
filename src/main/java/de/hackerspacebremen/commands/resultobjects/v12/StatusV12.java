@@ -1,6 +1,7 @@
 package de.hackerspacebremen.commands.resultobjects.v12;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,15 +69,41 @@ public final class StatusV12 extends BasicResultObject implements IStatus {
 				this.events.add(new Event(eventV13));
 			}
 		}
-		// TODO feeds
+		if(statusV13.getFeeds() != null) {
+			this.feeds = new ArrayList<>();
+			if(statusV13.getFeeds().getBlog() != null){
+				this.feeds.add(new Feed(statusV13.getFeeds().getBlog(), "blog"));
+			}
+			if(statusV13.getFeeds().getCalendar() != null){
+				this.feeds.add(new Feed(statusV13.getFeeds().getCalendar(), "calendar"));
+			}
+			if(statusV13.getFeeds().getFlickr() != null){
+				this.feeds.add(new Feed(statusV13.getFeeds().getFlickr(), "flickr"));
+			}
+			if(statusV13.getFeeds().getWiki() != null){
+				this.feeds.add(new Feed(statusV13.getFeeds().getWiki(), "wiki"));
+			}
+		}
 		this.icon = statusV13.getState().getIcon();
 		this.lat = statusV13.getLocation().getLat();
 		this.lon = statusV13.getLocation().getLon();
 		this.logo = statusV13.getLogo();
 		this.result = status;
 		// TODO sensors
+		
 		this.space = statusV13.getSpace();
-		// TODO stream
+		if(statusV13.getStream() != null){
+			this.stream = new HashMap<>();
+			if(statusV13.getStream().getM4() != null){
+				this.stream.put("m4", statusV13.getStream().getM4());
+			}
+			if(statusV13.getStream().getMjpeg() != null){
+				this.stream.put("mjpeg", statusV13.getStream().getMjpeg());
+			}
+			if(statusV13.getStream().getUstream() != null){
+				this.stream.put("ustream", statusV13.getStream().getUstream());
+			}
+		}
 		this.url = statusV13.getUrl();
 		this.lastchange = statusV13.getState().getLastchange();
 	}

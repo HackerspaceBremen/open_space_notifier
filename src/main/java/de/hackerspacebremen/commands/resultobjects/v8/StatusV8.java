@@ -1,14 +1,17 @@
 package de.hackerspacebremen.commands.resultobjects.v8;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
-import de.hackerspacebremen.commands.resultobjects.IStatus;
-import de.hackerspacebremen.commands.resultobjects.v13.StatusV13;
-import de.hackerspacebremen.common.SpaceAPIVersion;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
+import de.hackerspacebremen.commands.resultobjects.IStatus;
+import de.hackerspacebremen.commands.resultobjects.v13.EventV13;
+import de.hackerspacebremen.commands.resultobjects.v13.StatusV13;
+import de.hackerspacebremen.common.SpaceAPIVersion;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
@@ -43,6 +46,33 @@ public final class StatusV8 extends BasicResultObject implements IStatus{
 	private List<Event> events;
 	
 	public StatusV8(final StatusV13 status) {
-		// TODO
+		this.address = status.getLocation().getAddress();
+		this.cam = status.getCam();
+		if (status.getEvents() != null) {
+			this.events = new ArrayList<>(status.getEvents().size());
+			for (final EventV13 eventV13 : status.getEvents()) {
+				this.events.add(new Event(eventV13));
+			}
+		}
+		this.lastchange = status.getState().getLastchange();
+		this.lat = status.getLocation().getLat();
+		this.logo = status.getLogo();
+		this.lon = status.getLocation().getLon();
+		this.open = status.getState().isOpen();
+		this.space = status.getSpace();
+		this.status = status.getState().getMessage();
+		if(status.getStream() != null){
+			this.stream = new HashMap<>();
+			if(status.getStream().getM4() != null){
+				this.stream.put("m4", status.getStream().getM4());
+			}
+			if(status.getStream().getMjpeg() != null){
+				this.stream.put("mjpeg", status.getStream().getMjpeg());
+			}
+			if(status.getStream().getUstream() != null){
+				this.stream.put("ustream", status.getStream().getUstream());
+			}
+		}
+		this.url = status.getUrl();
 	}
 }
