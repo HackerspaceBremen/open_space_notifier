@@ -13,6 +13,11 @@ import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.format.LanguageFormat;
 import de.hackerspacebremen.format.SpeakingDateFormat;
 
+/**
+ * This entity should only be used in /v2 and before.
+ * 
+ * @author dragondagda
+ */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
@@ -36,10 +41,20 @@ public final class Status {
 	@JsonProperty("ST5")
 	private String message;
 	
+	public Status(final SpaceStatus spaceStatus){
+		this(spaceStatus, null);
+	}
+	
 	public Status(final SpaceStatus spaceStatus, final LanguageFormat format){
-		this.message = spaceStatus.getMessage().getValue();
+		if(spaceStatus.getMessage() == null){
+			this.message = "";
+		}else{
+			this.message = spaceStatus.getMessage().getValue();
+		}
 		this.status = spaceStatus.getStatus();
-		if(format != null){
+		if(format == null){
+			this.time = String.valueOf(spaceStatus.getTime());
+		}else{
 			final String statusTime = this.createTimeFormat(spaceStatus, format);
 			if(statusTime != null){
 				this.time = statusTime;
