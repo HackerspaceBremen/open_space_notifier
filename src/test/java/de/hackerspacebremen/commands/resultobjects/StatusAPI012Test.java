@@ -14,7 +14,7 @@ import de.hackerspacebremen.format.JacksonInstance;
 
 @Guice
 @Test
-public final class StatusV12Test {
+public final class StatusAPI012Test {
 
 	@Inject
 	private JacksonInstance jacksonInstance;
