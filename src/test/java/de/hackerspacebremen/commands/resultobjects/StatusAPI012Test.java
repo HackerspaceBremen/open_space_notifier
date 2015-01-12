@@ -2,6 +2,8 @@ package de.hackerspacebremen.commands.resultobjects;
 
 import junit.framework.Assert;
 
+import org.json.JSONException;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
@@ -20,12 +22,15 @@ public final class StatusAPI012Test {
 	private JacksonInstance jacksonInstance;
 	private static final String JSON_RESULT = "{\"api\":\"0.12\",\"space\":\"Hackerspace Bremen e.V.\",\"logo\":\"http://example.com/images/hackerspace_icon.png\",\"url\":\"http://www.hackerspace-bremen.de\",\"address\":\"Bornstraße 14/15, 28195 Bremen, Germany\",\"lat\":53.08177947998047,\"lon\":8.805830955505371,\"contact\":{\"phone\":\"+49 421 14 62 92 15\",\"twitter\":\"@hspacehb\",\"email\":\"info@hackerspace-bremen.de\"},\"icon\":{\"open\":\"http://example.com/images/status_auf_48px.png\",\"closed\":\"http://example.com/images/status_zu_48px.png\"},\"lastchange\":1420661704,\"open\":false,\"status\":\"po\",\"SUCCESS\":\"Status found\",\"RESULT\":{\"ST2\":\"1420661704902\",\"ST3\":\"CLOSED\",\"ST5\":\"po\"}}";
 	
-	public void formatTest() {
+	
+	public void formatTest() throws JSONException {
 		final StatusV12 status = this.testData();
 		
 		final String test = this.jacksonInstance.write(status);
 		Assert.assertNotNull(test);
-		Assert.assertEquals(JSON_RESULT, test);
+		
+		JSONAssert.assertEquals(JSON_RESULT, test, false);
+//		Assert.assertEquals(JSON_RESULT, test);
 	}
 
 	private StatusV12 testData() {

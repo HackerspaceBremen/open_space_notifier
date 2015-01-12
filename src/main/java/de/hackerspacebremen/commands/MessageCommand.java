@@ -94,6 +94,7 @@ public class MessageCommand extends WebCommand{
 				}else{
 					timeOfCurrent = new Status(status, LanguageFormat.createInstance(format)).getTime();
 				}
+				logger.info("timeOfCurrent: " + timeOfCurrent);
 				if(time != null && timeOfCurrent.equals(time)){
 					statusService.changeMessage(status, message);
 					this.handleSuccess(new BasicResultObject("Statusmessage was changed"));
