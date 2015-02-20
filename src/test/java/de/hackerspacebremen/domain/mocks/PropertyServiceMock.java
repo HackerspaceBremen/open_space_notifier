@@ -69,4 +69,9 @@ public final class PropertyServiceMock implements PropertyService {
 		return new GeneralProperties();
 	}
 
+	@Override
+	public <P> P fetchProperties(Class<P> propertyClass) {
+		return null;
+	}
+
 }

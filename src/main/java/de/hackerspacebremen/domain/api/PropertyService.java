@@ -7,13 +7,19 @@ import de.hackerspacebremen.valueobjects.properties.GeneralProperties;
 import de.hackerspacebremen.valueobjects.properties.PushProperties;
 
 public interface PropertyService {
+	
+	<P> P fetchProperties(Class<P> propertyClass);
 
+	@Deprecated
 	PushProperties fetchPushProperties();
 
+	@Deprecated
 	CertificateProperties fetchCertificateProperties();
 
+	@Deprecated
 	EmailProperties fetchEmailProperties();
 	
+	@Deprecated
 	GeneralProperties fetchGeneralProperties();
 
 	PushProperties savePushProperties(final boolean gcmEnabled,

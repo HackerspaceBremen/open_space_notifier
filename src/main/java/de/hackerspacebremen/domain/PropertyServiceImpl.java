@@ -37,6 +37,8 @@ import static de.hackerspacebremen.common.PropertyConstants.MAIL_ENABLED;
 import static de.hackerspacebremen.common.PropertyConstants.MPNS_ENABLED;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Logger;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -54,6 +56,11 @@ import de.hackerspacebremen.valueobjects.properties.PushProperties;
 
 public class PropertyServiceImpl implements PropertyService {
 
+	/**
+     * static attribute used for logging.
+     */
+    private static final Logger logger = Logger.getLogger(PropertyServiceImpl.class.getName());
+	
 	@Inject
 	private PropertyDAO propertyDAO;
 
@@ -82,6 +89,20 @@ public class PropertyServiceImpl implements PropertyService {
 		return property.getValue();
 	}
 
+	public <P> P fetchProperties(final Class<P> propertyClass){
+		P properties = null;
+		try {
+			properties = propertyClass.getConstructor().newInstance();
+			this.fillProperties(properties);
+		} catch (InstantiationException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			logger.severe("Exception occured while using Refelction: " + e.getMessage());
+		}
+		
+		return properties;
+	}
+	
 	@Override
 	public PushProperties fetchPushProperties() {
 		final PushProperties properties = pushProperties.get();
@@ -102,25 +123,8 @@ public class PropertyServiceImpl implements PropertyService {
 		try {
 			this.fillProperties(properties);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
-			// TODO log error
+			logger.severe("Exception occured while using Refelction: " + e.getMessage());
 		}
-//		properties.setEmail(findProperty(GENERAL_CONTACT_EMAIL, "").getValue());
-//		properties.setFacebookUrl(findProperty(GENERAL_SOCIAL_FACEBOOK, "").getValue());
-//		properties.setFoursquareUrl(findProperty(GENERAL_SOCIAL_FOURSQUARE, "").getValue());
-//		properties.setGooglePlusUrl(findProperty(GENERAL_SOCIAL_GPLUS, "").getValue());
-//		properties.setIdenticaUrl(findProperty(GENERAL_SOCIAL_IDENTICA, "").getValue());
-//		properties.setIrc(findProperty(GENERAL_CONTACT_IRC, "").getValue());
-//		properties.setIssueMail(findProperty(GENERAL_CONTACT_ISSUE_MAIL, "").getValue());
-//		properties.setJabber(findProperty(GENERAL_CONTACT_JABBER, "").getValue());
-//		properties.setLocationAddress(findProperty(GENERAL_LOCATION_ADDRESS, "").getValue());
-//		properties.setLocationLatitude(Double.parseDouble(findProperty(GENERAL_LOCATION_LATITUDE, "0.0").getValue()));
-//		properties.setLocationLongitude(Double.parseDouble(findProperty(GENERAL_LOCATION_LONGITUDE, "0.0").getValue()));
-//		properties.setMailinglist(findProperty(GENERAL_CONTACT_MAILINGLIST, "").getValue());
-//		properties.setPhone(findProperty(GENERAL_CONTACT_PHONE, "").getValue());
-//		properties.setSip(findProperty(GENERAL_CONTACT_SIP, "").getValue());
-//		properties.setSpaceName(findProperty(GENERAL_SPACE_NAME, "").getValue());
-//		properties.setTwitter(findProperty(GENERAL_SOCIAL_TWITTER, "").getValue());
-//		properties.setUrl(findProperty(GENERAL_URL, "").getValue());
 		return properties;
 	}
 	
@@ -131,46 +135,28 @@ public class PropertyServiceImpl implements PropertyService {
 			if(field.isAnnotationPresent(DataProperty.class)){
 				field.setAccessible(true);
 				final DataProperty dataProperty = field.getAnnotation(DataProperty.class);
-				field.set(properties, this.findProperty(dataProperty.key(), dataProperty.defaultValue()));
+				final String propertyAsString = this.findProperty(dataProperty.key(), dataProperty.defaultValue()).getValue();
+				if(field.getType() == boolean.class){
+					field.set(properties, Boolean.parseBoolean(propertyAsString));
+				}else if(field.getType() == double.class){
+					field.set(properties, Double.parseDouble(propertyAsString));
+				}else{
+					field.set(properties, propertyAsString);
+				}
+				
 				field.setAccessible(false);
 			}
 		}
 	}
-
+	
 	@Override
 	public EmailProperties fetchEmailProperties() {
 		final EmailProperties properties = emailProperties.get();
 		try {
 			this.fillProperties(properties);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
-			// TODO log error
+			logger.severe("Exception occured while using Refelction: " + e.getMessage());
 		}
-//		properties.setMailEnabled(Boolean.valueOf(findProperty(MAIL_ENABLED,
-//				"false").getValue()));
-//		properties.setSenderName(findProperty(EMAIL_SENDER_NAME,
-//				EMAIL_DEFAULT_SENDER_NAME).getValue());
-//		properties.setReceiverName(findProperty(EMAIL_RECEIVER_NAME,
-//				EMAIL_DEFAULT_RECEIVER_NAME).getValue());
-//		properties.setSubjectTag(findProperty(EMAIL_SUBJECT_TAG,
-//				EMAIL_DEFAULT_SUBJECT_TAG).getValue());
-//		properties.setSubjectOpened(findProperty(EMAIL_SUBJECT_OPENED,
-//				EMAIL_DEFAULT_SUBJECT_OPENED).getValue());
-//		properties.setSubjectClosed(findProperty(EMAIL_SUBJECT_CLOSED,
-//				EMAIL_DEFAULT_SUBJECT_CLOSED).getValue());
-//		properties
-//				.setContent(findProperty(EMAIL_CONTENT, EMAIL_DEFAULT_CONTENT)
-//						.getValue());
-//		properties.setOpened(findProperty(EMAIL_OPENED, EMAIL_DEFAULT_OPENED)
-//				.getValue());
-//		properties.setClosed(findProperty(EMAIL_CLOSED, EMAIL_DEFAULT_CLOSED)
-//				.getValue());
-//		properties
-//				.setMessage(findProperty(EMAIL_MESSAGE, EMAIL_DEFAULT_MESSAGE)
-//						.getValue());
-//		properties.setNegatedOpened(findProperty(EMAIL_NEGATED_OPENED,
-//				EMAIL_DEFAULT_NEGATED_OPENED).getValue());
-//		properties.setNegatedClosed(findProperty(EMAIL_NEGATED_CLOSED,
-//				EMAIL_DEFAULT_NEGATED_CLOSED).getValue());
 		return properties;
 	}
 

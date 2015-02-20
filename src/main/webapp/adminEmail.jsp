@@ -27,7 +27,7 @@
 
 <%
 	final Injector inj = (Injector) pageContext.getServletContext().getAttribute(Injector.class.getName());
-	final EmailProperties properties = inj.getInstance(PropertyService.class).fetchEmailProperties();
+	final EmailProperties properties = inj.getInstance(PropertyService.class).fetchProperties(EmailProperties.class);
 %>
 
 <html>

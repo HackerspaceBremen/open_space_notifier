@@ -92,4 +92,9 @@ public class PropertyServiceValidation extends Validation implements
 				facebookUrl, googlePlusUrl, identicaUrl, foursquareUrl, email,
 				mailinglist, issueMail, phone, sip, irc, jabber);
 	}
+
+	@Override
+	public <P> P fetchProperties(Class<P> propertyClass) {
+		return propertyService.fetchProperties(propertyClass);
+	}
 }
