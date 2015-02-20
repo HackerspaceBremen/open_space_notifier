@@ -3,10 +3,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
-    <version>2.1-SNAPSHOT</version>
+    <version>2.2-SNAPSHOT</version>
 
     <groupId>de.hackerspacebremen</groupId>
-    <artifactId>hshb_notifier_be</artifactId>
+    <artifactId>open_space_notifier</artifactId>
 
     <properties>
         <appengine.app.version>1</appengine.app.version>

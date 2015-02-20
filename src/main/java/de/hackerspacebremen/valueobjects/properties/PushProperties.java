@@ -1,4 +1,4 @@
-package de.hackerspacebremen.valueobjects;
+package de.hackerspacebremen.valueobjects.properties;
 
 import lombok.Getter;
 import lombok.Setter;

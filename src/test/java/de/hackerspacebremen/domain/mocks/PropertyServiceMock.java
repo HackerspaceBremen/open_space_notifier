@@ -2,9 +2,10 @@ package de.hackerspacebremen.domain.mocks;
 
 import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.valueobjects.CertificateProperties;
-import de.hackerspacebremen.valueobjects.EmailProperties;
-import de.hackerspacebremen.valueobjects.PushProperties;
+import de.hackerspacebremen.valueobjects.properties.CertificateProperties;
+import de.hackerspacebremen.valueobjects.properties.EmailProperties;
+import de.hackerspacebremen.valueobjects.properties.GeneralProperties;
+import de.hackerspacebremen.valueobjects.properties.PushProperties;
 
 public final class PropertyServiceMock implements PropertyService {
 
@@ -51,6 +52,21 @@ public final class PropertyServiceMock implements PropertyService {
 			final String negatedOpened, final String negatedClosed)
 			throws ValidationException {
 		return new EmailProperties();
+	}
+
+	@Override
+	public GeneralProperties fetchGeneralProperties() {
+		return new GeneralProperties();
+	}
+
+	@Override
+	public GeneralProperties saveGeneralProperties(String spaceName,
+			String url, String locationAddress, double locationLatitude,
+			double locationLongitude, String twitter, String facebookUrl,
+			String googlePlusUrl, String identicaUrl, String foursquareUrl,
+			String email, String mailinglist, String issueMail, String phone,
+			String sip, String irc, String jabber) {
+		return new GeneralProperties();
 	}
 
 }

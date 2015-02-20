@@ -2,6 +2,7 @@
 
 <div class="large-3 pull-9 columns">      
       <ul class="side-nav">
+      	<li><a href="/admin/general">Allgemeine Informationen</a></li>
         <li><a href="/admin/push">Push-Notifications</a></li>
         <li><a href="/admin/certificate">Zertifikate</a></li>
         <li><a href="/admin/email">Email</a></li>

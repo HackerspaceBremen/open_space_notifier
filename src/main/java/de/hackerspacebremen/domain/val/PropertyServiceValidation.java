@@ -3,9 +3,10 @@ package de.hackerspacebremen.domain.val;
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.domain.api.PropertyService;
-import de.hackerspacebremen.valueobjects.CertificateProperties;
-import de.hackerspacebremen.valueobjects.EmailProperties;
-import de.hackerspacebremen.valueobjects.PushProperties;
+import de.hackerspacebremen.valueobjects.properties.CertificateProperties;
+import de.hackerspacebremen.valueobjects.properties.EmailProperties;
+import de.hackerspacebremen.valueobjects.properties.GeneralProperties;
+import de.hackerspacebremen.valueobjects.properties.PushProperties;
 
 public class PropertyServiceValidation extends Validation implements
 		PropertyService {
@@ -71,5 +72,24 @@ public class PropertyServiceValidation extends Validation implements
 		return propertyService.saveEmailProperties(mailEnabled, senderName,
 				receiverName, subjectTag, subjectOpened, subjectClosed,
 				message, content, opened, closed, negatedOpened, negatedClosed);
+	}
+
+	@Override
+	public GeneralProperties fetchGeneralProperties() {
+		return propertyService.fetchGeneralProperties();
+	}
+
+	@Override
+	public GeneralProperties saveGeneralProperties(String spaceName,
+			String url, String locationAddress, double locationLatitude,
+			double locationLongitude, String twitter, String facebookUrl,
+			String googlePlusUrl, String identicaUrl, String foursquareUrl,
+			String email, String mailinglist, String issueMail, String phone,
+			String sip, String irc, String jabber) {
+		// TODO validation
+		return propertyService.saveGeneralProperties(spaceName, url,
+				locationAddress, locationLatitude, locationLongitude, twitter,
+				facebookUrl, googlePlusUrl, identicaUrl, foursquareUrl, email,
+				mailinglist, issueMail, phone, sip, irc, jabber);
 	}
 }

@@ -10,8 +10,8 @@ import com.google.inject.Inject;
 import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.modules.ValidationModule;
 import de.hackerspacebremen.modules.binding.annotations.ITest;
-import de.hackerspacebremen.valueobjects.CertificateProperties;
-import de.hackerspacebremen.valueobjects.PushProperties;
+import de.hackerspacebremen.valueobjects.properties.CertificateProperties;
+import de.hackerspacebremen.valueobjects.properties.PushProperties;
 
 @Guice(modules=ValidationModule.class)
 @Test

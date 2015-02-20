@@ -20,6 +20,7 @@ import de.hackerspacebremen.presentation.jsps.AdminAuthServlet;
 import de.hackerspacebremen.presentation.jsps.AdminAutomaticServlet;
 import de.hackerspacebremen.presentation.jsps.AdminCertificateServlet;
 import de.hackerspacebremen.presentation.jsps.AdminEmailServlet;
+import de.hackerspacebremen.presentation.jsps.AdminGeneralServlet;
 import de.hackerspacebremen.presentation.jsps.AdminPushServlet;
 import de.hackerspacebremen.presentation.jsps.AdminServlet;
 import de.hackerspacebremen.presentation.jsps.AdminSocialServlet;
@@ -72,6 +73,7 @@ public class ServletsModule extends ServletModule {
 		
 		// jsps
 		serve("/admin").with(AdminServlet.class);
+		serve("/admin/general").with(AdminGeneralServlet.class);
 		serve("/admin/email").with(AdminEmailServlet.class);
 		serve("/admin/push").with(AdminPushServlet.class);
 		serve("/admin/auth").with(AdminAuthServlet.class);

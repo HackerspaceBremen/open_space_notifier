@@ -13,8 +13,8 @@ import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.valueobjects.EmailProperties;
-import de.hackerspacebremen.valueobjects.PushProperties;
+import de.hackerspacebremen.valueobjects.properties.EmailProperties;
+import de.hackerspacebremen.valueobjects.properties.PushProperties;
 
 /**
  * This class helps the application to start new tasks.

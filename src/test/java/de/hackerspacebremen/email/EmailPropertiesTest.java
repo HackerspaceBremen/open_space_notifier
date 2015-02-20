@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import org.testng.annotations.Test;
 
-import de.hackerspacebremen.valueobjects.EmailProperties;
+import de.hackerspacebremen.valueobjects.properties.EmailProperties;
 
 @Test
 public final class EmailPropertiesTest {

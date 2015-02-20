@@ -21,7 +21,7 @@
 <%@ page import="com.google.inject.Injector"%>
 <%@ page import="com.google.inject.Guice"%>
 <%@ page import="de.hackerspacebremen.domain.api.PropertyService" %>
-<%@ page import="de.hackerspacebremen.valueobjects.PushProperties" %>
+<%@ page import="de.hackerspacebremen.valueobjects.properties.PushProperties" %>
 
 <%
 	final Injector inj = (Injector) pageContext.getServletContext().getAttribute(Injector.class.getName());

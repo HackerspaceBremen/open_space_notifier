@@ -37,7 +37,7 @@ import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
-import de.hackerspacebremen.valueobjects.EmailProperties;
+import de.hackerspacebremen.valueobjects.properties.EmailProperties;
 
 /**
  * @author Steve

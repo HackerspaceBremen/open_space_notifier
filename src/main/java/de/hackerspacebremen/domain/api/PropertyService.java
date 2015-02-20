@@ -1,9 +1,10 @@
 package de.hackerspacebremen.domain.api;
 
 import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.valueobjects.CertificateProperties;
-import de.hackerspacebremen.valueobjects.EmailProperties;
-import de.hackerspacebremen.valueobjects.PushProperties;
+import de.hackerspacebremen.valueobjects.properties.CertificateProperties;
+import de.hackerspacebremen.valueobjects.properties.EmailProperties;
+import de.hackerspacebremen.valueobjects.properties.GeneralProperties;
+import de.hackerspacebremen.valueobjects.properties.PushProperties;
 
 public interface PropertyService {
 
@@ -12,6 +13,8 @@ public interface PropertyService {
 	CertificateProperties fetchCertificateProperties();
 
 	EmailProperties fetchEmailProperties();
+	
+	GeneralProperties fetchGeneralProperties();
 
 	PushProperties savePushProperties(final boolean gcmEnabled,
 			final boolean apnsEnabled, final boolean mpnsEnabled,
@@ -28,6 +31,13 @@ public interface PropertyService {
 
 	CertificateProperties saveAPNSCertificate(final String apnsFileKeyString)
 			throws ValidationException;
+	
+	GeneralProperties saveGeneralProperties(final String spaceName, 
+		String url, String locationAddress, double locationLatitude,
+		double locationLongitude,String twitter, String facebookUrl,
+		String googlePlusUrl, String identicaUrl, String foursquareUrl,
+		String email, String mailinglist, String issueMail, String phone,
+		String sip, String irc, String jabber);
 
 	String findValueByKey(String key) throws ValidationException;
 }

@@ -5,7 +5,7 @@
 			<hr />
 			<div class="row">
 				<div class="small-6 columns">
-					<p>Copyright &copy; 2013-14 Hackerspace Bremen</p>
+					<p>Copyright &copy; 2013-15 Hackerspace Bremen</p>
 				</div>
 				<div class="small-6 columns">
 					<ul class="inline-list right">

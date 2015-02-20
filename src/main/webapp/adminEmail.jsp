@@ -1,4 +1,4 @@
-<%@page import="de.hackerspacebremen.valueobjects.PushProperties"%>
+<%@page import="de.hackerspacebremen.valueobjects.properties.PushProperties"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
 <!-- /* -->
@@ -23,7 +23,7 @@
 <%@ page import="com.google.inject.Injector"%>
 <%@ page import="com.google.inject.Guice"%>
 <%@ page import="de.hackerspacebremen.domain.api.PropertyService" %>
-<%@ page import="de.hackerspacebremen.valueobjects.EmailProperties" %>
+<%@ page import="de.hackerspacebremen.valueobjects.properties.EmailProperties" %>
 
 <%
 	final Injector inj = (Injector) pageContext.getServletContext().getAttribute(Injector.class.getName());
@@ -64,7 +64,7 @@
 					
 					<div class="row">
 						<div class="large-12 columns">
-							<h4>Versender und Empfänger</label>
+							<h4>Versender und Empfänger</h4>
 						</div>
 					</div>
 					<div class="row">
@@ -110,7 +110,7 @@
 					</div>
 					<div class="row">
 						<div class="large-12 columns">
-							<h4>E-Mail Inhalt</label>
+							<h4>E-Mail Inhalt</h4>
 						</div>
 					</div>
 					
@@ -125,7 +125,7 @@
 					
 					<div class="row">
 						<div class="large-12 columns">
-							<h4>Variablen für Inhalt</label>
+							<h4>Variablen für Inhalt</h4>
 						</div>
 					</div>
 					<div class="row">
