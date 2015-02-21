@@ -26,7 +26,7 @@
 
 <%
 	final Injector inj = (Injector) pageContext.getServletContext().getAttribute(Injector.class.getName());
-	final GeneralProperties properties = inj.getInstance(PropertyService.class).fetchGeneralProperties();
+	final GeneralProperties properties = inj.getInstance(PropertyService.class).fetchProperties(GeneralProperties.class);
 %>
 
 <html>
@@ -56,14 +56,14 @@
 						<div class="large-8 columns">
 							<label>Space-Name</label>
 							<input id="space_name" name="space_name" type="text" value="<%=properties.getSpaceName() %>">
-							<small id="space_name_error" hidden>Bitte Namen des Spaces eintragen!</small>
+							<small id="space_name_error" hidden="hidden">Bitte Namen des Spaces eintragen!</small>
 						</div>
 					</div>
 					<div class="row">
 						<div class="large-8 columns">
 							<label>Website-URL</label>
 							<input id="space_url" name="receiver_name" type="text" value="<%=properties.getUrl() %>">
-							<small id="space_url_error" hidden>Bitte URL des!</small>
+							<small id="space_url_error" hidden="hidden">Bitte URL der Space-Website eintragen!</small>
 						</div>
 					</div>
 				</fieldset>

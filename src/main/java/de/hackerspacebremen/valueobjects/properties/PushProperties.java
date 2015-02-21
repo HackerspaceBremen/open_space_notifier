@@ -1,35 +1,27 @@
 package de.hackerspacebremen.valueobjects.properties;
 
-import lombok.Getter;
-import lombok.Setter;
+import static de.hackerspacebremen.common.PropertyConstants.APNS_ENABLED;
+import static de.hackerspacebremen.common.PropertyConstants.APNS_PASSWORD;
+import static de.hackerspacebremen.common.PropertyConstants.GCM_ENABLED;
+import static de.hackerspacebremen.common.PropertyConstants.GCM_KEY;
+import static de.hackerspacebremen.common.PropertyConstants.MPNS_ENABLED;
+import lombok.Data;
 
+@Data
 public final class PushProperties {
 
-	@Getter
-	@Setter
+	@DataProperty(key=GCM_ENABLED, defaultValue="false")
 	private boolean gcmEnabled;
 	
-	@Getter
-	@Setter
+	@DataProperty(key=GCM_KEY)
 	private String gcmApiKey;
 	
-	@Getter
-	@Setter
+	@DataProperty(key=APNS_ENABLED, defaultValue="false")
 	private boolean apnsEnabled;
 	
-	@Getter
-	@Setter
+	@DataProperty(key=MPNS_ENABLED, defaultValue="false")
 	private boolean mpnsEnabled;
 	
-	@Getter
-	@Setter
+	@DataProperty(key=APNS_PASSWORD)
 	private String apnsPassword;
-	
-	public PushProperties(){
-		gcmEnabled = false;
-		gcmApiKey = "";
-		apnsEnabled = false;
-		mpnsEnabled = false;
-		apnsPassword = "";
-	}
 }

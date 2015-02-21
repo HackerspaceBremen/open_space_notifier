@@ -30,7 +30,7 @@
 	      <h3>Admin-Bereich</h3>
 				
 			<p id="info">
-				Willkommen im Admin-Bereich!</br></br>
+				Willkommen im Admin-Bereich!<br/><br/>
 				<b>Wähle links eine Einstellungsoption aus, um fortzufahren.</b>
 			</p>
 	            

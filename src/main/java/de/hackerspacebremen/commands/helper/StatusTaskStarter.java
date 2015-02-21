@@ -20,83 +20,70 @@ import de.hackerspacebremen.valueobjects.properties.PushProperties;
  * This class helps the application to start new tasks.
  * 
  * @author Steve
- *
+ * 
  */
 public final class StatusTaskStarter {
-	
+
 	@Inject
 	private Provider<Date> dateProvider;
-	
+
 	@Inject
 	private PropertyService propertyService;
-	
-	public void startTasks(final SpaceStatus status) throws ValidationException{
+
+	public void startTasks(final SpaceStatus status) throws ValidationException {
 		final boolean open = status.getStatus().equals(AppConstants.OPEN);
-		final PushProperties pushProperties = propertyService.fetchPushProperties();
-		final EmailProperties emailProperties = this.propertyService.fetchEmailProperties();
-		if(emailProperties.isMailEnabled()){
+		final PushProperties pushProperties = propertyService
+				.fetchProperties(PushProperties.class);
+		final EmailProperties emailProperties = this.propertyService
+				.fetchProperties(EmailProperties.class);
+		if (emailProperties.isMailEnabled()) {
 			this.startMailTask(status, open);
 		}
-		if(pushProperties.isGcmEnabled()){
+		if (pushProperties.isGcmEnabled()) {
 			this.startGCMTask(status, open);
 		}
-		if(pushProperties.isApnsEnabled()){
+		if (pushProperties.isApnsEnabled()) {
 			this.startAPNSTask(status, open);
 		}
 	}
-	
-	
+
 	private void startAPNSTask(final SpaceStatus status, final boolean open) {
 		final Queue queue = QueueFactory.getDefaultQueue();
-		TaskOptions taskOpt = TaskOptions.Builder
-				.withUrl("/v2/task/apns");
+		TaskOptions taskOpt = TaskOptions.Builder.withUrl("/v2/task/apns");
 		taskOpt.method(Method.POST);
-		if(open){
-			taskOpt.taskName("task_apns_open_"
-					+ dateProvider.get().getTime());
-		}else{
-			taskOpt.taskName("task_apns_close_"
-					+ dateProvider.get().getTime());
+		if (open) {
+			taskOpt.taskName("task_apns_open_" + dateProvider.get().getTime());
+		} else {
+			taskOpt.taskName("task_apns_close_" + dateProvider.get().getTime());
 		}
-		taskOpt.param(
-				"statusId",
-				String.valueOf(status.getId().longValue()));
+		taskOpt.param("statusId", String.valueOf(status.getId().longValue()));
 		queue.add(taskOpt);
 	}
 
 	private void startMailTask(final SpaceStatus status, final boolean open) {
 		final Queue queue = QueueFactory.getDefaultQueue();
-		TaskOptions taskOpt = TaskOptions.Builder
-				.withUrl("/v2/task/mail");
+		TaskOptions taskOpt = TaskOptions.Builder.withUrl("/v2/task/mail");
 		taskOpt.method(Method.POST);
-		if(open){
-			taskOpt.taskName("task_mail_open"
-					+ dateProvider.get().getTime());
-		}else{
-			taskOpt.taskName("task_mail_close"
-					+ dateProvider.get().getTime());
+		if (open) {
+			taskOpt.taskName("task_mail_open" + dateProvider.get().getTime());
+		} else {
+			taskOpt.taskName("task_mail_close" + dateProvider.get().getTime());
 		}
-		taskOpt.param(
-				"statusId",
-				String.valueOf(status.getId().longValue()));
+		taskOpt.param("statusId", String.valueOf(status.getId().longValue()));
 		queue.add(taskOpt);
 	}
 
-	private void startGCMTask(final SpaceStatus status, final boolean open) throws ValidationException {
+	private void startGCMTask(final SpaceStatus status, final boolean open)
+			throws ValidationException {
 		final Queue queue = QueueFactory.getDefaultQueue();
-		TaskOptions taskOpt = TaskOptions.Builder
-				.withUrl("/v2/task/gcm");
+		TaskOptions taskOpt = TaskOptions.Builder.withUrl("/v2/task/gcm");
 		taskOpt.method(Method.POST);
-		if(open){
-			taskOpt.taskName("task_gcm_open_"
-					+ dateProvider.get().getTime());
-		}else{
-			taskOpt.taskName("task_gcm_close_"
-					+ dateProvider.get().getTime());
+		if (open) {
+			taskOpt.taskName("task_gcm_open_" + dateProvider.get().getTime());
+		} else {
+			taskOpt.taskName("task_gcm_close_" + dateProvider.get().getTime());
 		}
-		taskOpt.param(
-				"statusId",
-				String.valueOf(status.getId().longValue()));
+		taskOpt.param("statusId", String.valueOf(status.getId().longValue()));
 		queue.add(taskOpt);
 	}
 }

@@ -71,14 +71,14 @@
 						<div class="large-8 columns">
 							<label>Name des Email-Versenders</label>
 							<input id="sender_name" name="sender_name" type="text" value="<%=properties.getSenderName() %>">
-							<small id="sender_name_error" hidden>Bitte Namen des Email-Versenders eintragen!</small>
+							<small id="sender_name_error" hidden="hidden">Bitte Namen des Email-Versenders eintragen!</small>
 						</div>
 					</div>
 					<div class="row">
 						<div class="large-8 columns">
 							<label>Name des Email-Empfängers</label>
 							<input id="receiver_name" name="receiver_name" type="text" value="<%=properties.getReceiverName() %>">
-							<small id="receiver_name_error" hidden>Bitte Namen des Email-Empfängers eintragen!</small>
+							<small id="receiver_name_error" hidden="hidden">Bitte Namen des Email-Empfängers eintragen!</small>
 						</div>
 					</div>
 					
@@ -91,21 +91,21 @@
 						<div class="large-8 columns">
 							<label>Name des Email-Tags</label>
 							<input id="subject_tag" name="subject_tag" type="text" value="<%=properties.getSubjectTag() %>">
-							<small id="subject_tag_error" hidden>Bitte Email-Tag eintragen!</small>
+							<small id="subject_tag_error" hidden="hidden">Bitte Email-Tag eintragen!</small>
 						</div>
 					</div>
 					<div class="row">
 						<div class="large-8 columns">
 							<label>Bei Öffnung</label>
 							<input id="subject_opened" name="subject_opened" type="text" value="<%=properties.getSubjectOpened() %>">
-							<small id="subject_opened_error" hidden>Bitte Email-Betreff eintragen!</small>
+							<small id="subject_opened_error" hidden="hidden">Bitte Email-Betreff eintragen!</small>
 						</div>
 					</div>
 					<div class="row">
 						<div class="large-8 columns">
 							<label>Bei Schließung</label>
 							<input id="subject_closed" name="subject_closed" type="text" value="<%=properties.getSubjectClosed() %>">
-							<small id="subject_closed_error" hidden>Bitte Email-Tag eintragen!</small>
+							<small id="subject_closed_error" hidden="hidden">Bitte Email-Tag eintragen!</small>
 						</div>
 					</div>
 					<div class="row">
@@ -118,7 +118,7 @@
 						<div class="large-12 columns">
 							<label>Email-Inhalts</label>
 							<textarea id="content" name="content" placeholder="large-8.columns" style="height:150px;"><%=properties.getContent() %></textarea>
-							<small id="content_error" hidden>Bitte füllen sie den Inhalt!</small>
+							<small id="content_error" hidden="hidden">Bitte füllen sie den Inhalt!</small>
 							<label>Mögliche Variablen: $STATUS$, $URL$, $NEG_STATUS$, $MESSAGE$</label>
 						</div>
 					</div>
@@ -132,35 +132,35 @@
 						<div class="large-8 columns">
 							<label>Einleitung für Statusnachricht</label>
 							<input id="message" name="message" type="text" value="<%=properties.getMessage() %>">
-							<small id="message_error" hidden>Bitte setzen Sie die Einleitung für die Statusnachricht!</small>
+							<small id="message_error" hidden="hidden">Bitte setzen Sie die Einleitung für die Statusnachricht!</small>
 						</div>
 					</div>
 					<div class="row">
 						<div class="large-8 columns">
 							<label>$STATUS$ geöffnet</label>
 							<input id="opened" name="opened" type="text" value="<%=properties.getOpened() %>">
-							<small id="opened_error" hidden>Bitte setzen Sie den geöffneten Status des Spaces!</small>
+							<small id="opened_error" hidden="hidden">Bitte setzen Sie den geöffneten Status des Spaces!</small>
 						</div>
 					</div>
 					<div class="row">
 						<div class="large-8 columns">
 							<label>$STATUS$ geschloßen</label>
 							<input id="closed" name="closed" type="text" value="<%=properties.getClosed() %>">
-							<small id="closed_error" hidden>Bitte setzen Sie den geschlossenen Status des Spaces!</small>
+							<small id="closed_error" hidden="hidden">Bitte setzen Sie den geschlossenen Status des Spaces!</small>
 						</div>
 					</div>
 					<div class="row">
 						<div class="large-8 columns">
 							<label>$NEG_STATUS$ geöffnet</label>
 							<input id="negated_opened" name="negated_opened" type="text" value="<%=properties.getNegatedOpened() %>">
-							<small id="negated_opened_error" hidden>Bitte setzen Sie den negierten geöffneten Status!</small>
+							<small id="negated_opened_error" hidden="hidden">Bitte setzen Sie den negierten geöffneten Status!</small>
 						</div>
 					</div>
 					<div class="row">
 						<div class="large-8 columns">
 							<label>$NEG_STATUS$ geschloßen</label>
 							<input id="negated_closed" name="negated_closed" type="text" value="<%=properties.getNegatedClosed() %>">
-							<small id="negated_closed_error" hidden>Bitte setzen Sie den negierten geschloßenen Status!</small>
+							<small id="negated_closed_error" hidden="hidden">Bitte setzen Sie den negierten geschloßenen Status!</small>
 						</div>
 					</div>
 				</fieldset>

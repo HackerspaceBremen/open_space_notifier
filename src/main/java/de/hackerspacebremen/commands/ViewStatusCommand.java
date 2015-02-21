@@ -46,11 +46,13 @@ import de.hackerspacebremen.commands.resultobjects.v8.StatusV8;
 import de.hackerspacebremen.commands.resultobjects.v9.StatusV9;
 import de.hackerspacebremen.common.SpaceAPIVersion;
 import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.domain.api.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.format.LanguageFormat;
 import de.hackerspacebremen.format.MessageFormat;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
+import de.hackerspacebremen.valueobjects.properties.GeneralProperties;
 
 public class ViewStatusCommand extends WebCommand {
 
@@ -60,6 +62,9 @@ public class ViewStatusCommand extends WebCommand {
 
 	@Setter
 	private SpaceAPIVersion apiVersion;
+
+	@Inject
+	private PropertyService propertyService;
 
 	protected void fetchStatus(final SpaceStatus spaceStatus,
 			final LanguageFormat format, final boolean htmlEncoded) {
@@ -107,43 +112,72 @@ public class ViewStatusCommand extends WebCommand {
 		final String url = "http://" + SystemProperty.applicationId.get()
 				+ ".appspot.com/";
 
+		final GeneralProperties generalInformation = propertyService
+				.fetchProperties(GeneralProperties.class);
+
 		final StatusV13 statusResult = new StatusV13();
 		// statusResult.setCam(cam);
 		final Cache cache = new Cache();
 		cache.setSchedule(Schedule.QUARTER_HOUR);
 		statusResult.setCache(cache);
 		final ContactV13 contact = new ContactV13();
-		contact.setEmail("info@hackerspace-bremen.de");
-		contact.setFacebook("https://www.facebook.com/HackerspaceBremen");
+		// TODO check if information is empty before setting
+		// contact.setEmail("info@hackerspace-bremen.de");
+		contact.setEmail(nullIfEmpty(generalInformation.getEmail()));
+		// contact.setFacebook("https://www.facebook.com/HackerspaceBremen");
+		contact.setFacebook(nullIfEmpty(generalInformation.getFacebookUrl()));
 		// contact.setFoursquare(foursquare);
-		final Google google = new Google();
-		google.setPlus("https://plus.google.com/106849621647585475724");
-		contact.setGoogle(google);
+		contact.setFoursquare(nullIfEmpty(generalInformation.getFoursquareUrl()));
+		final String googlePlusUrl = nullIfEmpty(generalInformation
+				.getGooglePlusUrl());
+		if (googlePlusUrl != null) {
+			final Google google = new Google();
+			// google.setPlus("https://plus.google.com/106849621647585475724");
+			google.setPlus(googlePlusUrl);
+			contact.setGoogle(google);
+		}
 		// contact.setIdentica(identica);
-		contact.setIrc("irc://irc.freenode.net/#hshb");
-		contact.setIssueMail("notifier@hackerspace-bremen.de");
+		contact.setIdentica(nullIfEmpty(generalInformation.getIdenticaUrl()));
+		// contact.setIrc("irc://irc.freenode.net/#hshb");
+		contact.setIrc(nullIfEmpty(generalInformation.getIrc()));
+		// contact.setIssueMail("notifier@hackerspace-bremen.de");
+		final String issueMail = nullIfEmpty(generalInformation.getIssueMail());
+		final List<IssueReport> issueReports = new ArrayList<>();
+		if (issueMail != null) {
+			contact.setIssueMail(issueMail);
+			issueReports.add(IssueReport.ISSUE_MAIL);
+		}
+		statusResult.setIssueReportChannels(issueReports);
 		// contact.setJabber(jabber);
+		contact.setJabber(nullIfEmpty(generalInformation.getJabber()));
 		// contact.setKeymaster(keymaster);
-		contact.setMailinglist("public@lists.hackerspace-bremen.de");
-		contact.setPhone("+49 421 14 62 92 15");
+
+		// contact.setMailinglist("public@lists.hackerspace-bremen.de");
+		contact.setMailinglist(nullIfEmpty(generalInformation.getMailinglist()));
+		// contact.setPhone("+49 421 14 62 92 15");
+		contact.setPhone(nullIfEmpty(generalInformation.getPhone()));
 		// contact.setSip(sip);
-		contact.setTwitter("@hspacehb");
+		contact.setSip(nullIfEmpty(generalInformation.getSip()));
+		// contact.setTwitter("@hspacehb");
+		contact.setTwitter(nullIfEmpty(generalInformation.getTwitter()));
 
 		statusResult.setContact(contact);
 
 		// statusResult.setFeeds(feeds);
-		final List<IssueReport>issueReports = new ArrayList<>();
-		issueReports.add(IssueReport.ISSUE_MAIL);
-		statusResult.setIssueReportChannels(issueReports);
+
 		final Location location = new Location();
-		location.setAddress("Bornstraße 14/15, 28195 Bremen, Germany");
-		location.setLat(53.08178);
-		location.setLon(8.805831);
+//		location.setAddress("Bornstraße 14/15, 28195 Bremen, Germany");
+		location.setAddress(nullIfEmpty(generalInformation.getLocationAddress()));
+//		location.setLat(53.08178);
+		location.setLat(generalInformation.getLocationLatitude());
+//		location.setLon(8.805831);
+		location.setLon(generalInformation.getLocationLongitude());
 		statusResult.setLocation(location);
 		statusResult.setLogo(url + "images/hackerspace_icon.png");
 		// statusResult.setProjects(projects);
 		// statusResult.setRadioShow(radioShow);
-		statusResult.setSpace("Hackerspace Bremen e.V.");
+//		statusResult.setSpace("Hackerspace Bremen e.V.");
+		statusResult.setSpace(nullIfEmpty(generalInformation.getSpaceName()));
 		final SpaceFED spacefed = new SpaceFED();
 		spacefed.setSpacenet(false);
 		spacefed.setSpacephone(false);
@@ -173,9 +207,21 @@ public class ViewStatusCommand extends WebCommand {
 		statusResult.setState(state);
 
 		// statusResult.setStream(stream);
-		statusResult.setUrl("http://www.hackerspace-bremen.de");
+//		statusResult.setUrl("http://www.hackerspace-bremen.de");
+		statusResult.setUrl(nullIfEmpty(generalInformation.getUrl()));
 
 		return statusResult;
+	}
+
+	private String nullIfEmpty(final String parameter) {
+		final String result;
+		if (parameter == null || parameter.isEmpty()) {
+			result = null;
+		} else {
+			result = parameter;
+		}
+
+		return result;
 	}
 
 	@Override

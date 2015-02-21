@@ -1,5 +1,8 @@
 package de.hackerspacebremen.domain.mocks;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Logger;
+
 import de.hackerspacebremen.domain.api.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.valueobjects.properties.CertificateProperties;
@@ -9,15 +12,11 @@ import de.hackerspacebremen.valueobjects.properties.PushProperties;
 
 public final class PropertyServiceAlternativeMock implements PropertyService {
 
-	@Override
-	public PushProperties fetchPushProperties() {
-		return new PushProperties();
-	}
-
-	@Override
-	public CertificateProperties fetchCertificateProperties() {
-		return new CertificateProperties();
-	}
+	/**
+	 * static attribute used for logging.
+	 */
+	private static final Logger logger = Logger
+			.getLogger(PropertyServiceAlternativeMock.class.getName());
 
 	@Override
 	public PushProperties savePushProperties(final boolean gcmEnabled,
@@ -39,11 +38,6 @@ public final class PropertyServiceAlternativeMock implements PropertyService {
 	}
 
 	@Override
-	public EmailProperties fetchEmailProperties() {
-		return new EmailProperties();
-	}
-
-	@Override
 	public EmailProperties saveEmailProperties(final boolean mailEnabled,
 			final String senderName, final String receiverName,
 			final String subjectTag, final String subjectOpened,
@@ -52,11 +46,6 @@ public final class PropertyServiceAlternativeMock implements PropertyService {
 			final String negatedOpened, final String negatedClosed)
 			throws ValidationException {
 		return new EmailProperties();
-	}
-
-	@Override
-	public GeneralProperties fetchGeneralProperties() {
-		return new GeneralProperties();
 	}
 
 	@Override
@@ -71,7 +60,17 @@ public final class PropertyServiceAlternativeMock implements PropertyService {
 
 	@Override
 	public <P> P fetchProperties(Class<P> propertyClass) {
-		return null;
+		P properties = null;
+		try {
+			properties = propertyClass.getConstructor().newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			logger.severe("Exception occured during creation of property object: "
+					+ e.getMessage());
+		}
+		
+		return properties;
 	}
 
 }

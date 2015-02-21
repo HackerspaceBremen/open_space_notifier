@@ -25,7 +25,7 @@
 
 <%
 	final Injector inj = (Injector) pageContext.getServletContext().getAttribute(Injector.class.getName());
-	final PushProperties properties = inj.getInstance(PropertyService.class).fetchPushProperties();
+	final PushProperties properties = inj.getInstance(PropertyService.class).fetchProperties(PushProperties.class);
 %>
 
 <html>

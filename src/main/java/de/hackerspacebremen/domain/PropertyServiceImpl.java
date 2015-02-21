@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Logger;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 import de.hackerspacebremen.data.api.PropertyDAO;
 import de.hackerspacebremen.data.entities.Property;
@@ -63,18 +62,6 @@ public class PropertyServiceImpl implements PropertyService {
 	
 	@Inject
 	private PropertyDAO propertyDAO;
-
-	@Inject
-	private Provider<PushProperties> pushProperties;
-
-	@Inject
-	private Provider<EmailProperties> emailProperties;
-	
-	@Inject
-	private Provider<GeneralProperties> generalProperties;
-
-	@Inject
-	private Provider<CertificateProperties> certificateProperties;
 
 	@Override
 	public String findValueByKey(final String key) throws ValidationException {
@@ -103,31 +90,6 @@ public class PropertyServiceImpl implements PropertyService {
 		return properties;
 	}
 	
-	@Override
-	public PushProperties fetchPushProperties() {
-		final PushProperties properties = pushProperties.get();
-		properties.setGcmEnabled(Boolean.valueOf(findProperty(GCM_ENABLED,
-				"false").getValue()));
-		properties.setGcmApiKey(findProperty(GCM_KEY, "").getValue());
-		properties.setApnsEnabled(Boolean.valueOf(findProperty(APNS_ENABLED,
-				"false").getValue()));
-		properties.setApnsPassword(findProperty(APNS_PASSWORD, "").getValue());
-		properties.setMpnsEnabled(Boolean.valueOf(findProperty(MPNS_ENABLED,
-				"false").getValue()));
-		return properties;
-	}
-	
-	@Override
-	public GeneralProperties fetchGeneralProperties() {
-		final GeneralProperties properties = generalProperties.get();
-		try {
-			this.fillProperties(properties);
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			logger.severe("Exception occured while using Refelction: " + e.getMessage());
-		}
-		return properties;
-	}
-	
 	private <P> void fillProperties(final P properties) throws IllegalArgumentException, IllegalAccessException{
 		final Field[] fields = properties.getClass().getDeclaredFields();
 		
@@ -147,17 +109,6 @@ public class PropertyServiceImpl implements PropertyService {
 				field.setAccessible(false);
 			}
 		}
-	}
-	
-	@Override
-	public EmailProperties fetchEmailProperties() {
-		final EmailProperties properties = emailProperties.get();
-		try {
-			this.fillProperties(properties);
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			logger.severe("Exception occured while using Refelction: " + e.getMessage());
-		}
-		return properties;
 	}
 
 	private Property findProperty(final String key, final String defaultValue) {
@@ -182,7 +133,7 @@ public class PropertyServiceImpl implements PropertyService {
 		this.saveProperty(GCM_KEY, gcmKey);
 		this.saveProperty(APNS_PASSWORD, apnsPassword);
 
-		return this.fetchPushProperties();
+		return this.fetchProperties(PushProperties.class);
 	}
 
 	private void saveProperty(final String key, final String value) {
@@ -196,16 +147,7 @@ public class PropertyServiceImpl implements PropertyService {
 			final String apnsFileKeyString) throws ValidationException {
 		this.saveProperty(APNS_FILE_KEY_STRING, apnsFileKeyString);
 
-		return this.fetchCertificateProperties();
-	}
-
-	@Override
-	public CertificateProperties fetchCertificateProperties() {
-		final CertificateProperties properties = certificateProperties.get();
-
-		properties.setApnsCertificate(findProperty(APNS_FILE_KEY_STRING, "")
-				.getValue());
-		return properties;
+		return this.fetchProperties(CertificateProperties.class);
 	}
 
 	@Override
@@ -229,7 +171,7 @@ public class PropertyServiceImpl implements PropertyService {
 		this.saveProperty(EMAIL_NEGATED_OPENED, String.valueOf(negatedOpened));
 		this.saveProperty(EMAIL_NEGATED_CLOSED, String.valueOf(negatedClosed));
 
-		return this.fetchEmailProperties();
+		return this.fetchProperties(EmailProperties.class);
 	}
 
 	@Override
@@ -257,7 +199,7 @@ public class PropertyServiceImpl implements PropertyService {
 		this.saveProperty(GENERAL_SPACE_NAME, spaceName);
 		this.saveProperty(GENERAL_URL, url);
 		
-		return this.fetchGeneralProperties();
+		return this.fetchProperties(GeneralProperties.class);
 	}
 
 }

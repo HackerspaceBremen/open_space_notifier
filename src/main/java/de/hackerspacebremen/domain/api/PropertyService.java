@@ -10,18 +10,6 @@ public interface PropertyService {
 	
 	<P> P fetchProperties(Class<P> propertyClass);
 
-	@Deprecated
-	PushProperties fetchPushProperties();
-
-	@Deprecated
-	CertificateProperties fetchCertificateProperties();
-
-	@Deprecated
-	EmailProperties fetchEmailProperties();
-	
-	@Deprecated
-	GeneralProperties fetchGeneralProperties();
-
 	PushProperties savePushProperties(final boolean gcmEnabled,
 			final boolean apnsEnabled, final boolean mpnsEnabled,
 			final String gcmKey, final String apnsPassword)

@@ -21,11 +21,6 @@ public class PropertyServiceValidation extends Validation implements
 	}
 
 	@Override
-	public PushProperties fetchPushProperties() {
-		return propertyService.fetchPushProperties();
-	}
-
-	@Override
 	public PushProperties savePushProperties(final boolean gcmEnabled,
 			final boolean apnsEnabled, final boolean mpnsEnabled,
 			final String gcmKey, final String apnsPassword)
@@ -51,16 +46,6 @@ public class PropertyServiceValidation extends Validation implements
 	}
 
 	@Override
-	public CertificateProperties fetchCertificateProperties() {
-		return propertyService.fetchCertificateProperties();
-	}
-
-	@Override
-	public EmailProperties fetchEmailProperties() {
-		return propertyService.fetchEmailProperties();
-	}
-
-	@Override
 	public EmailProperties saveEmailProperties(final boolean mailEnabled,
 			final String senderName, final String receiverName,
 			final String subjectTag, final String subjectOpened,
@@ -72,11 +57,6 @@ public class PropertyServiceValidation extends Validation implements
 		return propertyService.saveEmailProperties(mailEnabled, senderName,
 				receiverName, subjectTag, subjectOpened, subjectClosed,
 				message, content, opened, closed, negatedOpened, negatedClosed);
-	}
-
-	@Override
-	public GeneralProperties fetchGeneralProperties() {
-		return propertyService.fetchGeneralProperties();
 	}
 
 	@Override

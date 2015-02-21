@@ -27,7 +27,7 @@
 
 <%
 	final Injector inj = (Injector) pageContext.getServletContext().getAttribute(Injector.class.getName());
-	final CertificateProperties properties = inj.getInstance(PropertyService.class).fetchCertificateProperties();
+	final CertificateProperties properties = inj.getInstance(PropertyService.class).fetchProperties(CertificateProperties.class);
 	final BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 %>
 

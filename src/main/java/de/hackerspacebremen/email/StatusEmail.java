@@ -66,7 +66,7 @@ public class StatusEmail{
 			message = de.hackerspacebremen.format.MessageFormat.fitMessageSize(spaceStatus.getMessage().getValue());
 		}
 		final boolean opened = spaceStatus.getStatus().equals(AppConstants.OPEN);
-		final EmailProperties emailProperties = propertyService.fetchEmailProperties();
+		final EmailProperties emailProperties = propertyService.fetchProperties(EmailProperties.class);
 		try {
 			final String senderAddress = propertyService.findValueByKey(EMAIL_ADDRESSED_ADDRESS);
 			final Session session = Session.getDefaultInstance(new Properties(), null);
