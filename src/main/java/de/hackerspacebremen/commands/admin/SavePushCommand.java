@@ -1,27 +1,27 @@
 package de.hackerspacebremen.commands.admin;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
-import com.google.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import de.hackerspacebremen.commands.WebCommand;
-import de.hackerspacebremen.domain.api.PropertyService;
+import de.hackerspacebremen.domain.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.modules.binding.annotations.Proxy;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@Component
 public class SavePushCommand extends WebCommand{
 
-	@Inject
-	@Proxy
 	private PropertyService propertyService;
 	
-	/**
-     * static attribute used for logging.
-     */
-    private static final Logger logger = Logger.getLogger(SavePushCommand.class.getName());
+	@Autowired
+	public SavePushCommand(PropertyService propertyService) {
+		this.propertyService = propertyService;
+	}
 	
 	@Override
 	public void process() throws ServletException, IOException {
@@ -38,14 +38,14 @@ public class SavePushCommand extends WebCommand{
 		}
 		
 		try {
-			logger.info("gcmEnabled: " + gcmEnabled);
+			log.info("gcmEnabled: " + gcmEnabled);
 			propertyService.savePushProperties(gcmEnabled, apnsEnabled, mpnsEnabled, gcmKey, apnsPassword);
-			logger.info("result == SUCCESS");
+			log.info("result == SUCCESS");
 			req.setAttribute("result", "SUCCESS");
 			req.setAttribute("code", Integer.valueOf(0));
 			req.getRequestDispatcher("/adminPush.jsp").forward(req, resp);
 		} catch (ValidationException e) {
-			logger.warning("ValidationException occured with error code: " + e.getErrorCode());
+			log.warn("ValidationException occured with error code: {}",e.getErrorCode());
 			req.setAttribute("error", e.getMessage());
 			req.setAttribute("result", "ERROR");
 			req.setAttribute("code", e.getErrorCode());

@@ -20,40 +20,38 @@ package de.hackerspacebremen.commands;
 
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
-import com.google.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
 import de.hackerspacebremen.commands.resultobjects.Status;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.domain.api.AuthAttemptService;
-import de.hackerspacebremen.domain.api.AuthenticationService;
-import de.hackerspacebremen.domain.api.SpaceStatusService;
+import de.hackerspacebremen.domain.AuthAttemptService;
+import de.hackerspacebremen.domain.BasicHTTPAuthenticationService;
+import de.hackerspacebremen.domain.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.format.LanguageFormat;
-import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@Component
 public class MessageCommand extends WebCommand{
 
-	/**
-     * static attribute used for logging.
-     */
-    private static final Logger logger = Logger.getLogger(MessageCommand.class.getName());
-	
-    @Inject
-    @Proxy
 	private SpaceStatusService statusService;
-    
-    @Inject
-    @Proxy
-	private AuthenticationService authService;
-    
-    @Inject
+	private BasicHTTPAuthenticationService authService;
     private AuthAttemptService authAttemptService;
+
+    @Autowired
+    public MessageCommand(SpaceStatusService statusService, BasicHTTPAuthenticationService authService,
+    		AuthAttemptService authAttemptService) {
+				this.statusService = statusService;
+				this.authService = authService;
+				this.authAttemptService = authAttemptService;
+	}
     
     
 	@Override
@@ -80,9 +78,9 @@ public class MessageCommand extends WebCommand{
 			final String format = this.req.getParameter("format");
 			final String time = this.req.getParameter("time");
 			
-			logger.info("message: " + message);
-			logger.info("format: " + format);
-			logger.info("time: " + time);
+			log.info("message: " + message);
+			log.info("format: " + format);
+			log.info("time: " + time);
 			
 			if(authAttemptService.checkAttemptMax(name)){
 				this.handleError(55);
@@ -94,7 +92,7 @@ public class MessageCommand extends WebCommand{
 				}else{
 					timeOfCurrent = new Status(status, LanguageFormat.createInstance(format)).getTime();
 				}
-				logger.info("timeOfCurrent: " + timeOfCurrent);
+				log.info("timeOfCurrent: " + timeOfCurrent);
 				if(time != null && timeOfCurrent.equals(time)){
 					statusService.changeMessage(status, message);
 					this.handleSuccess(new BasicResultObject("Statusmessage was changed"));

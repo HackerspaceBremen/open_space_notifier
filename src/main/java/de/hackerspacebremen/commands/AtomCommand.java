@@ -5,16 +5,20 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import de.hackerspacebremen.domain.api.FeedService;
-import de.hackerspacebremen.modules.binding.annotations.Atom;
+import de.hackerspacebremen.domain.AtomService;
 
+@Component
 public class AtomCommand extends WebCommand{
 
-	@Inject
-	@Atom
-	private FeedService feedService;
+	private AtomService feedService;
+
+	@Autowired
+	public AtomCommand(AtomService feedService) {
+		this.feedService = feedService;
+	}
 	
 	@Override
 	public void process() throws ServletException, IOException {

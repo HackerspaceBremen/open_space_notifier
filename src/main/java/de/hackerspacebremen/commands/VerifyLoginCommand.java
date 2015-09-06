@@ -5,23 +5,26 @@ import java.net.URLDecoder;
 
 import javax.servlet.ServletException;
 
-import com.google.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
-import de.hackerspacebremen.domain.api.AuthAttemptService;
-import de.hackerspacebremen.domain.api.AuthenticationService;
+import de.hackerspacebremen.domain.AuthAttemptService;
+import de.hackerspacebremen.domain.BasicHTTPAuthenticationService;
 import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
 
+@Component
 public class VerifyLoginCommand extends WebCommand{
 
-	@Inject
-	@Proxy
-	private AuthenticationService authService;
-	
-	@Inject
+	private BasicHTTPAuthenticationService authService;
 	private AuthAttemptService authAttemptService;
+
+	@Autowired
+	public VerifyLoginCommand(BasicHTTPAuthenticationService authService, AuthAttemptService authAttemptService) {
+		this.authService = authService;
+		this.authAttemptService = authAttemptService;
+	}
 	
 	@Override
 	public void process() throws ServletException, IOException {

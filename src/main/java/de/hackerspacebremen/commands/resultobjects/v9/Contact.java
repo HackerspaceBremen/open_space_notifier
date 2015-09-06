@@ -3,18 +3,18 @@ package de.hackerspacebremen.commands.resultobjects.v9;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import de.hackerspacebremen.commands.resultobjects.v13.contact.ContactV13;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@JsonInclude(Include.NON_NULL)
+@Getter
+@Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper=false)
+@JsonInclude(Include.NON_NULL)
 public class Contact {
 
 	private String phone;

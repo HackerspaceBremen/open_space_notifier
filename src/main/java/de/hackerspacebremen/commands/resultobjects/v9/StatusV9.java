@@ -11,11 +11,11 @@ import de.hackerspacebremen.commands.resultobjects.v13.EventV13;
 import de.hackerspacebremen.commands.resultobjects.v13.StatusV13;
 import de.hackerspacebremen.commands.resultobjects.v8.Event;
 import de.hackerspacebremen.common.SpaceAPIVersion;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@Setter
 public final class StatusV9 extends BasicResultObject implements IStatus{
 	
 	private final SpaceAPIVersion api = SpaceAPIVersion.API_0_09;

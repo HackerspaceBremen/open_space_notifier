@@ -1,11 +1,34 @@
 package de.hackerspacebremen.valueobjects.properties;
 
-import lombok.Data;
+import static de.hackerspacebremen.common.EmailDefaults.EMAIL_DEFAULT_CLOSED;
+import static de.hackerspacebremen.common.EmailDefaults.EMAIL_DEFAULT_CONTENT;
+import static de.hackerspacebremen.common.EmailDefaults.EMAIL_DEFAULT_MESSAGE;
+import static de.hackerspacebremen.common.EmailDefaults.EMAIL_DEFAULT_NEGATED_CLOSED;
+import static de.hackerspacebremen.common.EmailDefaults.EMAIL_DEFAULT_NEGATED_OPENED;
+import static de.hackerspacebremen.common.EmailDefaults.EMAIL_DEFAULT_OPENED;
+import static de.hackerspacebremen.common.EmailDefaults.EMAIL_DEFAULT_RECEIVER_NAME;
+import static de.hackerspacebremen.common.EmailDefaults.EMAIL_DEFAULT_SENDER_NAME;
+import static de.hackerspacebremen.common.EmailDefaults.EMAIL_DEFAULT_SUBJECT_CLOSED;
+import static de.hackerspacebremen.common.EmailDefaults.EMAIL_DEFAULT_SUBJECT_OPENED;
+import static de.hackerspacebremen.common.EmailDefaults.EMAIL_DEFAULT_SUBJECT_TAG;
+import static de.hackerspacebremen.common.PropertyConstants.EMAIL_CLOSED;
+import static de.hackerspacebremen.common.PropertyConstants.EMAIL_CONTENT;
+import static de.hackerspacebremen.common.PropertyConstants.EMAIL_MESSAGE;
+import static de.hackerspacebremen.common.PropertyConstants.EMAIL_NEGATED_CLOSED;
+import static de.hackerspacebremen.common.PropertyConstants.EMAIL_NEGATED_OPENED;
+import static de.hackerspacebremen.common.PropertyConstants.EMAIL_OPENED;
+import static de.hackerspacebremen.common.PropertyConstants.EMAIL_RECEIVER_NAME;
+import static de.hackerspacebremen.common.PropertyConstants.EMAIL_SENDER_NAME;
+import static de.hackerspacebremen.common.PropertyConstants.EMAIL_SUBJECT_CLOSED;
+import static de.hackerspacebremen.common.PropertyConstants.EMAIL_SUBJECT_OPENED;
+import static de.hackerspacebremen.common.PropertyConstants.EMAIL_SUBJECT_TAG;
+import static de.hackerspacebremen.common.PropertyConstants.MAIL_ENABLED;
 
-import static de.hackerspacebremen.common.PropertyConstants.*;
-import static de.hackerspacebremen.common.EmailDefaults.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public final class EmailProperties {
 
 	@DataProperty(key = MAIL_ENABLED, defaultValue = "false")

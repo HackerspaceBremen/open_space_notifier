@@ -18,34 +18,24 @@
  */
 package de.hackerspacebremen.commands.push;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-
-import com.google.inject.Inject;
-
 import de.hackerspacebremen.commands.WebCommand;
-import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
-import de.hackerspacebremen.domain.api.GCMDataService;
-import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.modules.binding.annotations.Proxy;
 
 public class GCMUnregistryCommand extends WebCommand{
 
-	@Inject
-	@Proxy
-	private GCMDataService gcmService;
-	
-	@Override
-	public void process() throws ServletException, IOException {
-		try{
-			gcmService.unregister(req.getParameter("deviceId"));
-			this.handleSuccess(new BasicResultObject("You successfully unregistered"));
-		}catch(ValidationException e){
-			this.handleError(e);
-		}
-		
-		// close services
-		super.process();
-	}
+//	@Inject
+//	@Proxy
+//	private GCMDataService gcmService;
+//	
+//	@Override
+//	public void process() throws ServletException, IOException {
+//		try{
+//			gcmService.unregister(req.getParameter("deviceId"));
+//			this.handleSuccess(new BasicResultObject("You successfully unregistered"));
+//		}catch(ValidationException e){
+//			this.handleError(e);
+//		}
+//		
+//		// close services
+//		super.process();
+//	}
 }

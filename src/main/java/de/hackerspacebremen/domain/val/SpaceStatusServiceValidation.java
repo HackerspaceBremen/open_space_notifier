@@ -18,52 +18,26 @@
  */
 package de.hackerspacebremen.domain.val;
 
-import com.google.inject.Inject;
+import org.springframework.stereotype.Component;
 
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.domain.api.SpaceStatusService;
 
-public class SpaceStatusServiceValidation extends Validation 
-										  implements SpaceStatusService{
+@Component
+public class SpaceStatusServiceValidation extends Validation {
 
-	private SpaceStatusService spaceStatusService;
-
-	@Inject
-	public SpaceStatusServiceValidation(final SpaceStatusService service){
-		this.spaceStatusService = service;
-	}
-	
-	@Override
-	public SpaceStatus openSpace(final String changedBy, final String message) throws ValidationException{
+	public void openSpace(final String changedBy) {
 		this.validateNull(changedBy, 16);
-		return spaceStatusService.openSpace(changedBy, message);
 	}
 
-	@Override
-	public SpaceStatus closeSpace(final String changedBy, final String message) throws ValidationException{
+	public void closeSpace(final String changedBy){
 		this.validateNull(changedBy, 16);
-		return spaceStatusService.closeSpace(changedBy, message);
 	}
 
-	@Override
-	public SpaceStatus currentCopyStatus() throws ValidationException{
-		return spaceStatusService.currentCopyStatus();
-	}
-	
-	@Override
-	public SpaceStatus currentStatus() throws ValidationException{
-		return spaceStatusService.currentStatus();
-	}
-
-	@Override
-	public SpaceStatus changeMessage(final SpaceStatus status, final String message) throws ValidationException {
+	public void changeMessage(final SpaceStatus status) {
 		this.validateNull(status, 20);
-		return spaceStatusService.changeMessage(status, message);
 	}
 
-	@Override
-	public SpaceStatus findById(final Long id) throws ValidationException {
+	public void findById(final Long id)  {
 		this.validateNull(id, 22);
-		return spaceStatusService.findById(id);
 	}
 }

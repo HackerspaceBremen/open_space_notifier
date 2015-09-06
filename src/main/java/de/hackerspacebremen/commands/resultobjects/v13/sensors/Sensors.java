@@ -2,16 +2,16 @@ package de.hackerspacebremen.commands.resultobjects.v13.sensors;
 
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @JsonInclude(Include.NON_NULL)
-@EqualsAndHashCode(callSuper=false)
 public final class Sensors {
 
 	private List<Temperature> temperature;

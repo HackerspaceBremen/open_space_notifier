@@ -2,25 +2,24 @@ package de.hackerspacebremen.commands.resultobjects;
 
 import java.util.Date;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
 import de.hackerspacebremen.format.LanguageFormat;
 import de.hackerspacebremen.format.SpeakingDateFormat;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * This entity should only be used in /v2 and before.
  * 
  * @author dragondagda
  */
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper=false)
 public final class Status {
 
 	/**

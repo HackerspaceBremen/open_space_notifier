@@ -23,37 +23,42 @@ import java.net.URLDecoder;
 
 import javax.servlet.ServletException;
 
-import com.google.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import de.hackerspacebremen.commands.helper.StatusTaskStarter;
 import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.domain.api.AuthAttemptService;
-import de.hackerspacebremen.domain.api.AuthenticationService;
-import de.hackerspacebremen.domain.api.SpaceStatusService;
+import de.hackerspacebremen.domain.AuthAttemptService;
+import de.hackerspacebremen.domain.BasicHTTPAuthenticationService;
+import de.hackerspacebremen.domain.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
 
-
+@Component
 public class OpenSpaceCommand extends WebCommand {
 	
-	@Inject
-	@Proxy
 	private SpaceStatusService statusService;
-	
-	@Inject
-	@Proxy
-	private AuthenticationService authService;
-	
-	@Inject
+	private BasicHTTPAuthenticationService authService;
 	private StatusTaskStarter statusTaskStarter;
-	
-	@Inject
 	private AuthAttemptService authAttemptService;
 
 	
+	
+	@Autowired
+	public OpenSpaceCommand(SpaceStatusService statusService,
+			BasicHTTPAuthenticationService authService, StatusTaskStarter statusTaskStarter,
+			AuthAttemptService authAttemptService) {
+		this.statusService = statusService;
+		this.authService = authService;
+		this.statusTaskStarter = statusTaskStarter;
+		this.authAttemptService = authAttemptService;
+	}
+
+
+
+
 	@Override
 	public void process() throws ServletException, IOException {
 		try {

@@ -3,30 +3,32 @@ package de.hackerspacebremen.commands.admin;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
-import com.google.inject.Inject;
 
 import de.hackerspacebremen.commands.WebCommand;
-import de.hackerspacebremen.domain.api.PropertyService;
+import de.hackerspacebremen.domain.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.modules.binding.annotations.Proxy;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@Component
 public final class SaveAPNSCertificateCommand extends WebCommand{
 
-	/**
-     * static attribute used for logging.
-     */
-    private static final Logger logger = Logger.getLogger(SaveAPNSCertificateCommand.class.getName());
     
-	@Inject
-	@Proxy
 	private PropertyService propertyService;
+	
+	@Autowired
+	public SaveAPNSCertificateCommand(PropertyService propertyService) {
+		this.propertyService = propertyService;
+	}
 	
 	@Override
 	public void process() throws ServletException, IOException {
@@ -57,7 +59,7 @@ public final class SaveAPNSCertificateCommand extends WebCommand{
 			req.setAttribute("code", Integer.valueOf(0));
 			req.getRequestDispatcher("/admin/certificate").forward(req, resp);
 		} catch (ValidationException e) {
-			logger.warning("ValidationException occured with error code: " + e.getErrorCode());
+			log.warn("ValidationException occured with error code: {}", e.getErrorCode());
 			req.setAttribute("error", e.getMessage());
 			req.setAttribute("result", "ERROR");
 			req.setAttribute("code", e.getErrorCode());

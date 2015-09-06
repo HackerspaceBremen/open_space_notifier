@@ -2,16 +2,19 @@ package de.hackerspacebremen.commands.helper;
 
 import java.util.Date;
 
+import javax.inject.Provider;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.domain.api.PropertyService;
+import de.hackerspacebremen.domain.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.valueobjects.properties.EmailProperties;
 import de.hackerspacebremen.valueobjects.properties.PushProperties;
@@ -22,13 +25,17 @@ import de.hackerspacebremen.valueobjects.properties.PushProperties;
  * @author Steve
  * 
  */
-public final class StatusTaskStarter {
+@Component
+public class StatusTaskStarter {
 
-	@Inject
 	private Provider<Date> dateProvider;
-
-	@Inject
 	private PropertyService propertyService;
+	
+	@Autowired
+	public StatusTaskStarter(Provider<Date> dateProvider, PropertyService propertyService) {
+		this.dateProvider = dateProvider;
+		this.propertyService = propertyService;
+	}
 
 	public void startTasks(final SpaceStatus status) throws ValidationException {
 		final boolean open = status.getStatus().equals(AppConstants.OPEN);

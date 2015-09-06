@@ -5,16 +5,20 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import de.hackerspacebremen.domain.api.FeedService;
-import de.hackerspacebremen.modules.binding.annotations.RSS;
+import de.hackerspacebremen.domain.RssService;
 
+@Component
 public class RSSCommand extends WebCommand{
 
-	@Inject
-	@RSS
-	private FeedService feedService;
+	private RssService feedService;
+
+	@Autowired
+	public RSSCommand(RssService feedService) {
+		this.feedService = feedService;
+	}
 	
 	@Override
 	public void process() throws ServletException, IOException {

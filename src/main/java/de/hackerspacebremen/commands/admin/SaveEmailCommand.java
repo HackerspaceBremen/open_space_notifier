@@ -1,28 +1,27 @@
 package de.hackerspacebremen.commands.admin;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
-import com.google.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import de.hackerspacebremen.commands.WebCommand;
-import de.hackerspacebremen.domain.api.PropertyService;
+import de.hackerspacebremen.domain.PropertyService;
 import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.modules.binding.annotations.Proxy;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@Component
 public class SaveEmailCommand extends WebCommand {
 
-	@Inject
-	@Proxy
 	private PropertyService propertyService;
 
-	/**
-	 * static attribute used for logging.
-	 */
-	private static final Logger logger = Logger
-			.getLogger(SaveEmailCommand.class.getName());
+	@Autowired
+	public SaveEmailCommand(PropertyService propertyService) {
+		this.propertyService = propertyService;
+	}
 
 	@Override
 	public void process() throws ServletException, IOException {
@@ -40,15 +39,13 @@ public class SaveEmailCommand extends WebCommand {
 		final boolean mailEnabled = req.getParameter("mail_enable") != null;
 
 		try {
-			propertyService.saveEmailProperties(mailEnabled, senderName, receiverName,
-					subjectTag, subjectOpened, subjectClosed, message, content, opened,
-					closed, negatedOpened, negatedClosed);
+			propertyService.saveEmailProperties(mailEnabled, senderName, receiverName, subjectTag, subjectOpened,
+					subjectClosed, message, content, opened, closed, negatedOpened, negatedClosed);
 			req.setAttribute("result", "SUCCESS");
 			req.setAttribute("code", Integer.valueOf(0));
 			req.getRequestDispatcher("/adminEmail.jsp").forward(req, resp);
 		} catch (ValidationException e) {
-			logger.warning("ValidationException occured with error code: "
-					+ e.getErrorCode());
+			log.warn("ValidationException occured with error code: {}", e.getErrorCode());
 			req.setAttribute("error", e.getMessage());
 			req.setAttribute("result", "ERROR");
 			req.setAttribute("code", e.getErrorCode());

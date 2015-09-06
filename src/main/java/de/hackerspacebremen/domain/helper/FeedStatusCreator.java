@@ -3,7 +3,8 @@ package de.hackerspacebremen.domain.helper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.springframework.stereotype.Component;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
@@ -16,13 +17,12 @@ import com.sun.syndication.io.SyndFeedOutput;
 
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
+import lombok.extern.slf4j.Slf4j;
 
-public final class FeedStatusCreator {
+@Slf4j
+@Component
+public class FeedStatusCreator {
 	
-	/**
-     * static attribute used for logging.
-     */
-    private static final Logger logger = Logger.getLogger(FeedStatusCreator.class.getName());
 
 	public String createFeed(final List<SpaceStatus> statusList, final FeedType type){
 		final SyndFeed feed = new SyndFeedImpl();
@@ -61,7 +61,7 @@ public final class FeedStatusCreator {
 	    try{
 	    	result = output.outputString(feed);
 	    }catch(FeedException e){
-	    	logger.warning("FeedException occured: " + e.getMessage());
+	    	log.warn("FeedException occured: " + e.getMessage());
 	    }
 	    return result;
 	}

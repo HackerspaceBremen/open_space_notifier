@@ -9,7 +9,7 @@ public class MyGuiceServletContextListener extends GuiceServletContextListener{
 	/**{@inheritedDoc}*/
 	@Override
 	protected Injector getInjector() {
-		return Guice.createInjector(new OSNModule(), new ServletsModule(), new DataModule(),
+		return Guice.createInjector(new OSNModule(), new ServletsModule(), 
 				new DomainModule());
 	}
 

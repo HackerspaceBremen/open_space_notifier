@@ -5,10 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
@@ -20,10 +16,13 @@ import de.hackerspacebremen.commands.resultobjects.v13.StatusV13;
 import de.hackerspacebremen.commands.resultobjects.v8.Event;
 import de.hackerspacebremen.commands.resultobjects.v9.Contact;
 import de.hackerspacebremen.common.SpaceAPIVersion;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 public final class StatusV12 extends BasicResultObject implements IStatus {
 
 	private final SpaceAPIVersion api = SpaceAPIVersion.API_0_12;

@@ -35,7 +35,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
 
-import de.hackerspacebremen.data.annotations.Entity;
+import de.hackerspacebremen.data.annotations.OsnEntity;
 import de.hackerspacebremen.data.annotations.FormatPart;
 import de.hackerspacebremen.data.entities.BasicEntity;
 
@@ -58,7 +58,7 @@ public class JSONFormatter<T extends BasicEntity> implements Formatter<T> {
 		} else {
 			levelList = Arrays.asList(levels);
 		}
-		if (entity.getClass().isAnnotationPresent(Entity.class)) {
+		if (entity.getClass().isAnnotationPresent(OsnEntity.class)) {
 			final Field[] fields = entity.getClass().getDeclaredFields();
 			for (final Field field : fields) {
 				if (field.isAnnotationPresent(FormatPart.class)
@@ -124,7 +124,7 @@ public class JSONFormatter<T extends BasicEntity> implements Formatter<T> {
 			final Class<T> entityClass) throws FormatException {
 		T result = null;
 		final Map<String, Field> fieldMap = new HashMap<String, Field>();
-		if (entityClass.isAnnotationPresent(Entity.class)) {
+		if (entityClass.isAnnotationPresent(OsnEntity.class)) {
 			final Field[] fields = entityClass.getDeclaredFields();
 			for (final Field field : fields) {
 				if (field.isAnnotationPresent(FormatPart.class)) {

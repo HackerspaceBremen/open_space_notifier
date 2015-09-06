@@ -19,40 +19,38 @@
 package de.hackerspacebremen.commands.push;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
-import com.google.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import de.hackerspacebremen.commands.WebCommand;
 import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.domain.api.GCMDataService;
-import de.hackerspacebremen.domain.api.SpaceStatusService;
+import de.hackerspacebremen.domain.GcmDataService;
+import de.hackerspacebremen.domain.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.format.FormatException;
 import de.hackerspacebremen.format.FormatFactory;
 import de.hackerspacebremen.format.MessageFormat;
 import de.hackerspacebremen.format.ResultKind;
-import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.util.Constants;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@Component
 public class GCMCommand extends WebCommand{
 
-	/**
-     * static attribute used for logging.
-     */
-    private static final Logger logger = Logger.getLogger(GCMCommand.class.getName());
-	
-    @Inject
-    @Proxy
 	private SpaceStatusService statusService;
-    
-    @Inject
-    @Proxy
-	private GCMDataService gcmDataService;
+	private GcmDataService gcmDataService;
+
+    @Autowired
+    public GCMCommand(SpaceStatusService statusService, GcmDataService gcmDataService) {
+		this.statusService = statusService;
+		this.gcmDataService = gcmDataService;
+	}
     
 	@Override
 	public void process() throws ServletException, IOException {
@@ -73,7 +71,7 @@ public class GCMCommand extends WebCommand{
 			this.handleError(ve);
 		} catch (FormatException e) {
 			this.handleError(77);
-			logger.warning(Constants.FORMAT_EXCEPTION_OCCURED + e.getMessage());
+			log.warn(Constants.FORMAT_EXCEPTION_OCCURED + e.getMessage());
 		}
 		
 		super.process();

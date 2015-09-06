@@ -21,6 +21,7 @@ package de.hackerspacebremen.presentation.command;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,10 +31,16 @@ import com.google.inject.Singleton;
 
 import de.hackerspacebremen.MyErrorMessages;
 import de.hackerspacebremen.commands.OpenSpaceCommand;
-import de.hackerspacebremen.presentation.OSNServlet;
+import de.hackerspacebremen.presentation.v2.CommandV2Controller;
 
+/**
+ * @deprecated use {@link CommandV2Controller#open()} instead
+ * @author Steve
+ *
+ */
+@Deprecated
 @Singleton
-public class OpenServlet extends OSNServlet{
+public class OpenServlet extends HttpServlet{
 
 	/**
 	 * generated serialVersionUID.

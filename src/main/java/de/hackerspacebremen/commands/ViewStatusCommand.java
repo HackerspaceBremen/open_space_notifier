@@ -24,10 +24,10 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.google.appengine.api.utils.SystemProperty;
-import com.google.inject.Inject;
 
 import de.hackerspacebremen.commands.resultobjects.Status;
 import de.hackerspacebremen.commands.resultobjects.v11.Icon;
@@ -46,33 +46,35 @@ import de.hackerspacebremen.commands.resultobjects.v8.StatusV8;
 import de.hackerspacebremen.commands.resultobjects.v9.StatusV9;
 import de.hackerspacebremen.common.SpaceAPIVersion;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.domain.api.PropertyService;
-import de.hackerspacebremen.domain.api.SpaceStatusService;
+import de.hackerspacebremen.domain.PropertyService;
+import de.hackerspacebremen.domain.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.format.LanguageFormat;
 import de.hackerspacebremen.format.MessageFormat;
-import de.hackerspacebremen.modules.binding.annotations.Proxy;
 import de.hackerspacebremen.valueobjects.properties.GeneralProperties;
+import lombok.Setter;
 
+@Component
 public class ViewStatusCommand extends WebCommand {
 
-	@Inject
-	@Proxy
 	private SpaceStatusService statusService;
 
 	@Setter
 	private SpaceAPIVersion apiVersion;
-
-	@Inject
 	private PropertyService propertyService;
 
-	protected void fetchStatus(final SpaceStatus spaceStatus,
-			final LanguageFormat format, final boolean htmlEncoded) {
+	@Autowired
+	public ViewStatusCommand(SpaceStatusService statusService, PropertyService propertyService) {
+		this.statusService = statusService;
+		this.propertyService = propertyService;
+
+	}
+
+	protected void fetchStatus(final SpaceStatus spaceStatus, final LanguageFormat format, final boolean htmlEncoded) {
 		if (this.apiVersion == SpaceAPIVersion.UNKNOWN) {
 			this.handleError(30);
 		} else {
-			final StatusV13 status = this.fetchStatusV13(spaceStatus,
-					htmlEncoded);
+			final StatusV13 status = this.fetchStatusV13(spaceStatus, htmlEncoded);
 			status.setSuccess("Status found");
 
 			if (this.apiVersion.isNewer(8)) {
@@ -88,8 +90,7 @@ public class ViewStatusCommand extends WebCommand {
 			} else {
 				switch (this.apiVersion) {
 				case API_0_12:
-					this.handleSuccess(new StatusV12(status, new Status(
-							spaceStatus, format)));
+					this.handleSuccess(new StatusV12(status, new Status(spaceStatus, format)));
 					break;
 				case API_0_11:
 					this.handleSuccess(new StatusV11(status));
@@ -107,13 +108,10 @@ public class ViewStatusCommand extends WebCommand {
 		}
 	}
 
-	private StatusV13 fetchStatusV13(final SpaceStatus status,
-			final boolean htmlEncoded) {
-		final String url = "http://" + SystemProperty.applicationId.get()
-				+ ".appspot.com/";
+	private StatusV13 fetchStatusV13(final SpaceStatus status, final boolean htmlEncoded) {
+		final String url = "http://" + SystemProperty.applicationId.get() + ".appspot.com/";
 
-		final GeneralProperties generalInformation = propertyService
-				.fetchProperties(GeneralProperties.class);
+		final GeneralProperties generalInformation = propertyService.fetchProperties(GeneralProperties.class);
 
 		final StatusV13 statusResult = new StatusV13();
 		// statusResult.setCam(cam);
@@ -128,8 +126,7 @@ public class ViewStatusCommand extends WebCommand {
 		contact.setFacebook(nullIfEmpty(generalInformation.getFacebookUrl()));
 		// contact.setFoursquare(foursquare);
 		contact.setFoursquare(nullIfEmpty(generalInformation.getFoursquareUrl()));
-		final String googlePlusUrl = nullIfEmpty(generalInformation
-				.getGooglePlusUrl());
+		final String googlePlusUrl = nullIfEmpty(generalInformation.getGooglePlusUrl());
 		if (googlePlusUrl != null) {
 			final Google google = new Google();
 			// google.setPlus("https://plus.google.com/106849621647585475724");
@@ -166,17 +163,17 @@ public class ViewStatusCommand extends WebCommand {
 		// statusResult.setFeeds(feeds);
 
 		final Location location = new Location();
-//		location.setAddress("Bornstraße 14/15, 28195 Bremen, Germany");
+		// location.setAddress("Bornstraße 14/15, 28195 Bremen, Germany");
 		location.setAddress(nullIfEmpty(generalInformation.getLocationAddress()));
-//		location.setLat(53.08178);
+		// location.setLat(53.08178);
 		location.setLat(generalInformation.getLocationLatitude());
-//		location.setLon(8.805831);
+		// location.setLon(8.805831);
 		location.setLon(generalInformation.getLocationLongitude());
 		statusResult.setLocation(location);
 		statusResult.setLogo(url + "images/hackerspace_icon.png");
 		// statusResult.setProjects(projects);
 		// statusResult.setRadioShow(radioShow);
-//		statusResult.setSpace("Hackerspace Bremen e.V.");
+		// statusResult.setSpace("Hackerspace Bremen e.V.");
 		statusResult.setSpace(nullIfEmpty(generalInformation.getSpaceName()));
 		final SpaceFED spacefed = new SpaceFED();
 		spacefed.setSpacenet(false);
@@ -207,7 +204,7 @@ public class ViewStatusCommand extends WebCommand {
 		statusResult.setState(state);
 
 		// statusResult.setStream(stream);
-//		statusResult.setUrl("http://www.hackerspace-bremen.de");
+		// statusResult.setUrl("http://www.hackerspace-bremen.de");
 		statusResult.setUrl(nullIfEmpty(generalInformation.getUrl()));
 
 		return statusResult;
@@ -226,15 +223,14 @@ public class ViewStatusCommand extends WebCommand {
 
 	@Override
 	public void process() throws ServletException, IOException {
-		final boolean htmlEncoded = (req.getParameter("htmlEncoded") != null && req
-				.getParameter("htmlEncoded").equals("true"));
+		final boolean htmlEncoded = (req.getParameter("htmlEncoded") != null
+				&& req.getParameter("htmlEncoded").equals("true"));
 		try {
 			final SpaceStatus status = statusService.currentCopyStatus();
 			if (status == null) {
 				this.handleError(17);
 			} else {
-				final LanguageFormat format = LanguageFormat.createInstance(req
-						.getParameter("format"));
+				final LanguageFormat format = LanguageFormat.createInstance(req.getParameter("format"));
 				this.fetchStatus(status, format, htmlEncoded);
 			}
 		} catch (ValidationException ve) {

@@ -23,51 +23,63 @@ import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.google.inject.Inject;
 
 import de.hackerspacebremen.commands.helper.StatusTaskStarter;
 import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.domain.api.SpaceStatusService;
+import de.hackerspacebremen.domain.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.modules.binding.annotations.Proxy;
-
 
 /**
  * @author Steve
  *
  */
-public class StatusCheckCommand extends WebCommand{
+@Component
+public class StatusCheckCommand extends WebCommand {
 
 	/**
-     * static attribute used for logging.
-     */
-    private static final Logger logger = Logger.getLogger(StatusCheckCommand.class.getName());
-	
-    @Inject
-    @Proxy
+	 * static attribute used for logging.
+	 */
+	private static final Logger logger = Logger.getLogger(StatusCheckCommand.class.getName());
+
+	@Inject
+	@Proxy
 	private SpaceStatusService statusService;
-    
-    @Inject
+
+	@Inject
 	private StatusTaskStarter statusTaskStarter;
-    
-	/* (non-Javadoc)
+
+	@Autowired
+	public StatusCheckCommand(SpaceStatusService statusService, StatusTaskStarter statusTaskStarter) {
+		this.statusService = statusService;
+		this.statusTaskStarter = statusTaskStarter;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see de.hackerspacebremen.commands.WebCommand#process()
 	 */
 	@Override
 	public void process() throws ServletException, IOException {
-		
-		try{
+
+		try {
 			final SpaceStatus currentStatus = statusService.currentCopyStatus();
-			if(currentStatus.getStatus()!=null && currentStatus.getStatus().equals("OPEN")){
+			if (currentStatus.getStatus() != null && currentStatus.getStatus().equals("OPEN")) {
 				logger.info("The space wasn't closed - START closing space!");
 				final SpaceStatus status = statusService.closeSpace("ADMIN - AUTOMATIC", "");
 				this.statusTaskStarter.startTasks(status);
 				this.handleSuccess(new BasicResultObject("The space is now closed"));
-			}else{
+			} else {
 				logger.info("The space was correctly closed");
 			}
-		}catch(ValidationException ve){
+		} catch (ValidationException ve) {
 			this.handleError(ve);
 		}
 		super.process();

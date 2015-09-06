@@ -4,16 +4,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Getter;
 
-@Data
-@JsonInclude(Include.NON_NULL)
+@Getter
+@Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper=false)
+@JsonInclude(Include.NON_NULL)
 public class BasicResultObject {
 
 	@JsonProperty("SUCCESS")

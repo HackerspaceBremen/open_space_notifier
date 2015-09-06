@@ -1,31 +1,30 @@
 package de.hackerspacebremen.commands;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
-import com.google.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import de.hackerspacebremen.domain.api.SpaceStatusService;
+import de.hackerspacebremen.domain.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.email.StatusEmail;
-import de.hackerspacebremen.modules.binding.annotations.Proxy;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
+@Component
 public class MailCommand extends WebCommand{
 
-	/**
-     * static attribute used for logging.
-     */
-    private static final Logger logger = Logger.getLogger(MailCommand.class.getName());
 	
-	@Inject
-	@Proxy
 	private SpaceStatusService statusService;
-	
-	@Inject
 	private StatusEmail statusEmail;
+	
+	@Autowired
+	public MailCommand(SpaceStatusService statusService, StatusEmail statusEmail) {
+		this.statusService = statusService;
+		this.statusEmail = statusEmail;
+	}
 	
 	@Override
 	public void process() throws ServletException, IOException {
@@ -33,7 +32,7 @@ public class MailCommand extends WebCommand{
 		try {
 			statusEmail.send(this.statusService.findById(statusId));
 		} catch (ValidationException e) {
-			logger.warning("ValidationException occured: " + e.getMessage());
+			log.warn("ValidationException occured: " + e.getMessage());
 		}
 		
 		super.process();

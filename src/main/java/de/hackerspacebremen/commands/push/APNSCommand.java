@@ -5,28 +5,30 @@ import java.util.Date;
 
 import javax.servlet.ServletException;
 
-import com.google.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import de.hackerspacebremen.commands.WebCommand;
 import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
 import de.hackerspacebremen.common.AppConstants;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.domain.api.APNSDataService;
-import de.hackerspacebremen.domain.api.SpaceStatusService;
+import de.hackerspacebremen.domain.ApnsDataService;
+import de.hackerspacebremen.domain.SpaceStatusService;
 import de.hackerspacebremen.domain.val.ValidationException;
 import de.hackerspacebremen.format.MessageFormat;
 import de.hackerspacebremen.format.SpeakingDateFormat;
-import de.hackerspacebremen.modules.binding.annotations.Proxy;
 
+@Component
 public class APNSCommand extends WebCommand{
 	
-	@Inject
-    @Proxy
 	private SpaceStatusService statusService;
-	
-	@Inject
-	@Proxy
-    private APNSDataService apnsDataService;
+    private ApnsDataService apnsDataService;
+
+	@Autowired
+	public APNSCommand(SpaceStatusService statusService, ApnsDataService apnsDataService) {
+		this.statusService = statusService;
+		this.apnsDataService = apnsDataService;
+	}
 
 	
 	@Override

@@ -21,6 +21,7 @@ package de.hackerspacebremen.presentation.gcm;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,10 +31,17 @@ import com.google.inject.Singleton;
 
 import de.hackerspacebremen.MyErrorMessages;
 import de.hackerspacebremen.commands.push.GCMRegistryCommand;
-import de.hackerspacebremen.presentation.OSNServlet;
+import de.hackerspacebremen.presentation.v1.GcmController;
 
+/**
+ * 
+ * @deprecated use {@link GcmController#register(String, String)} instead
+ * @author Steve
+ *
+ */
 @Singleton
-public final class GCMRegistryServlet extends OSNServlet{
+@Deprecated
+public final class GCMRegistryServlet extends HttpServlet{
 
 	/**
 	 * generated serialVersionUID.

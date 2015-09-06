@@ -5,9 +5,12 @@ import static de.hackerspacebremen.common.PropertyConstants.APNS_PASSWORD;
 import static de.hackerspacebremen.common.PropertyConstants.GCM_ENABLED;
 import static de.hackerspacebremen.common.PropertyConstants.GCM_KEY;
 import static de.hackerspacebremen.common.PropertyConstants.MPNS_ENABLED;
-import lombok.Data;
 
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public final class PushProperties {
 
 	@DataProperty(key=GCM_ENABLED, defaultValue="false")

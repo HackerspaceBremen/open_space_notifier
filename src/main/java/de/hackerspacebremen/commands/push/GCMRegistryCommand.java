@@ -22,20 +22,19 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-import com.google.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import de.hackerspacebremen.commands.WebCommand;
 import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
-import de.hackerspacebremen.domain.api.GCMDataService;
+import de.hackerspacebremen.domain.GcmDataService;
 import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.modules.binding.annotations.Proxy;
 
-
+@Component
 public class GCMRegistryCommand extends WebCommand{
 	
-	@Inject
-	@Proxy
-	private GCMDataService gcmService;
+	@Autowired
+	private GcmDataService gcmService;
 
 	@Override
 	public void process() throws ServletException, IOException {

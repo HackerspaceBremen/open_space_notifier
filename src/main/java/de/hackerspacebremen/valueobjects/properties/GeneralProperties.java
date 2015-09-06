@@ -1,10 +1,28 @@
 package de.hackerspacebremen.valueobjects.properties;
 
-import lombok.Data;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_CONTACT_EMAIL;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_CONTACT_IRC;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_CONTACT_ISSUE_MAIL;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_CONTACT_JABBER;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_CONTACT_MAILINGLIST;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_CONTACT_PHONE;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_CONTACT_SIP;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_LOCATION_ADDRESS;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_LOCATION_LATITUDE;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_LOCATION_LONGITUDE;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_SOCIAL_FACEBOOK;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_SOCIAL_FOURSQUARE;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_SOCIAL_GPLUS;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_SOCIAL_IDENTICA;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_SOCIAL_TWITTER;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_SPACE_NAME;
+import static de.hackerspacebremen.common.PropertyConstants.GENERAL_URL;
 
-import static de.hackerspacebremen.common.PropertyConstants.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public final class GeneralProperties {
 
 	@DataProperty(key=GENERAL_SPACE_NAME)

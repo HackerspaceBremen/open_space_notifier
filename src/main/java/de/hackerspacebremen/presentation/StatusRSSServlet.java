@@ -3,6 +3,7 @@ package de.hackerspacebremen.presentation;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,9 +13,16 @@ import com.google.inject.Singleton;
 
 import de.hackerspacebremen.MyErrorMessages;
 import de.hackerspacebremen.commands.RSSCommand;
+import de.hackerspacebremen.presentation.v2.StatusV2Controller;
 
+/**
+ * @deprecated use {@link StatusV2Controller#rss()} instead
+ * @author Steve
+ *
+ */
+@Deprecated
 @Singleton
-public final class StatusRSSServlet extends OSNServlet{
+public final class StatusRSSServlet extends HttpServlet {
 
 	/**
 	 * generated serialVersionUID.
@@ -22,15 +30,14 @@ public final class StatusRSSServlet extends OSNServlet{
 	private static final long serialVersionUID = 503720739837717764L;
 
 	private final Provider<RSSCommand> rssCommand;
-	
+
 	@Inject
-	public StatusRSSServlet(final Provider<RSSCommand> rssCommand){
+	public StatusRSSServlet(final Provider<RSSCommand> rssCommand) {
 		this.rssCommand = rssCommand;
 	}
-	
+
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		final RSSCommand cmd = rssCommand.get();
 		cmd.init(req, resp, MyErrorMessages.class);
 		cmd.process();

@@ -21,6 +21,7 @@ package de.hackerspacebremen.presentation.cron;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,14 +31,15 @@ import com.google.inject.Singleton;
 
 import de.hackerspacebremen.MyErrorMessages;
 import de.hackerspacebremen.commands.StatusCheckCommand;
-import de.hackerspacebremen.presentation.OSNServlet;
+import de.hackerspacebremen.presentation.v1.CronJobController;
 
 /**
  * @author Steve Liedtke
- *
+ * @deprecated use {@link CronJobController#statusCheck()} instead
  */
+@Deprecated
 @Singleton
-public class StatusCheckServlet extends OSNServlet{
+public class StatusCheckServlet extends HttpServlet{
 
 	/**
 	 * generated serialVersionUID.

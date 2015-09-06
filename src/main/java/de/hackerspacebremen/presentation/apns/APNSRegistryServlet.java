@@ -21,6 +21,7 @@ package de.hackerspacebremen.presentation.apns;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,10 +31,15 @@ import com.google.inject.Singleton;
 
 import de.hackerspacebremen.MyErrorMessages;
 import de.hackerspacebremen.commands.push.APNSRegistryCommand;
-import de.hackerspacebremen.presentation.OSNServlet;
+import de.hackerspacebremen.presentation.v2.ApnsController;
 
+/**
+ * @deprecated use {@link ApnsController#register()} instead
+ * @author Steve
+ *
+ */
 @Singleton
-public final class APNSRegistryServlet extends OSNServlet{
+public final class APNSRegistryServlet extends HttpServlet{
 
 	
 	/**

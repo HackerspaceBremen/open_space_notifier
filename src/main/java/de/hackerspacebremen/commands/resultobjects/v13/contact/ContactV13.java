@@ -1,14 +1,13 @@
 package de.hackerspacebremen.commands.resultobjects.v13.contact;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import de.hackerspacebremen.commands.resultobjects.v9.Contact;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@Setter
 public final class ContactV13 extends Contact{
 
 	private String facebook;

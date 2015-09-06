@@ -18,7 +18,7 @@
  */
 package de.hackerspacebremen.domain.val;
 
-public class ValidationException extends Exception {
+public class ValidationException extends RuntimeException {
 
 	/**
 	 * generated serialVersionUID.

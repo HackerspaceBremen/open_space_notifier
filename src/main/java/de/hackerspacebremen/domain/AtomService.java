@@ -2,31 +2,33 @@ package de.hackerspacebremen.domain;
 
 import java.util.List;
 
-import com.google.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import de.hackerspacebremen.data.api.SpaceStatusDAO;
 import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.domain.api.FeedService;
+import de.hackerspacebremen.data.objectify.SpaceStatusDao;
 import de.hackerspacebremen.domain.helper.FeedStatusCreator;
 import de.hackerspacebremen.domain.helper.FeedType;
 
-public final class AtomService implements FeedService{
+@Service
+public class AtomService {
 
-	@Inject 
 	private FeedStatusCreator feedCreator;
+	private SpaceStatusDao spaceStatusDao;
 	
-	@Inject
-	private SpaceStatusDAO spaceStatusDAO;
+	@Autowired
+	public AtomService(FeedStatusCreator feedCreator, SpaceStatusDao spaceStatusDao) {
+		this.feedCreator = feedCreator;
+		this.spaceStatusDao = spaceStatusDao;
+	}
 	
-	@Override
 	public String createFeed(int maxEntries) {
-		final List<SpaceStatus> statusList = this.spaceStatusDAO.findAllOrdered(maxEntries);
+		final List<SpaceStatus> statusList = this.spaceStatusDao.findAllOrdered(maxEntries);
 		return feedCreator.createFeed(statusList, FeedType.ATOM);
 	}
 
-	@Override
 	public String createFeed() {
-		final List<SpaceStatus> statusList = this.spaceStatusDAO.findAllOrdered();
+		final List<SpaceStatus> statusList = this.spaceStatusDao.findAllOrdered();
 		return feedCreator.createFeed(statusList, FeedType.ATOM);
 	}
 

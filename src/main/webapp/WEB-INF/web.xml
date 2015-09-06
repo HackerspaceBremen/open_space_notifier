@@ -1,116 +1,124 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<!-- 
- * Hackerspace Bremen Backend - An Open-Space-Notifier
- * 
- * Copyright (C) 2012 Steve Liedtke <sliedtke57@gmail.com>
- * 
- * This program is free software; you can redistribute it and/or modify it under the terms of the 
- * GNU General Public License as published by the Free Software Foundation; either version 3 of 
- * the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
- * the GNU General Public License for more details.
- * 
- * You can find a copy of the GNU General Public License on http://www.gnu.org/licenses/gpl.html.
- * 
- * Contributors:
- *     Steve Liedtke <sliedtke57@gmail.com>
--->
-<web-app 
-	xmlns="http://java.sun.com/xml/ns/javaee" 
-	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	version="2.5" 
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	>
+<!-- * Hackerspace Bremen Backend - An Open-Space-Notifier * * Copyright 
+	(C) 2012 Steve Liedtke <sliedtke57@gmail.com> * * This program is free software; 
+	you can redistribute it and/or modify it under the terms of the * GNU General 
+	Public License as published by the Free Software Foundation; either version 
+	3 of * the License, or (at your option) any later version. * * This program 
+	is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+	* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+	PURPOSE. See * the GNU General Public License for more details. * * You can 
+	find a copy of the GNU General Public License on http://www.gnu.org/licenses/gpl.html. 
+	* * Contributors: * Steve Liedtke <sliedtke57@gmail.com> -->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+						http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
 	<display-name>Open Space Notifier</display-name>
-	
-	<filter>
-        <filter-name>appstats</filter-name>
-        <filter-class>com.google.appengine.tools.appstats.AppstatsFilter</filter-class>
-        <init-param>
-            <param-name>logMessage</param-name>
-            <param-value>Appstats available: /appstats/details?time={ID}</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>appstats</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-	
-	<servlet>
-        <servlet-name>appstats</servlet-name>
-        <servlet-class>com.google.appengine.tools.appstats.AppstatsServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>appstats</servlet-name>
-        <url-pattern>/appstats/*</url-pattern>
-    </servlet-mapping>
 
-    
-	
 	<filter>
-		<filter-name>guiceFilter</filter-name>
-		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+		<filter-name>appstats</filter-name>
+		<filter-class>com.google.appengine.tools.appstats.AppstatsFilter</filter-class>
+		<init-param>
+			<param-name>logMessage</param-name>
+			<param-value>Appstats available: /appstats/details?time={ID}</param-value>
+		</init-param>
 	</filter>
-
 	<filter-mapping>
-		<filter-name>guiceFilter</filter-name>
+		<filter-name>appstats</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>osn</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+		</init-param>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>de.hackerspacebremen.OSNConfig</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>osn</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
 	<listener>
-		<listener-class>de.hackerspacebremen.modules.MyGuiceServletContextListener</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+
+	<servlet>
+		<servlet-name>appstats</servlet-name>
+		<servlet-class>com.google.appengine.tools.appstats.AppstatsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>appstats</servlet-name>
+		<url-pattern>/appstats/*</url-pattern>
+	</servlet-mapping>
+
+
+
+	<!-- <filter> <filter-name>guiceFilter</filter-name> <filter-class>com.google.inject.servlet.GuiceFilter</filter-class> 
+		</filter> <filter-mapping> <filter-name>guiceFilter</filter-name> <url-pattern>/*</url-pattern> 
+		</filter-mapping> <listener> <listener-class>de.hackerspacebremen.modules.MyGuiceServletContextListener</listener-class> 
+		</listener> -->
+
 	<welcome-file-list>
-        <welcome-file>index.html</welcome-file>
-    </welcome-file-list>
-	
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
 	<security-constraint>
-    	<web-resource-collection>
-      		<web-resource-name>any</web-resource-name>
-      		<url-pattern>/cmd/*</url-pattern>
-      		<url-pattern>/register</url-pattern>
-      		<url-pattern>/unregister</url-pattern>
-      		<url-pattern>/activate</url-pattern>
-      		<!-- VERSION 2 -->
-      		<url-pattern>/v2/cmd/*</url-pattern>
-      		<url-pattern>/v2/gcm/*</url-pattern>
-      		<url-pattern>/v2/apns/*</url-pattern>
-      		<url-pattern>/</url-pattern>
-      	</web-resource-collection>
-      	<user-data-constraint>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-  	</security-constraint>
-  	<security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Admin</web-resource-name>
-            <url-pattern>/v2/task/*</url-pattern>
-            <url-pattern>/v2/cron/*</url-pattern>
-            <url-pattern>/admin</url-pattern>
-            <url-pattern>/admin**.jsp</url-pattern>
-            <url-pattern>/admin/*</url-pattern>
-            <url-pattern>/appstats/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>admin</role-name>
-        </auth-constraint>
-    </security-constraint>
-  	<security-constraint>
-    	<web-resource-collection>
-      		<web-resource-name>httpGets</web-resource-name>
-      		<url-pattern>/status</url-pattern>
-      		<!-- VERSION 2 -->
-      		<url-pattern>/v2/status</url-pattern>
-      		<url-pattern>/v2/status.rss</url-pattern>
-      		<url-pattern>/v2/status.atom</url-pattern>
-      		<http-method>GET</http-method>
-      	</web-resource-collection>
-      	<user-data-constraint>
-            <transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
-  	</security-constraint>
+		<web-resource-collection>
+			<web-resource-name>any</web-resource-name>
+			<url-pattern>/cmd/*</url-pattern>
+			<url-pattern>/register</url-pattern>
+			<url-pattern>/unregister</url-pattern>
+			<url-pattern>/activate</url-pattern>
+			<!-- VERSION 2 -->
+			<url-pattern>/v2/cmd/*</url-pattern>
+			<url-pattern>/v2/gcm/*</url-pattern>
+			<url-pattern>/v2/apns/*</url-pattern>
+			<url-pattern>/</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Admin</web-resource-name>
+			<url-pattern>/v2/task/*</url-pattern>
+			<url-pattern>/v2/cron/*</url-pattern>
+			<url-pattern>/admin</url-pattern>
+			<url-pattern>/admin**.jsp</url-pattern>
+			<url-pattern>/admin/*</url-pattern>
+			<url-pattern>/appstats/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>httpGets</web-resource-name>
+			<url-pattern>/status</url-pattern>
+			<!-- VERSION 2 -->
+			<url-pattern>/v2/status</url-pattern>
+			<url-pattern>/v2/status.rss</url-pattern>
+			<url-pattern>/v2/status.atom</url-pattern>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
 </web-app>

@@ -21,6 +21,7 @@ package de.hackerspacebremen.presentation;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,16 +32,21 @@ import com.google.inject.Singleton;
 import de.hackerspacebremen.MyErrorMessages;
 import de.hackerspacebremen.commands.ViewStatusCommand;
 import de.hackerspacebremen.common.SpaceAPIVersion;
+import de.hackerspacebremen.presentation.v2.StatusV2Controller;
 
 /**
  * This servlet is used to get the status of the hackerspace.
  * 
  * States: -Open -Close
  * 
+ * 
+ * @deprecated use {@link StatusV2Controller#status()} and
+ *             {@link StatusV2Controller#forApi()} instead
  * @author Steve Liedtke
  */
+@Deprecated
 @Singleton
-public class StatusServlet extends OSNServlet {
+public class StatusServlet extends HttpServlet {
 
 	/**
 	 * generated serialVersionUID.
@@ -54,11 +60,9 @@ public class StatusServlet extends OSNServlet {
 		this.viewStatusCommand = viewStatusCommand;
 	}
 
-	public void doGet(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
-		final String apiVersion = this.extractAPIversion(req.getRequestURI(),
-				"\\/v2\\/status");
+	public void doGet(final HttpServletRequest req, final HttpServletResponse resp)
+			throws ServletException, IOException {
+		final String apiVersion = this.extractAPIversion(req.getRequestURI(), "\\/v2\\/status");
 
 		final ViewStatusCommand cmd = viewStatusCommand.get();
 		cmd.init(req, resp, MyErrorMessages.class);
@@ -66,8 +70,7 @@ public class StatusServlet extends OSNServlet {
 		cmd.process();
 	}
 
-	private String extractAPIversion(final String uri,
-			final String beginningPath) {
+	private String extractAPIversion(final String uri, final String beginningPath) {
 		String apiVersion = uri.replaceFirst(beginningPath, "");
 		apiVersion = apiVersion.trim();
 		apiVersion = removeLastCharIf(apiVersion, '/');
@@ -78,12 +81,12 @@ public class StatusServlet extends OSNServlet {
 		final String result;
 		if (text == null || text.isEmpty()) {
 			result = "";
-		}else{
+		} else {
 			final char lastChar = text.charAt(text.length() - 1);
 			if (lastChar == character) {
-				if(text.length()<=1){
+				if (text.length() <= 1) {
 					result = "";
-				}else{
+				} else {
 					result = text.substring(0, text.length() - 2);
 				}
 			} else {

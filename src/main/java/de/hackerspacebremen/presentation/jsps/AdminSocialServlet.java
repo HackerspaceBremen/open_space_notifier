@@ -3,15 +3,22 @@ package de.hackerspacebremen.presentation.jsps;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.inject.Singleton;
 
-import de.hackerspacebremen.presentation.OSNServlet;
+import de.hackerspacebremen.presentation.admin.SocialController;
 
+/**
+ * @deprecated use {@link SocialController} instead
+ * @author Steve
+ *
+ */
+@Deprecated
 @Singleton
-public class AdminSocialServlet extends OSNServlet{
+public class AdminSocialServlet extends HttpServlet{
 
 	/**
 	 * generated serialVersionUID.
