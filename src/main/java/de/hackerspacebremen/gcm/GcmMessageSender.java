@@ -30,7 +30,7 @@ import com.google.android.gcm.server.Result;
 import com.google.android.gcm.server.Sender;
 
 import de.hackerspacebremen.domain.PropertyService;
-import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.domain.validation.ValidationException;
 
 @Component
 public final class GcmMessageSender {

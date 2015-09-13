@@ -18,7 +18,7 @@
  */
 package de.hackerspacebremen.format;
 
-import de.hackerspacebremen.data.entities.BasicEntity;
+import de.hackerspacebremen.data.entity.BasicEntity;
 
 public interface Formatter<T extends BasicEntity> {
 

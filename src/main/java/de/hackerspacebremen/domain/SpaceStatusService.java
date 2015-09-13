@@ -26,10 +26,10 @@ import org.springframework.stereotype.Service;
 import com.google.appengine.api.datastore.Text;
 
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.data.objectify.SpaceStatusDao;
-import de.hackerspacebremen.domain.val.SpaceStatusServiceValidation;
-import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.data.SpaceStatusDao;
+import de.hackerspacebremen.data.entity.SpaceStatus;
+import de.hackerspacebremen.domain.validation.SpaceStatusServiceValidation;
+import de.hackerspacebremen.domain.validation.ValidationException;
 
 @Service
 public class SpaceStatusService {
@@ -69,7 +69,11 @@ public class SpaceStatusService {
 	}
 
 	public SpaceStatus currentCopyStatus() {
-		return new SpaceStatus(this.spaceStatusDao.findCurrentStatus());
+		SpaceStatus currentStatus = this.spaceStatusDao.findCurrentStatus();
+		if(currentStatus == null){
+			currentStatus = this.changeState("OSN", "Initial state", false);
+		}
+		return new SpaceStatus(currentStatus);
 	}
 	
 	public SpaceStatus currentStatus() {

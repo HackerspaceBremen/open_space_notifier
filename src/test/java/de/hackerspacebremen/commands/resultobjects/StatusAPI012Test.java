@@ -9,9 +9,10 @@ import org.testng.annotations.Test;
 
 import com.google.inject.Inject;
 
-import de.hackerspacebremen.commands.resultobjects.v11.Icon;
-import de.hackerspacebremen.commands.resultobjects.v12.StatusV12;
-import de.hackerspacebremen.commands.resultobjects.v9.Contact;
+import de.hackerspacebremen.commands.resultobject.Status;
+import de.hackerspacebremen.commands.resultobject.v11.Icon;
+import de.hackerspacebremen.commands.resultobject.v12.StatusV12;
+import de.hackerspacebremen.commands.resultobject.v9.Contact;
 import de.hackerspacebremen.format.JacksonInstance;
 
 @Guice

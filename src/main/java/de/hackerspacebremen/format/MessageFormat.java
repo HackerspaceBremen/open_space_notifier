@@ -23,7 +23,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import com.google.appengine.api.datastore.Text;
 
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.data.entity.SpaceStatus;
 
 /**
  * @author Steve

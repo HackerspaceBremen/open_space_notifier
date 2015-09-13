@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.hackerspacebremen.data.entities.SpaceStatus;
-import de.hackerspacebremen.data.objectify.SpaceStatusDao;
+import de.hackerspacebremen.data.SpaceStatusDao;
+import de.hackerspacebremen.data.entity.SpaceStatus;
 import de.hackerspacebremen.domain.helper.FeedStatusCreator;
 import de.hackerspacebremen.domain.helper.FeedType;
 

@@ -18,10 +18,11 @@
  */
 package de.hackerspacebremen.util;
 
-import lombok.Getter;
-import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
+import de.hackerspacebremen.ErrorMessages;
+import de.hackerspacebremen.commands.resultobject.BasicResultObject;
 import de.hackerspacebremen.format.JacksonInstance;
 import de.hackerspacebremen.format.ResultKind;
+import lombok.Getter;
 
 public class Result {
 

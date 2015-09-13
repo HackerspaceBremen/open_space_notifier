@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.domain.validation.ValidationException;
 
 public class AuthenticateServiceDemo {
 	

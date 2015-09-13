@@ -25,18 +25,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lombok.NonNull;
-
 import org.json.JSONObject;
 
 import com.google.inject.Inject;
 import com.googlecode.objectify.ObjectifyService;
 
-import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
-import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.ErrorMessages;
+import de.hackerspacebremen.commands.resultobject.BasicResultObject;
+import de.hackerspacebremen.domain.validation.ValidationException;
 import de.hackerspacebremen.format.ResultKind;
-import de.hackerspacebremen.util.ErrorMessages;
 import de.hackerspacebremen.util.Result;
+import lombok.NonNull;
 
 public abstract class WebCommand {
 
@@ -59,8 +58,8 @@ public abstract class WebCommand {
 	protected ErrorMessages errorMessages;
 
 	
-	public <T extends ErrorMessages> void init(@NonNull final HttpServletRequest req,
-			@NonNull final HttpServletResponse resp, final Class<T> errorMessageClass) {
+	public  void init(@NonNull final HttpServletRequest req,
+			@NonNull final HttpServletResponse resp, final Class<ErrorMessages> errorMessageClass) {
 		final ResultKind kind = ResultKind.find(req.getParameter("format"));
 		this.result = new Result(kind, errorMessages);
 		this.req = req;

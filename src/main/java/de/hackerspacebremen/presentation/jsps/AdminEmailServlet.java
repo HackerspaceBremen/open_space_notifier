@@ -11,7 +11,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
-import de.hackerspacebremen.MyErrorMessages;
+import de.hackerspacebremen.ErrorMessages;
 import de.hackerspacebremen.commands.admin.SaveEmailCommand;
 import de.hackerspacebremen.presentation.admin.EmailController;
 
@@ -42,7 +42,7 @@ public class AdminEmailServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		final SaveEmailCommand cmd = saveEmailCommand.get();
-		cmd.init(req, resp, MyErrorMessages.class);
+		cmd.init(req, resp, ErrorMessages.class);
 		cmd.process();
 	}
 }

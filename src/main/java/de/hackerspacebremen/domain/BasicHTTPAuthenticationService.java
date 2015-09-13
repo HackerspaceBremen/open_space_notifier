@@ -9,7 +9,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.hackerspacebremen.domain.val.AuthServiceValidation;
+import de.hackerspacebremen.domain.validation.AuthServiceValidation;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

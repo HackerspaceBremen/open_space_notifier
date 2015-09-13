@@ -35,9 +35,9 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
 
-import de.hackerspacebremen.data.annotations.OsnEntity;
-import de.hackerspacebremen.data.annotations.FormatPart;
-import de.hackerspacebremen.data.entities.BasicEntity;
+import de.hackerspacebremen.data.annotation.FormatPart;
+import de.hackerspacebremen.data.annotation.OsnEntity;
+import de.hackerspacebremen.data.entity.BasicEntity;
 
 public class JSONFormatter<T extends BasicEntity> implements Formatter<T> {
 

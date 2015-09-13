@@ -20,7 +20,7 @@
 <!--  */ -->
 <%@ page import="com.google.inject.Injector"%>
 <%@ page import="com.google.inject.Guice"%>
-<%@ page import="de.hackerspacebremen.domain.api.PropertyService" %>
+<%@ page import="de.hackerspacebremen.domain.PropertyService" %>
 <%@ page import="de.hackerspacebremen.valueobjects.properties.PushProperties" %>
 
 <%

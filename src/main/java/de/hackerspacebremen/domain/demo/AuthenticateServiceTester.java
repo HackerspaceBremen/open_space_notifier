@@ -1,7 +1,7 @@
 package de.hackerspacebremen.domain.demo;
 
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.domain.validation.ValidationException;
 
 public class AuthenticateServiceTester {
 

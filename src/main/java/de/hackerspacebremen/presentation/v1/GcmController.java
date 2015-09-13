@@ -1,31 +1,40 @@
 package de.hackerspacebremen.presentation.v1;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import de.hackerspacebremen.commands.resultobjects.BasicResultObject;
+import de.hackerspacebremen.ErrorMessages;
+import de.hackerspacebremen.commands.resultobject.BasicResultObject;
 import de.hackerspacebremen.domain.GcmDataService;
+import de.hackerspacebremen.presentation.BasicOsnRestController;
 
-@Controller
-public class GcmController {
+@RestController
+public class GcmController extends BasicOsnRestController {
 
 	private GcmDataService gcmDataService;
 
 	@Autowired
-	public GcmController(GcmDataService gcmDataService) {
+	public GcmController(ErrorMessages errorMessages, GcmDataService gcmDataService) {
+		super(errorMessages);
 		this.gcmDataService = gcmDataService;
 	}
 
-	@RequestMapping({ "/register", "/v1/register" })
-	public BasicResultObject register(@RequestParam final String deviceId, @RequestParam final String registrationId) {
+	@ResponseBody
+	@RequestMapping(value = { "/register", "/v1/register" }, method = RequestMethod.POST)
+	public BasicResultObject register(@RequestParam(required = false) final String deviceId,
+			@RequestParam(required = false) final String registrationId) {
 		this.gcmDataService.register(deviceId, registrationId);
 		return new BasicResultObject("Your registry was successful");
 	}
 
-	@RequestMapping({ "/unregister", "/v1/unregister" })
-	public void unregister(@RequestParam final String deviceId) {
+	@ResponseBody
+	@RequestMapping(value = { "/unregister", "/v1/unregister" }, method = RequestMethod.POST)
+	public BasicResultObject unregister(@RequestParam(required = false) final String deviceId) {
 		gcmDataService.unregister(deviceId);
+		return new BasicResultObject("You successfully unregistered");
 	}
 }

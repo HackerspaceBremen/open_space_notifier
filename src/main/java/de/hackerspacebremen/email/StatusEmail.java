@@ -32,9 +32,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.data.entity.SpaceStatus;
 import de.hackerspacebremen.domain.PropertyService;
-import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.domain.validation.ValidationException;
 import de.hackerspacebremen.util.Constants;
 import de.hackerspacebremen.valueobjects.properties.EmailProperties;
 import lombok.extern.slf4j.Slf4j;

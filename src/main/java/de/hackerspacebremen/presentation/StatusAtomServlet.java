@@ -11,7 +11,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
-import de.hackerspacebremen.MyErrorMessages;
+import de.hackerspacebremen.ErrorMessages;
 import de.hackerspacebremen.commands.AtomCommand;
 import de.hackerspacebremen.presentation.v2.StatusV2Controller;
 
@@ -39,7 +39,7 @@ public class StatusAtomServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		final AtomCommand cmd = atomCommand.get();
-		cmd.init(req, resp, MyErrorMessages.class);
+		cmd.init(req, resp, ErrorMessages.class);
 		cmd.process();
 	}
 }

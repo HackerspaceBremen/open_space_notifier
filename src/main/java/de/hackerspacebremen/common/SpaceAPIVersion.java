@@ -49,21 +49,21 @@ public enum SpaceAPIVersion {
 		case "":
 			apiVersion = getDefaultAPIVersion(backendVersion);
 			break;
-		case "/0_8":
-		case "/0_08":
+		case "0_8":
+		case "0_08":
 			apiVersion = API_0_08;
 			break;
-		case "/0_9":
-		case "/0_09":
+		case "0_9":
+		case "0_09":
 			apiVersion = API_0_09;
 			break;
-		case "/0_11":
+		case "0_11":
 			apiVersion = API_0_11;
 			break;
-		case "/0_12":
+		case "0_12":
 			apiVersion = API_0_12;
 			break;
-		case "/0_13":
+		case "0_13":
 			apiVersion = API_0_13;
 			break;
 		default:

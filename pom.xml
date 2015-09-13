@@ -134,6 +134,13 @@
 			<artifactId>apns</artifactId>
 			<version>0.2.3</version>
 		</dependency>
+		<!-- Apache libraries -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+
 		<!-- Commons codec -->
 		<dependency>
 			<groupId>commons-codec</groupId>

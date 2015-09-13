@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import de.hackerspacebremen.common.PresentationMode;
-import de.hackerspacebremen.data.annotations.FormatPart;
+import de.hackerspacebremen.data.annotation.FormatPart;
 import flexjson.TypeContext;
 import flexjson.transformer.AbstractTransformer;
 

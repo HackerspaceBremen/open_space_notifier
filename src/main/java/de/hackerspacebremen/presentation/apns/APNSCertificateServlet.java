@@ -11,7 +11,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
-import de.hackerspacebremen.MyErrorMessages;
+import de.hackerspacebremen.ErrorMessages;
 import de.hackerspacebremen.commands.admin.SaveAPNSCertificateCommand;
 import de.hackerspacebremen.presentation.admin.CertificateController;
 
@@ -39,7 +39,7 @@ public class APNSCertificateServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		final SaveAPNSCertificateCommand cmd = saveAPNSCertificateCommand.get();
-		cmd.init(req, resp, MyErrorMessages.class);
+		cmd.init(req, resp, ErrorMessages.class);
 		cmd.process();
 	}
 

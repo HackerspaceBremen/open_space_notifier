@@ -15,9 +15,9 @@ import com.notnoop.apns.ApnsService;
 import com.notnoop.exceptions.InvalidSSLConfig;
 
 import de.hackerspacebremen.common.PropertyConstants;
-import de.hackerspacebremen.data.entities.ApnsData;
-import de.hackerspacebremen.data.objectify.ApnsDataDao;
-import de.hackerspacebremen.domain.val.ApnsDataValidation;
+import de.hackerspacebremen.data.ApnsDataDao;
+import de.hackerspacebremen.data.entity.ApnsData;
+import de.hackerspacebremen.domain.validation.ApnsDataValidation;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

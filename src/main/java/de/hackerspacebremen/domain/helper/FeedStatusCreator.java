@@ -16,7 +16,7 @@ import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedOutput;
 
 import de.hackerspacebremen.common.AppConstants;
-import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.data.entity.SpaceStatus;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

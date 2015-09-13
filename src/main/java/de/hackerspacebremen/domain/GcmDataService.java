@@ -29,11 +29,10 @@ import org.springframework.stereotype.Service;
 import com.google.android.gcm.server.Constants;
 import com.google.android.gcm.server.Result;
 
-
-import de.hackerspacebremen.data.entities.GcmData;
-import de.hackerspacebremen.data.objectify.GcmDataDao;
-import de.hackerspacebremen.domain.val.GcmDataServiceValidation;
-import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.data.GcmDataDao;
+import de.hackerspacebremen.data.entity.GcmData;
+import de.hackerspacebremen.domain.validation.GcmDataServiceValidation;
+import de.hackerspacebremen.domain.validation.ValidationException;
 import de.hackerspacebremen.gcm.GcmMessageSender;
 import lombok.extern.slf4j.Slf4j;
 

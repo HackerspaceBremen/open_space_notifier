@@ -15,7 +15,7 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
 import de.hackerspacebremen.commands.WebCommand;
 import de.hackerspacebremen.domain.PropertyService;
-import de.hackerspacebremen.domain.val.ValidationException;
+import de.hackerspacebremen.domain.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

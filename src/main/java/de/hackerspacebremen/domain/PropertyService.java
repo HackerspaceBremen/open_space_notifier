@@ -42,11 +42,11 @@ import java.lang.reflect.InvocationTargetException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.hackerspacebremen.data.entities.Property;
-import de.hackerspacebremen.data.objectify.PropertyDao;
-import de.hackerspacebremen.domain.val.PropertyServiceValidation;
-import de.hackerspacebremen.domain.val.ValidationException;
-import de.hackerspacebremen.exceptions.NotCompletelyConfigured;
+import de.hackerspacebremen.data.PropertyDao;
+import de.hackerspacebremen.data.entity.Property;
+import de.hackerspacebremen.domain.validation.PropertyServiceValidation;
+import de.hackerspacebremen.domain.validation.ValidationException;
+import de.hackerspacebremen.exception.NotCompletelyConfigured;
 import de.hackerspacebremen.valueobjects.properties.CertificateProperties;
 import de.hackerspacebremen.valueobjects.properties.DataProperty;
 import de.hackerspacebremen.valueobjects.properties.EmailProperties;

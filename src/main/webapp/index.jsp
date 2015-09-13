@@ -1,6 +1,6 @@
 <%@page import="de.hackerspacebremen.common.AppConstants"%>
 <%@page import="de.hackerspacebremen.util.Constants"%>
-<%@page import="de.hackerspacebremen.data.entities.SpaceStatus"%>
+<%@page import="de.hackerspacebremen.data.entity.SpaceStatus"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <!-- /* -->
 <!--  * Hackerspace Bremen Backend - An Open-Space-Notifier -->
@@ -22,7 +22,7 @@
 <!--  */ -->
 <%@ page import="com.google.inject.Injector"%>
 <%@ page import="com.google.inject.Guice"%>
-<%@ page import="de.hackerspacebremen.domain.api.SpaceStatusService" %>
+<%@ page import="de.hackerspacebremen.domain.SpaceStatusService" %>
 <%@ page import="de.hackerspacebremen.commands.resultobjects.Status" %>
 <%@ page import="de.hackerspacebremen.format.LanguageFormat" %>
 

@@ -4,7 +4,8 @@ import org.testng.annotations.Test;
 
 import com.google.appengine.api.datastore.Text;
 
-import de.hackerspacebremen.data.entities.SpaceStatus;
+import de.hackerspacebremen.commands.resultobject.Status;
+import de.hackerspacebremen.data.entity.SpaceStatus;
 
 @Test
 public final class StatusTest {
