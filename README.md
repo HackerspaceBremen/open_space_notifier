@@ -42,7 +42,7 @@ Dependencies
 Continuous Integration
 ----------------------
 
-[![Build Status](http://tools.steveliedtke.de/jenkins/job/open%20space%20notifier%20-%20master/badge/icon)](http://tools.steveliedtke.de/jenkins/job/open%20space%20notifier%20-%20master/)
+[![Build Status](http://jenkins.steveliedtke.de/job/osn%20-%20master%20-%20unit%20tests/badge/icon)](http://tools.steveliedtke.de/jenkins/job/open%20space%20notifier%20-%20master/)
 
 The project is build and tested by a Jenkins service on a private server. You can access it as an 
 read-only anonymous user on the [Jenkins of Steve Liedtke](http://tools.steveliedtke.de/jenkins/view/Hackerspace%20Projekte).
